@@ -57,7 +57,7 @@ scene.add( helper );
 
 
 //Adding axis helper.
-const axesHelper = new THREE.AxesHelper( 5 );
+const axesHelper = new THREE.AxesHelper( 6 );
 scene.add( axesHelper );
 
 // //Rotation camera with orbit controls.
