@@ -30,7 +30,7 @@ const helper = new THREE.Box3Helper( box, 0x000000 );
 scene.add( helper );
 
 
-//Instantiate a loader
+//Instantiate a loaderr
 // const loader = new GLTFLoader();
 // loader.load(
 // 	// resource URL
