@@ -3,8 +3,11 @@ import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitC
 import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import { DragControls } from './node_modules/three/examples/jsm/controls/DragControls.js';
 
+
+
+
 //Intialization scene,camera,renderer,loader 3d models.
-const scene = new THREE.Scene();
+export const scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xf0ecf3 );
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
@@ -24,9 +27,9 @@ renderer.setSize( 600, 300 );
 
 
 //Adding odject to scene.
-const box = new THREE.Box3();
-box.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3( 2, 1, 2 ) );
-const helper = new THREE.Box3Helper( box, 0x000000 );
+export const box_three = new THREE.Box3();
+box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3( 2, 1, 2 ) );
+export const helper = new THREE.Box3Helper( box_three, 0x000000 );
 scene.add( helper );
 
 
@@ -65,7 +68,7 @@ const controls = new OrbitControls(camera, canvas_three);
 controls.enableDamping = true;
 controls.zoomSpeed = 6;
 
-const controls1 = new DragControls( box, camera, renderer.domElement );
+const controls1 = new DragControls( box_three, camera, renderer.domElement );
 // controls1.update();
 
 function animate() 
@@ -77,6 +80,13 @@ function animate()
 
 	renderer.render( scene, camera );
 }
-	
+
+
+export function delete_from_scene()
+{
+	scene.remove(helper);
+}
+
+
 animate();
 

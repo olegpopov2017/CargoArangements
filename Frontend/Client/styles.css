@@ -21,3 +21,12 @@ color:#000000
     padding:0;
     border:0;   
     }
+
+#form
+    {
+    position:absolute;
+    top: 150px;
+    left: 15px;
+    padding:0;
+    border:0;   
+    }

@@ -26,8 +26,12 @@ const server = http.createServer((req, res) =>
             console.log(body);
             let x = JSON.parse(body);
             console.log(x);
-            x.x = 777;
-            console.log(x);
+            
+            x.x = 7;
+            x.y = 7;
+            x.z = 7;
+            
+            // console.log(x);
             let y = JSON.stringify(x);
             console.log(y);
             
