@@ -11,12 +11,23 @@ export const scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xf0ecf3 );
 
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.position.z = 7;
 
-const geometry = new THREE.PlaneGeometry( 10,10);
-geometry.rotateX(-Math.PI * 2);
-const material = new THREE.MeshBasicMaterial( {color: 0xaeb9b6, side: THREE.DoubleSide} );
-const plane = new THREE.Mesh( geometry, material );
+camera.position.x = 7;
+	camera.position.y = 7;
+
+// 	camera.position.z = 30;
+// 	camera.lookAt(scene.position);
+
+
+
+
+var geometry = new THREE.PlaneGeometry( 300,300,3,3);
+// geometry.scale(0,0,0)
+var material = new THREE.MeshBasicMaterial( {color: 0xaeb9b6} );
+var plane = new THREE.Mesh( geometry, material );
+plane.rotation.x= -Math.PI*0.5;
+// plane.rotation.y= -Math.PI;
+
 scene.add( plane );
 
 var spotLight = new THREE.SpotLight( 0xffffff );
@@ -64,7 +75,8 @@ scene.add(group);
 
 
 //Adding axis helper.
-const axesHelper = new THREE.AxesHelper( 6 );
+const axesHelper = new THREE.AxesHelper( 150 );
+
 scene.add( axesHelper );
 
 // //Rotation camera with orbit controls.

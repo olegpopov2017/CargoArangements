@@ -9,7 +9,6 @@ button2.addEventListener('click',changing_position_into_server);
 
 function changing_position_into_server()
 {
-    
     let box = new Box;
         
     box.length = document.querySelector("#lenght").value;
@@ -42,13 +41,13 @@ function changing_position_into_server()
                 group.clear();
                 
                 const box_three = new THREE.Box3();
-                box_three.setFromCenterAndSize( new THREE.Vector3( x, y, z ), new THREE.Vector3( lenght, width, height ) );
+                box_three.setFromCenterAndSize(new THREE.Vector3( x+(lenght/2), y+(height/2), z+(width/2) ), new THREE.Vector3( lenght,height,width, ) );
                 
-                const helper = new THREE.Box3Helper( box_three, 0x000000 );
+                const helper = new THREE.Box3Helper(box_three, 0x000000 );
                 group.add(helper);
                 
             });
-    }
+}
 
 
 
