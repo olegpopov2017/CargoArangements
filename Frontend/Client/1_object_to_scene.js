@@ -1,52 +1,55 @@
 import * as THREE from 'three';
-import {Box} from './test_json.js';
-import {scene,helper,group} from './main';
+import {Box} from './classes.js';
+import {group} from './main';
 
+
+//Button from form "creating object,changing position into server"
 let button2 = document.querySelector('#button2');
-button2.addEventListener('click',create_obj_to_scene);
+button2.addEventListener('click',changing_position_into_server);
 
-function create_obj_to_scene()
+function changing_position_into_server()
 {
-
     
     let box = new Box;
-    // console.log(box);
-    
-    
+        
     box.length = document.querySelector("#lenght").value;
     box.width = document.querySelector("#width").value;
     box.height = document.querySelector("#height").value;
     box.x = document.querySelector("#x").value;
     box.y = document.querySelector("#y").value;
     box.z = document.querySelector("#z").value;
-    // console.log(box);
+    
+    const controller = new AbortController();
+    setTimeout(() => {controller.abort()}, 2000);
+    
+    fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box),AbortController: controller.signal})
+        .then((response) => {
+            return response.json();
+        })
+            .then((data) => {
+                console.log(data);
+                let box1 = data;
+                console.log(box1);
 
+                let lenght = Number(box1.length); 
+                let width = Number(box1.width);
+                let height = Number(box1.height); 
+                let x = Number(box1.x);
+                let y = Number(box1.y);
+                let z = Number(box1.z);
+                console.log(x);
 
-    async function click()
-    {    
-        const controller = new AbortController();
-        setTimeout(() => {controller.abort()}, 2000);
-        
-        let response = await fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box),AbortController: controller.signal})
-        
-        let box1 = await response.json()
-        await console.log(box1)
-        
-        let lenght = box1.length = (parseInt(document.querySelector("#lenght").value))
-        let width = box1.width = parseInt(document.querySelector("#width").value);
-        let height = box1.height = parseInt(document.querySelector("#height").value);
-        let x = box1.x = parseInt(document.querySelector("#x").value);
-        let y = box1.y = parseInt(document.querySelector("#y").value);
-        let z = box1.z = parseInt(document.querySelector("#z").value);
-        
-        group.clear();
-        
-        const box_three = new THREE.Box3();
-        box_three.setFromCenterAndSize( new THREE.Vector3( x, y, z ), new THREE.Vector3( lenght, width, height ) );
-        // box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1,1 ), new THREE.Vector3(1, 1,1 ));
-
-        const helper = new THREE.Box3Helper( box_three, 0x000000 );
-        group.add(helper);
+                group.clear();
+                
+                const box_three = new THREE.Box3();
+                box_three.setFromCenterAndSize( new THREE.Vector3( x, y, z ), new THREE.Vector3( lenght, width, height ) );
+                
+                const helper = new THREE.Box3Helper( box_three, 0x000000 );
+                group.add(helper);
+                
+            });
     }
-    click();
-}
+
+
+
+    
