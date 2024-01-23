@@ -33,9 +33,9 @@ button.addEventListener('click',click);
 
 
 
-async function click()
+export async function click()
 {
-let box2 = new Box(2,2,2,1,1,1); 
+  let box2 = new Box(2,2,2,1,1,1); 
 
 scene.remove(helper);
 
@@ -45,6 +45,7 @@ setTimeout(() => {controller.abort()}, 2000);
 
 let response = await fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box2),AbortController: controller.signal});
 
-let result = await response.json();
-console.log(result);
+let box = await response.json();
+console.log(box);
+
 }

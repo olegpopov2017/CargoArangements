@@ -25,12 +25,16 @@ scene.add( spotLight );
 const renderer = new THREE.WebGLRenderer({canvas: canvas_three});
 renderer.setSize( 600, 300 );
 
+export const group = new THREE.Group();
 
 //Adding odject to scene.
 export const box_three = new THREE.Box3();
 box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3( 2, 1, 2 ) );
 export const helper = new THREE.Box3Helper( box_three, 0x000000 );
-scene.add( helper );
+
+
+group.add( helper );
+scene.add(group);
 
 
 //Instantiate a loaderr
