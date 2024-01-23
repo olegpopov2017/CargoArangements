@@ -27,9 +27,9 @@ const server = http.createServer((req, res) =>
             let x = JSON.parse(body);
             console.log(x);
             
-            x.x = 7;
-            x.y = 7;
-            x.z = 7;
+            x.x = 0;
+            x.y = 0;
+            x.z = 0;
             
             // console.log(x);
             let y = JSON.stringify(x);
