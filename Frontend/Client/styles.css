@@ -1,6 +1,7 @@
 #test color
 {
 color:#000000
+#ffffff 
 }
 
 #header
@@ -29,4 +30,12 @@ color:#000000
     left: 15px;
     padding:0;
     border:0;   
+    }
+#button3
+    {   
+    position:absolute;
+    top: 200px;
+    left: 900px;
+    /* padding:0;
+    border:0;    */
     }

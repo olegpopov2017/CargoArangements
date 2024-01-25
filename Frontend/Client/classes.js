@@ -1,6 +1,8 @@
 export class Box
 {
-  name = 'box_json';
+  class_name = 'box';
+  guid = 0;
+  
   constructor(length,width,height,x,y,z) 
   {
     this.length = length;
@@ -13,4 +15,22 @@ export class Box
 };
 
 
+export class Container extends Box
+{
+  class_name = 'container'
+  
+  constructor(box_array,length,width,height,x,y,z)
+  {
+    super(length,width,height,x,y,z);
+    this.box_array = box_array;
+  }
+}
 
+
+
+//добавить к каждому бокс гуид 
+//добавить к каждому бокс возможность доблять массив боксов
+
+
+//возможность добавления в бокс поштучно
+//возможность бобавления в бокс оптом много одинаковых.

@@ -50,5 +50,7 @@ function changing_position_into_server()
 }
 
 
-
-    
+//Creating button "delete all"
+let button3 = document.querySelector('#button3');
+button3.addEventListener('click',delete_all);
+ function delete_all()   {group.clear()}

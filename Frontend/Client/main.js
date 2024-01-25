@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import { DragControls } from './node_modules/three/examples/jsm/controls/DragControls.js';
+import { Box,Container } from './classes.js';
 
 
 
@@ -13,13 +14,7 @@ scene.background = new THREE.Color( 0xf0ecf3 );
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 camera.position.x = 7;
-	camera.position.y = 7;
-
-// 	camera.position.z = 30;
-// 	camera.lookAt(scene.position);
-
-
-
+camera.position.y = 7;
 
 var geometry = new THREE.PlaneGeometry( 300,300,3,3);
 // geometry.scale(0,0,0)
@@ -92,8 +87,7 @@ function animate()
 	requestAnimationFrame( animate );
 	// required if controls.enableDamping or controls.autoRotate are set to true
 	controls.update();
-	// controls1.update();
-
+	
 	renderer.render( scene, camera );
 }
 
@@ -106,3 +100,14 @@ export function delete_from_scene()
 
 animate();
 
+let l = new  Container(null,1,1,1,1,1,1);
+let a = new Box(2,2,2,2,2,2);
+let b = new Box(3,3,3,3,3,3);
+let c = new Box(4,4,4,4,4,4);
+
+
+l.box_array = {a,b,c};
+console.log(l);
+
+l.box_array.a.x = 99;
+console.log(l);
