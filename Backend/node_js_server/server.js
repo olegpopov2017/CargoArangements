@@ -27,11 +27,11 @@ const server = http.createServer((req, res) =>
             let x = JSON.parse(body);
             console.log(x);
             
-            x.x = 10;
-            x.y = 10;
-            x.z = 10;
+            x.x = 50;
+            x.y = 50;
+            x.z = 50;
             
-            // console.log(x);
+            console.log(x);
             let y = JSON.stringify(x);
             console.log(y);
             

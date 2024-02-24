@@ -31,7 +31,11 @@ scene.add( spotLight );
 const renderer = new THREE.WebGLRenderer({canvas: canvas_three});
 renderer.setSize( 600, 300 );
 
-export const group = new THREE.Group();
+export const group1 = new THREE.Group();
+export const palette_group = new THREE.Group();
+scene.add(palette_group);
+
+
 
 //Adding odject to scene.
 export const box_three = new THREE.Box3();
@@ -39,8 +43,10 @@ box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3(
 export const helper = new THREE.Box3Helper( box_three, 0x000000 );
 
 
-group.add( helper );
-scene.add(group);
+group1.add( helper );
+scene.add(group1);
+
+
 
 
 //Instantiate a loaderr
@@ -100,14 +106,3 @@ export function delete_from_scene()
 
 animate();
 
-let l = new  Container(null,1,1,1,1,1,1);
-let a = new Box(2,2,2,2,2,2);
-let b = new Box(3,3,3,3,3,3);
-let c = new Box(4,4,4,4,4,4);
-
-
-l.box_array = {a,b,c};
-console.log(l);
-
-l.box_array.a.x = 99;
-console.log(l);

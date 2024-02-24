@@ -1,6 +1,6 @@
 #test color
 {
-color:#000000
+color:#df0707
 #ffffff 
 }
 
@@ -34,8 +34,32 @@ color:#000000
 #button3
     {   
     position:absolute;
-    top: 200px;
+    top: 320px;
     left: 900px;
+    /* padding:0;
+    border:0;    */
+    }
+#form2
+    {
+    position:absolute;
+    top: 370px;
+    left: 15px;
+    padding:0;
+    border:0;   
+    }
+#button5
+    {   
+    position:absolute;
+    top: 320px;
+    left: 760px;
+    /* padding:0;
+    border:0;    */
+    }
+#button6
+    {   
+    position:absolute;
+    top: 360px;
+    left: 760px;
     /* padding:0;
     border:0;    */
     }

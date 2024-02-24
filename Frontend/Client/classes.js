@@ -15,6 +15,18 @@ export class Box
 };
 
 
+export class Palette
+{
+  class_name = 'Palette'
+  constructor(lenght_palette,width_palette,height_palette)
+  {
+    this.lenght_palette = lenght_palette;
+    this.width_palette = width_palette;
+    this.height_palette = height_palette;
+  }
+}
+
+
 export class Container extends Box
 {
   class_name = 'container'
@@ -25,6 +37,32 @@ export class Container extends Box
     this.box_array = box_array;
   }
 }
+
+
+
+class Cuboid
+{
+  class_name = 'Cuboid';
+  
+  cuboid_type = 
+
+  inner_object = bool;
+  have_parent = bool;
+  
+  constructor(length,width,height,x,y,z,guid) 
+  {
+    this.length = length;
+    this.width = width;
+    this.height = height;    
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.guid = guid;
+  }
+};
+
+
+
 
 
 

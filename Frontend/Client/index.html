@@ -11,34 +11,40 @@
 		<canvas id="canvas_three"></canvas>
 		<script type="module" src="./main.js"></script>
 		<script type="module" src="./classes.js"></script>
-		<script type="module" src="./1_object_to_scene.js"></script>
+		<script type="module" src="./buttons_html.js"></script>
+		<script type="module" src="./button6-present_obj_param.js"></script>
+
+
+		<button id = "button3" type="button" >Удалить обьекты</button>
+		<button id = "button5" type="button" >Удалить паллет</button>
+		<button id = "button6" type="button" >Показать параметры объектов</button>
+		
 		<form id= "form1">
-		<button id = "button3" type="button" >Удалить все</button>
 			<fieldset>
 				<legend>Создание обьекта,изменение координат на сервере</legend>
 					<table>
 						<tr>
-							<td><label >lenght</label></td>
+							<td><label >Длина</label></td>
 							<td><input id="lenght" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>width</label></td>
+							<td><label>Ширина</label></td>
 							<td><input id="width" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>hight</label></td>
+							<td><label>Высота</label></td>
 							<td><input id="height" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Input x</label></td>
+							<td><label>X</label></td>
 							<td><input id="x" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Input y</label></td>
+							<td><label>Y</label></td>
 							<td><input id="y" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Input z</label></td>
+							<td><label>Z</label></td>
 							<td><input id="z" type="number"/></td>
 						</tr>
 						<tr>
@@ -47,5 +53,30 @@
 					</table>
 			</fieldset>
 		</form>
+
+		<form id= "form2">
+			<fieldset>
+				<legend>Создание паллета</legend>
+					<table>
+						<tr>
+							<td><label >Длина</label></td>
+							<td><input id="lenght_palette" type="number"/></td>
+						</tr>
+						<tr>
+							<td><label>Ширина</label></td>
+							<td><input id="width_palette" type="number"/></td>
+						</tr>
+						<tr>
+							<td><label>Высота</label></td>
+							<td><input id="height_palette" type="number"/></td>
+						</tr>
+						<tr>
+							<td><button id = "button4" type="button" >Добавить паллет</button></td>
+							
+						</tr>
+					</table>
+			</fieldset>
+		</form>
+
 	</body>
 </html>
