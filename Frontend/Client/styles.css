@@ -22,7 +22,7 @@ color:#df0707
     padding:0;
     border:0;   
     }
-
+                                    /* Forms */
 #form1
     {
     position:absolute;
@@ -31,14 +31,6 @@ color:#df0707
     padding:0;
     border:0;   
     }
-#button3
-    {   
-    position:absolute;
-    top: 320px;
-    left: 900px;
-    /* padding:0;
-    border:0;    */
-    }
 #form2
     {
     position:absolute;
@@ -46,6 +38,35 @@ color:#df0707
     left: 15px;
     padding:0;
     border:0;   
+    }
+#form3
+    {
+    position:absolute;
+    top: 550px;
+    left: 15px;
+    padding:0;
+    border:0;   
+    }
+#form4
+    {
+    position:absolute;
+    top: 350px;
+    left: 15px;
+    padding:0;
+    border:0;   
+    }
+
+
+
+
+                                    /* Buttons */
+#button3
+    {   
+    position:absolute;
+    top: 320px;
+    left: 900px;
+    /* padding:0;
+    border:0;    */
     }
 #button5
     {   

@@ -6,7 +6,6 @@ import { Box,Container } from './classes.js';
 
 
 
-
 //Intialization scene,camera,renderer,loader 3d models.
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color( 0xf0ecf3 );
