@@ -25,18 +25,14 @@ function create_and_changing_position_into_server()
             return response.json();
         })
             .then((data) => {
-                // console.log(data);
                 let box1 = data;
-                // console.log(box1);
-
                 let lenght = Number(box1.length); 
                 let width = Number(box1.width);
                 let height = Number(box1.height); 
                 let x = Number(box1.x);
                 let y = Number(box1.y);
                 let z = Number(box1.z);
-                
-                               
+                                               
                 const box_three = new THREE.Box3();
                 box_three.setFromCenterAndSize(new THREE.Vector3( z+(width/2), y+(height/2),  x+(lenght/2)), new THREE.Vector3( width,height,lenght ) );
                 

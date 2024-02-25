@@ -26,7 +26,7 @@ color:#df0707
 #form1
     {
     position:absolute;
-    top: 150px;
+    top: 340px;
     left: 15px;
     padding:0;
     border:0;   
@@ -34,7 +34,7 @@ color:#df0707
 #form2
     {
     position:absolute;
-    top: 370px;
+    top: 120px;
     left: 15px;
     padding:0;
     border:0;   
@@ -60,27 +60,27 @@ color:#df0707
 
 
                                     /* Buttons */
-#button3
+/* #button3
     {   
     position:absolute;
     top: 320px;
     left: 900px;
-    /* padding:0;
-    border:0;    */
-    }
-#button5
+    padding:0;
+    border:0;   
+    } 
+    #button5
     {   
     position:absolute;
     top: 320px;
     left: 760px;
-    /* padding:0;
-    border:0;    */
-    }
+    padding:0;
+    border:0;   
+    } 
 #button6
     {   
     position:absolute;
     top: 360px;
     left: 760px;
-    /* padding:0;
-    border:0;    */
-    }
+    padding:0;
+    border:0;   
+    } */
