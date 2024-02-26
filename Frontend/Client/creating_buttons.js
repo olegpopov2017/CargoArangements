@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import {Box} from './classes.js';
-import {group1,palette_group,scene} from './main';
+import {group1,palette_group,scene} from './three_cargo_canvas.js';
 
                 //Button 2 - Creating object,changing position into server
+
 let button2 = document.querySelector('#button2');
 button2.addEventListener('click',create_and_changing_position_into_server);
 
@@ -44,7 +45,7 @@ function create_and_changing_position_into_server()
 
 
 
-                //Button 3 - Delete all
+                //Button 3 - Delete all objects in scene
 let button3 = document.querySelector('#button3');
 button3.addEventListener('click',delete_all);
 function delete_all()   {group1.clear()};
@@ -72,7 +73,7 @@ button4.addEventListener('click',palette_adding);
 };
 
 
-                //Button 5 - Delete all palets
+                //Button 5 - Delete all palets in scene
 let button5 = document.querySelector('#button5');
 button5.addEventListener('click',() => (palette_group.clear()));
 

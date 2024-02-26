@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls';
-import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
-import { DragControls } from './node_modules/three/examples/jsm/controls/DragControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 import { Box,Container } from './classes.js';
 
 
@@ -44,35 +44,6 @@ export const helper = new THREE.Box3Helper( box_three, 0x000000 );
 
 group1.add( helper );
 scene.add(group1);
-
-
-
-
-//Instantiate a loaderr
-// const loader = new GLTFLoader();
-// loader.load(
-// 	// resource URL
-// 	'/GLTF_2.0/avocado/Avocado.gltf',
-// 	// called when the resource is loaded
-// 	function ( gltf ) {
-// 		scene.add( gltf.scene );
-// 		gltf.animations; // Array<THREE.AnimationClip>
-// 		gltf.scene; // THREE.Group
-// 		gltf.scenes; // Array<THREE.Group>
-// 		gltf.cameras; // Array<THREE.Camera>
-// 		gltf.asset; // Object
-// 	},
-// 	// called while loading is progressing
-// 	function ( xhr ) {
-// 		console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
-// 	},
-// 	// called when loading has errors
-// 	function ( error ) {
-// 		console.log( 'An error happened' );
-// 	}
-// );
-
-
 
 //Adding axis helper.
 const axesHelper = new THREE.AxesHelper( 150 );
