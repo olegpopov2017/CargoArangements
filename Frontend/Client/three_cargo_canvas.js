@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
+import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls';
+import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import { DragControls } from './node_modules/three/examples/jsm/controls/DragControls.js';
 import { Box,Container } from './classes.js';
 
 
@@ -38,11 +38,11 @@ scene.add(palette_group);
 
 //Adding odject to scene.
 export const box_three = new THREE.Box3();
-box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3( 2, 1, 2 ) );
+// box_three.setFromCenterAndSize( new THREE.Vector3( 1, 1, 3 ), new THREE.Vector3( 2, 1, 2 ) );
 export const helper = new THREE.Box3Helper( box_three, 0x000000 );
 
 
-group1.add( helper );
+// group1.add( helper );
 scene.add(group1);
 
 //Adding axis helper.

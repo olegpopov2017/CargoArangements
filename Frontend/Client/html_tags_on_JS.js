@@ -46,7 +46,7 @@ let form1_html = `
     let form1 = document.createElement('form1');
     form1.id = "form1";
     form1.innerHTML = form1_html;
-    document.body.append(form1);
+    //document.body.append(form1);
 
 
 
@@ -84,26 +84,4 @@ let form2_html = `
     document.body.append(form2);
 
 
-    // Creating Form4 - Test form on HTML
     
-    let form4_html = `
-    <fieldset>	
-    <legend>Создание формы на JS</legend>
-    <table>
-    <tr>
-    
-    <td><label >тестовая форма</label></td>
-    <td><input id="lenght" type="number"/></td>
-    
-    <tr>
-    <td><button id = "button2" type="button" >Создать</button></td>
-    </tr>
-    </tr>
-    </table>
-    `;
-    
-    
-    let form4 = document.createElement('form4');
-    form4.id = "form4";
-    form4.innerHTML = form4_html;
-    document.body.append(form4);
