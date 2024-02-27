@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {Box} from './classes.js';
 import {group1,palette_group,scene} from './three_cargo_canvas.js';
 
-                //Button 2 - Creating object,changing position into server
+                // FETCH Button 2 - Creating object,changing position into server
 
 // let button2 = document.querySelector('#button2');
 // button2.addEventListener('click',create_and_changing_position_into_server);

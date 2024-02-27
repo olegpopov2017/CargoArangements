@@ -55,10 +55,10 @@ const controls = new OrbitControls(camera, canvas_three);
 controls.enableDamping = true;
 controls.zoomSpeed = 6;
 
-const controls1 = new DragControls( box_three, camera, renderer.domElement );
+// const controls1 = new DragControls( box_three, camera, renderer.domElement );
 // controls1.update();
 
-function animate() 
+export function animate() 
 {
 	requestAnimationFrame( animate );
 	// required if controls.enableDamping or controls.autoRotate are set to true
