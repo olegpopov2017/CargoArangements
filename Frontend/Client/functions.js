@@ -5,24 +5,37 @@ import {group1,palette_group,scene,animate} from './three_cargo_canvas.js';
 
 export function present_object_parameters()
 {
-    console.clear();
-    let pallete = palette_group.children[0]
-    let inner_array = group1.children;
+    try{
+            console.clear();
+            let pallete = palette_group.children;
+            let inner_array = group1.children;
+            console.log(typeof(pallete))
+            console.log(typeof(pallete))
 
-    console.log(' Cargo area UUID: ',pallete.uuid,'\n',
-                'Cargo area scale:  ','Lenght =',pallete.scale.x*2,'; Width =',pallete.scale.y*2,'; Height =',pallete.scale.z*2,'\n',
-                'Number of objects in the cargo area:',inner_array.length,'\n',
-                )
+            if(pallete.length == 0) {throw new Error("Pallete not createted. Please create pallete and try again.")}
+            if(inner_array.length == 0) {throw new Error("No objects in cargo area.")}
+            
+           
+
+            console.log(' Cargo area UUID: ',pallete.uuid,'\n',
+                        'Cargo area scale:  ','Lenght =',pallete.scale.x*2,'; Width =',pallete.scale.y*2,'; Height =',pallete.scale.z*2,'\n',
+                        'Number of objects in the cargo area:',inner_array.length,'\n',
+                        )
 
 
-    for (let i = 0; i < inner_array.length; ++i)
+            for (let i = 0; i < inner_array.length; ++i)
+                {
+                let arr = inner_array[i];
+                console.log('     Number of object: ',i+1,'\n',
+                            '    UUID: ',arr.uuid,'\n',
+                            '    Scale:  ','Lenght =',arr.scale.x*2,'; Width =',arr.scale.y*2,'; Height =',arr.scale.z*2,'\n',
+                            '    Coordinates:  ','X =',arr.position.x-arr.scale.x,'; Y =',arr.position.y-arr.scale.y, '; Z =',arr.position.z-arr.scale.z
+                            );
+                }
+        } 
+        catch (err) 
         {
-        let arr = inner_array[i];
-        console.log('     Number of object: ',i+1,'\n',
-                    '    UUID: ',arr.uuid,'\n',
-                    '    Scale:  ','Lenght =',arr.scale.x*2,'; Width =',arr.scale.y*2,'; Height =',arr.scale.z*2,'\n',
-                    '    Coordinates:  ','X =',arr.position.x-arr.scale.x,'; Y =',arr.position.y-arr.scale.y, '; Z =',arr.position.z-arr.scale.z
-                    );
+            console.log(err.message)
         }
 }
 
