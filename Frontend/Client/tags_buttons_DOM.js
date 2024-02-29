@@ -89,7 +89,7 @@ button24.addEventListener('click',palette_adding);
 
 //Button 25 - Delete all palets in scene
 let button25 = document.querySelector('#button25');
-button25.addEventListener('click',() => (palette_group.clear()));
+button25.addEventListener('click',() => (palette_group.clear(),present_object_parameters()));
 
 
 
@@ -145,7 +145,7 @@ button42.addEventListener('click',create_object_and_present_object_parameters);
 
 //Button 43(Form4) - Delete all objects in scene
 let button43 = document.querySelector('#button43');
-button43.addEventListener('click',() => (group1.clear()));
+button43.addEventListener('click',() => (group1.clear(),present_object_parameters()));
 
 //Button 44(Form4) - Present object parameters
 let button44 = document.querySelector('#button44');

@@ -7,18 +7,16 @@ export function present_object_parameters()
 {
     try{
             console.clear();
-            let pallete = palette_group.children;
+            let pallete = palette_group.children[0];
             let inner_array = group1.children;
-            console.log(typeof(pallete))
-            console.log(typeof(pallete))
 
-            if(pallete.length == 0) {throw new Error("Pallete not createted. Please create pallete and try again.")}
+            if(typeof(pallete) === "undefined" || pallete.length === 0) {throw new Error("Pallete not createted. Please create pallete and try again.")}
+            if(typeof(pallete.scale.x) === "undefined" || typeof(pallete.scale.y) === "undefined" || typeof(pallete.scale.z) === "undefined" ) {throw new Error("Pallete data not valid. Please create pallete and try again.")}
+            if(pallete.scale.x == 0 || pallete.scale.y === 0 || pallete.scale.z === 0) {throw new Error("Pallete size not correct. Please create pallete and try again.")}
             if(inner_array.length == 0) {throw new Error("No objects in cargo area.")}
-            
-           
 
             console.log(' Cargo area UUID: ',pallete.uuid,'\n',
-                        'Cargo area scale:  ','Lenght =',pallete.scale.x*2,'; Width =',pallete.scale.y*2,'; Height =',pallete.scale.z*2,'\n',
+                        'Cargo area scale:  ','Lenght =',pallete.scale.z*2,'; Width =',pallete.scale.x*2,'; Height =',pallete.scale.y*2,'\n',
                         'Number of objects in the cargo area:',inner_array.length,'\n',
                         )
 
@@ -26,10 +24,11 @@ export function present_object_parameters()
             for (let i = 0; i < inner_array.length; ++i)
                 {
                 let arr = inner_array[i];
+                // if(arr.scale.x == 0 || arr.scale.y === 0 || arr.scale.z === 0) {console.log("Object size is not correct. Please create object and try again.")}
                 console.log('     Number of object: ',i+1,'\n',
                             '    UUID: ',arr.uuid,'\n',
-                            '    Scale:  ','Lenght =',arr.scale.x*2,'; Width =',arr.scale.y*2,'; Height =',arr.scale.z*2,'\n',
-                            '    Coordinates:  ','X =',arr.position.x-arr.scale.x,'; Y =',arr.position.y-arr.scale.y, '; Z =',arr.position.z-arr.scale.z
+                            '    Scale:  ','Lenght =',arr.scale.z*2,'; Width =',arr.scale.x*2,'; Height =',arr.scale.y*2,'\n',
+                            '    Coordinates:  ','X =',arr.position.z-arr.scale.z,'; Y =',arr.position.y-arr.scale.y, '; Z =',arr.position.x-arr.scale.x
                             );
                 }
         } 
@@ -78,6 +77,8 @@ palette_box.setFromCenterAndSize( new THREE.Vector3( y/2,z/2 ,x/2  ), new THREE.
 const palette_helper = new THREE.Box3Helper( palette_box, 0xdf0707 );
 
 palette_group.add(palette_helper);
+animate()
+present_object_parameters()
 };
 
 
