@@ -1,10 +1,12 @@
 export class Box
 {
   class_name = 'box';
-  guid = 0;
+  uuid = 0;
+  inner_objects; //Array of inner objects.
   
-  constructor(length,width,height,x,y,z) 
+  constructor(length,width,height,x,y,z,inner_objects) 
   {
+    this.inner_objects = inner_objects
     this.length = length;
     this.width = width;
     this.height = height;    
@@ -61,7 +63,23 @@ class Cuboid
   }
 };
 
+export class Trainig_box
+{
+  uuid
+  constructor(array = [],length,width,height,x,y,z) 
+  {
+    this.init_array = array;
+     
 
+    this.length = length;
+    this.width = width;
+    this.height = height;    
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+} 
 
 
 

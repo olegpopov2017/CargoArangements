@@ -24,7 +24,7 @@ export function present_object_parameters()
             for (let i = 0; i < inner_array.length; ++i)
                 {
                 let arr = inner_array[i];
-                // if(arr.scale.x == 0 || arr.scale.y === 0 || arr.scale.z === 0) {console.log("Object size is not correct. Please create object and try again.")}
+                if(arr.scale.x == 0 || arr.scale.y === 0 || arr.scale.z === 0) {console.log("Object size is not correct. Please create object and try again.")}
                 console.log('     Number of object: ',i+1,'\n',
                             '    UUID: ',arr.uuid,'\n',
                             '    Scale:  ','Lenght =',arr.scale.z*2,'; Width =',arr.scale.x*2,'; Height =',arr.scale.y*2,'\n',

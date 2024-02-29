@@ -1,9 +1,13 @@
 import * as THREE from 'three';
 import {Box} from './classes.js';
 import {group1,palette_group,scene} from './three_cargo_canvas.js';
+import {present_object_parameters, create_object_and_present_object_parameters,
+		create_object_and_adding_to_scene, palette_adding} from './functions.js';
+
+import{function_button51,button52_function} from './NEW_functions.js'
 
 
-                                                // FETCH Button 2 - Creating object,changing position into server
+                                    // FETCH Button 2 - Creating object,changing position into server
 
 // let button2 = document.querySelector('#button2');
 // button2.addEventListener('click',create_and_changing_position_into_server);
@@ -46,9 +50,31 @@ import {group1,palette_group,scene} from './three_cargo_canvas.js';
 
   
 
+//Creating Form5 - Create object for sending data to server
+let form5_html = `
+<fieldset>
+<legend>создание объекта и отправка его на сервер</legend>
+    <table>
+        <td><button id = "button51" type="button" >Создать тестовый палетт и 2 обьекта</button></td>
+        <td><button id = "button52" type="button" >создать обьект testing box</button></td>
+        <td><button id = "button53" type="button" >вывести обьект testing box в консоль</button></td>
 
+    </table>
+</fieldset>
+    `;
+    
+let form5 = document.createElement('form5');
+form5.id = "form5";
+form5.innerHTML = form5_html;
+document.body.append(form5);
                
+//Button 51 - создать тестовый палет и 2 объекта
+let button51 = document.querySelector('#button51');
+button51.addEventListener('click',function_button51);
 
+//Button 52 - создать объект testing box
+let button52 = document.querySelector('#button52');
+button52.addEventListener('click',button52_function);
                 
 
 
