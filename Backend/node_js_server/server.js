@@ -25,15 +25,16 @@ const server = http.createServer((req, res) =>
             //Interacring with request data (var "body")
             
             let x = JSON.parse(body);
-            console.log(x);
+            // console.log(x);
             
-            x.x = 50;
-            x.y = 50;
-            x.z = 50;
+            x.x = 54;
+            x.y = 54;
+            x.z = 54;
             
             console.log(x);
+
             let y = JSON.stringify(x);
-            console.log(y);
+            
             
             // Sending response to clint in format JSON.
             res.end(y);

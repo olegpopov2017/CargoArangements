@@ -4,7 +4,7 @@ import {group1,palette_group,scene} from './three_cargo_canvas.js';
 import {present_object_parameters, create_object_and_present_object_parameters,
 		create_object_and_adding_to_scene, palette_adding} from './functions.js';
 
-import{function_button51,button52_function} from './NEW_functions.js'
+import{function_button51,button52_function,button53_function} from './NEW_functions.js'
 
 
                                     // FETCH Button 2 - Creating object,changing position into server
@@ -14,7 +14,7 @@ import{function_button51,button52_function} from './NEW_functions.js'
 
 // function create_and_changing_position_into_server()
 // {
-//     let box = new Box;
+//     let box = new Cuboid;
         
 //     box.length = document.querySelector("#lenght").value;
 //     box.width = document.querySelector("#width").value;
@@ -56,7 +56,7 @@ let form5_html = `
 <legend>создание объекта и отправка его на сервер</legend>
     <table>
         <td><button id = "button51" type="button" >Создать тестовый палетт и 2 обьекта</button></td>
-        <td><button id = "button52" type="button" >создать обьект testing box и вывести на консоль</button></td>
+        <td><button id = "button52" type="button" >создать обьект testing box из всего что на сцене</button></td>
         <td><button id = "button53" type="button" >отправитьна ,принять с сервера и в консоль</button></td>
 
     </table>
