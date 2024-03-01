@@ -56,8 +56,8 @@ let form5_html = `
 <legend>создание объекта и отправка его на сервер</legend>
     <table>
         <td><button id = "button51" type="button" >Создать тестовый палетт и 2 обьекта</button></td>
-        <td><button id = "button52" type="button" >создать обьект testing box</button></td>
-        <td><button id = "button53" type="button" >вывести обьект testing box в консоль</button></td>
+        <td><button id = "button52" type="button" >создать обьект testing box и вывести на консоль</button></td>
+        <td><button id = "button53" type="button" >отправитьна ,принять с сервера и в консоль</button></td>
 
     </table>
 </fieldset>
@@ -75,6 +75,10 @@ button51.addEventListener('click',function_button51);
 //Button 52 - создать объект testing box
 let button52 = document.querySelector('#button52');
 button52.addEventListener('click',button52_function);
+
+//Button 53 - создать объект testing box
+let button53 = document.querySelector('#button53');
+button53.addEventListener('click',button53_function);
                 
 
 

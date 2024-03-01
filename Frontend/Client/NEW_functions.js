@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Box, Trainig_box} from './classes.js';
+import {Box, Cuboid} from './classes.js';
 import {group1,palette_group,scene,animate} from './three_cargo_canvas.js';
 
 export function function_button51()
@@ -22,35 +22,29 @@ export function function_button51()
         
         animate()
 
-    
 }
 
 export function button52_function()
 {
-    let t_box = new Trainig_box
+    let t_box = new Cuboid
     let cargo_area = palette_group.children[0];
-    console.log(typeof t_box.init_array)
-
-    t_box.init_array = group1.children.slice();
-    console.log(typeof t_box.init_array)
-    
+     
     t_box.uuid = cargo_area.uuid;
     t_box.length = cargo_area.scale.z*2;
     t_box.width = cargo_area.scale.x*2;
     t_box.height = cargo_area.scale.y*2;
     
-    // for(let i =0;i<=t_box.inner_objects.length;i++)
-    //     {
-    //         let obj = new Trainig_box;
-    //         let arr = t_box.inner_objects[i];
+    for(let i =0;i<group1.children.length;i++)
+        {
+            let obj = new Cuboid;
+            let arr = group1.children[i];
 
-    //         obj.uuid = arr.uuid;
-    //         obj.length = arr.scale.z*2;
-    //         obj.width = arr.scale.x*2;
-    //         obj.height = arr.scale.y*2;
+            obj.uuid = arr.uuid;
+            obj.length = arr.scale.z*2;
+            obj.width = arr.scale.x*2;
+            obj.height = arr.scale.y*2;
+            t_box.array_of_inner_objects.push(obj);
 
-           
-           
-        // }
+        }
     console.log(t_box)
 }

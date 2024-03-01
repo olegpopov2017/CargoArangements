@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from './node_modules/three/examples/jsm/controls/OrbitControls';
 import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import { DragControls } from './node_modules/three/examples/jsm/controls/DragControls.js';
-import { Box,Container } from './classes.js';
+import { Box } from './classes.js';
 
 
 

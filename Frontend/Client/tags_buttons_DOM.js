@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {Box} from './classes.js';
+// import {Box} from './classes.js';
 import {group1,palette_group,scene} from './three_cargo_canvas.js';
 import {present_object_parameters, create_object_and_present_object_parameters,
 		create_object_and_adding_to_scene, palette_adding} from './functions.js';

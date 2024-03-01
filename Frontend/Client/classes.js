@@ -28,49 +28,14 @@ export class Palette
   }
 }
 
-
-export class Container extends Box
-{
-  class_name = 'container'
-  
-  constructor(box_array,length,width,height,x,y,z)
-  {
-    super(length,width,height,x,y,z);
-    this.box_array = box_array;
-  }
-}
-
-
-
-class Cuboid
-{
-  class_name = 'Cuboid';
-  
-  cuboid_type = 
-
-  inner_object = bool;
-  have_parent = bool;
-  
-  constructor(length,width,height,x,y,z,guid) 
-  {
-    this.length = length;
-    this.width = width;
-    this.height = height;    
-    this.x = x;
-    this.y = y;
-    this.z = z;
-    this.guid = guid;
-  }
-};
-
-export class Trainig_box
+export class Cuboid
 {
   uuid
-  constructor(array = [],length,width,height,x,y,z) 
-  {
-    this.init_array = array;
-     
+  array_of_inner_objects
 
+  constructor(length,width,height,x,y,z) 
+  {
+    this.array_of_inner_objects = [];
     this.length = length;
     this.width = width;
     this.height = height;    
@@ -78,7 +43,6 @@ export class Trainig_box
     this.y = y;
     this.z = z;
   }
-
 } 
 
 
