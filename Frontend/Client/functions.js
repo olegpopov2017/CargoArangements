@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-// import {Box} from './classes.js';
+import {Cuboid} from './classes.js';
 import {group1,palette_group,scene,animate} from './three_cargo_canvas.js';
 
 
@@ -82,7 +82,81 @@ present_object_parameters()
 };
 
 
+export function threejs_obj_to_cuboid_obj()
+{
+    let parent_cube = new Cuboid
+    let cargo_area = palette_group.children[0];
+     
+    parent_cube.uuid = cargo_area.uuid;
+    parent_cube.length = cargo_area.scale.z*2;
+    parent_cube.width = cargo_area.scale.x*2;
+    parent_cube.height = cargo_area.scale.y*2;
+    
+    for(let i =0;i<group1.children.length;i++)
+        {
+            let children_cube = new Cuboid;
+            let inner_cube = group1.children[i];
 
+            children_cube.uuid = inner_cube.uuid;
+            children_cube.length = inner_cube.scale.z*2;
+            children_cube.width = inner_cube.scale.x*2;
+            children_cube.height = inner_cube.scale.y*2;
+
+            children_cube.x = inner_cube.position.z-inner_cube.scale.z;
+            children_cube.y = inner_cube.position.y-inner_cube.scale.y;
+            children_cube.z = inner_cube.position.x-inner_cube.scale.x;
+
+            parent_cube.array_of_inner_objects.push(children_cube);
+        }
+    return parent_cube
+}
+
+
+export function placement_cargo_according_to_algorithm()
+{
+    let box = threejs_obj_to_cuboid_obj()
+    
+    fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box)})
+        .then((response) => {
+            return response.json();
+        })
+            .then((data) => {
+                palette_group.clear()
+                group1.clear()
+
+                let parent_cube = data;
+
+                let lenght = Number(parent_cube.length); 
+                let width = Number(parent_cube.width);
+                let height = Number(parent_cube.height); 
+                let x = Number(parent_cube.x);
+                let y = Number(parent_cube.y);
+                let z = Number(parent_cube.z);
+
+                const box_three = new THREE.Box3();
+                box_three.setFromCenterAndSize(new THREE.Vector3( z+(width/2), y+(height/2),  x+(lenght/2)), new THREE.Vector3( width,height,lenght ) );
+                const helper = new THREE.Box3Helper(box_three, 0xdf0707 );
+                palette_group.add(helper);
+                
+                for(let i = 0; i < parent_cube.array_of_inner_objects.length; i++)
+                {
+                    let children_cube = parent_cube.array_of_inner_objects[i]
+
+                    let lenght = Number(children_cube.length); 
+                    let width = Number(children_cube.width);
+                    let height = Number(children_cube.height); 
+                    let x = Number(children_cube.x);
+                    let y = Number(children_cube.y);
+                    let z = Number(children_cube.z);
+
+                    const box_three = new THREE.Box3();
+                    box_three.setFromCenterAndSize(new THREE.Vector3( z+(width/2), y+(height/2),  x+(lenght/2)), new THREE.Vector3( width,height,lenght ) );
+                    const helper = new THREE.Box3Helper(box_three, 0x000000 );
+                    
+                    group1.add(helper);
+                }
+            });
+}
 
 
     

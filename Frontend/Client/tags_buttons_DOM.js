@@ -2,54 +2,8 @@ import * as THREE from 'three';
 // import {Box} from './classes.js';
 import {group1,palette_group,scene} from './three_cargo_canvas.js';
 import {present_object_parameters, create_object_and_present_object_parameters,
-		create_object_and_adding_to_scene, palette_adding} from './functions.js';
-
-
-        //Creating Form1 - Creating object,change coordinates on server.
-// let form1_html = `
-// <fieldset>
-// 				<legend>Создание обьекта,изменение координат на сервере</legend>
-// 					<table>
-// 						<tr>
-// 							<td><label >Длина</label></td>
-// 							<td><input id="lenght" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><label>Ширина</label></td>
-// 							<td><input id="width" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><label>Высота</label></td>
-// 							<td><input id="height" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><label>X</label></td>
-// 							<td><input id="x" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><label>Y</label></td>
-// 							<td><input id="y" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><label>Z</label></td>
-// 							<td><input id="z" type="number"/></td>
-// 						</tr>
-// 						<tr>
-// 							<td><button id = "button2" type="button" >Создать</button></td>
-// 							<td><button id = "button3" type="button" >Удалить все обьекты</button></td>
-// 							<td><button id = "button6" type="button" >Показать параметры объектов</button></td>
-
-// 						</tr>
-// 					</table>
-//     </fieldset>
-//     `;
-    
-    
-//     let form1 = document.createElement('form1');
-//     form1.id = "form1";
-//     form1.innerHTML = form1_html;
-//     document.body.append(form1);
-
+		create_object_and_adding_to_scene, palette_adding,placement_cargo_according_to_algorithm,
+		threejs_obj_to_cuboid_obj	} from './functions.js';
 
 
 		//Creating Form2 - Adding/delete cargo area to scene
@@ -95,7 +49,7 @@ button25.addEventListener('click',() => (palette_group.clear(),present_object_pa
 
 
 
-		//Creating Form4 - Creating object,delete object on scene.
+			//Creating Form4 - Creating object,delete object on scene.
 let form4_html = `
 <fieldset>
 				<legend>Создание объекта, удаление всех объектов</legend>
@@ -150,4 +104,28 @@ button43.addEventListener('click',() => (group1.clear(),present_object_parameter
 //Button 44(Form4) - Present object parameters
 let button44 = document.querySelector('#button44');
 button44.addEventListener('click',present_object_parameters);
+
+
+
+
+
+							//Creating Form5 - Placement cargo according to algorithm
+let form5_html = `
+<fieldset>
+<legend>Расстановка грузов по алгоритму согласно размеров грузового помещения</legend>
+    <table>
+        <td><button id = "button53" type="button" class = "button1">Расчитать</button></td>
+		<td><button id = "button54" type="button" class = "button1">Расчитать на локальном сервере</button></td>
+</table>
+</fieldset>
+    `;
+    
+let form5 = document.createElement('form5');
+form5.id = "form5";
+form5.innerHTML = form5_html;
+document.body.append(form5);
+               
+//Button 53 - создать объект testing box
+let button53 = document.querySelector('#button53');
+button53.addEventListener('click',placement_cargo_according_to_algorithm);
     
