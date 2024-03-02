@@ -47,8 +47,8 @@ export function create_helper_from_cuboid(Cuboid)
 
     // console.log(helper.uuid)
     group1.clear(   )
-    group1.add(helper)
-    
+    // group1.add(helper)
+    animate()
     return helper
 }
 
@@ -57,23 +57,27 @@ export function create_helper_from_cuboid(Cuboid)
 export function create_cuboid_from_helper_and_show_to_console()
 {
     let a = create_cuboid()
+    console.log(a)
 
     let helper = create_helper_from_cuboid(a)
+
+    console.log(helper)
+
     
     
-    console.clear()
+    // console.clear()
     
     let cube = new Cuboid
     
     cube.height = helper.scale.y
-    cube.width = helper.scale.x*2
-    cube.length = helper.scale.z*2
+    cube.width = helper.scale.x
+    cube.length = helper.scale.z
     cube.x = helper.position.x
     cube.y = helper.position.z
     cube.z = helper.position.y
 
-    console.log(helper)
-    console.log(cube)
+    // console.log(helper)
+    // console.log(cube)
     return cube
 
 
