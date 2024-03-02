@@ -128,4 +128,8 @@ document.body.append(form5);
 //Button 53 - создать объект testing box
 let button53 = document.querySelector('#button53');
 button53.addEventListener('click',placement_cargo_according_to_algorithm);
+
+
+
+
     
