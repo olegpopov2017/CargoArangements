@@ -6,6 +6,7 @@ import {group1,palette_group,scene,animate, helper} from './three_cargo_canvas.j
 
 export function create_cuboid()
 {   
+    group1.clear()
     let length = Number(document.querySelector("#lenght4").value);
     let width = Number(document.querySelector("#width4").value);
     let height = Number(document.querySelector("#height4").value);
@@ -57,10 +58,11 @@ export function create_helper_from_cuboid(Cuboid)
 export function create_cuboid_from_helper_and_show_to_console()
 {
     let a = create_cuboid()
-    console.log(a)
-
+    // console.log(a)
+    
     let helper = create_helper_from_cuboid(a)
-
+    group1.add(helper)
+animate()
     console.log(helper)
 
     
@@ -75,9 +77,9 @@ export function create_cuboid_from_helper_and_show_to_console()
     cube.x = helper.position.x
     cube.y = helper.position.z
     cube.z = helper.position.y
-
+animate()
     // console.log(helper)
-    // console.log(cube)
+    console.log(cube)
     return cube
 
 
