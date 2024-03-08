@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 // import {Box} from './classes.js';
-import {group1,palette_group,scene} from './three_cargo_canvas.js';
-import {present_object_parameters, create_object_and_present_object_parameters,
-		create_object_and_adding_to_scene, palette_adding,placement_cargo_according_to_algorithm,
-		threejs_obj_to_cuboid_obj	} from './functions.js';
-
+import {cargo_area_group,cargo_group,scene} from './three_cargo_canvas.js';
+import {present_object_parameters, 
+		 palette_adding,placement_cargo_according_to_algorithm,
+		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper} from './functions.js';
+// create_object_and_adding_to_scene,create_object_and_present_object_parameters,
 
 		//Creating Form2 - Adding/delete cargo area to scene
 let form2_html = `
@@ -43,7 +43,7 @@ button24.addEventListener('click',palette_adding);
 
 //Button 25 - Delete all palets in scene
 let button25 = document.querySelector('#button25');
-button25.addEventListener('click',() => (palette_group.clear(),present_object_parameters()));
+button25.addEventListener('click',() => (cargo_area_group.clear(),present_object_parameters()));
 
 
 
@@ -95,11 +95,13 @@ document.body.append(form4);
 
 //Button42(Form 4) - Creating object
 let button42 = document.querySelector('#button42');
-button42.addEventListener('click',create_object_and_present_object_parameters);
+// button42.addEventListener('click',create_object_and_present_object_parameters);
+button42.addEventListener('click',() => (cargo_group.add(create_helper_from_cuboid(create_cuboid_from_input())),present_object_parameters()));
+
 
 //Button 43(Form4) - Delete all objects in scene
 let button43 = document.querySelector('#button43');
-button43.addEventListener('click',() => (group1.clear(),present_object_parameters()));
+button43.addEventListener('click',() => (cargo_group.clear(),present_object_parameters()));
 
 //Button 44(Form4) - Present object parameters
 let button44 = document.querySelector('#button44');
@@ -125,7 +127,7 @@ form5.id = "form5";
 form5.innerHTML = form5_html;
 document.body.append(form5);
                
-//Button 53 - создать объект testing box
+//Button 53 - creating buttons 'placement cargo according with algorithm"
 let button53 = document.querySelector('#button53');
 button53.addEventListener('click',placement_cargo_according_to_algorithm);
 

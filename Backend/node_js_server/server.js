@@ -27,9 +27,9 @@ const server = http.createServer((req, res) =>
             let x = JSON.parse(body);
             // console.log(x);
             
-            x.x = 54;
-            x.y = 54;
-            x.z = 54;
+            // x.x = x.x +1;
+            // x.y = x.y +1;
+            // x.z = x.z + 1;
             
             console.log(x);
 
