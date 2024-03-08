@@ -2,8 +2,8 @@ import * as THREE from 'three';
 // import {Box} from './classes.js';
 import {cargo_area_group,cargo_group,scene} from './three_cargo_canvas.js';
 import {present_object_parameters, 
-		 palette_adding,placement_cargo_according_to_algorithm,
-		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper} from './functions.js';
+		 placement_cargo_according_to_algorithm,
+		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper, cargo_area_adding} from './functions.js';
 // create_object_and_adding_to_scene,create_object_and_present_object_parameters,
 
 		//Creating Form2 - Adding/delete cargo area to scene
@@ -24,8 +24,8 @@ let form2_html = `
             <td><input id="height_palette" type="number"/></td>
         </tr>
         <tr>
-            <td><button id = "button24" type="button" >Добавить</button></td>
-            <td><button id = "button25" type="button" >Удалить</button></td>
+            <td><button id = "button24" type="button" >Добавить / Изменить</button></td>
+            <td><button id = "button25" type="button" >Удалить все</button></td>
             
         </tr>
     </table>
@@ -37,11 +37,11 @@ form2.id = "form2";
 form2.innerHTML = form2_html;
 document.body.append(form2);
 
-//Button 24 - Adding palette
+//Button 24 - Adding/change cargo area
 let button24 = document.querySelector('#button24');
-button24.addEventListener('click',palette_adding);
+button24.addEventListener('click',cargo_area_adding);
 
-//Button 25 - Delete all palets in scene
+//Button 25 - Delete all cargo areas in scene
 let button25 = document.querySelector('#button25');
 button25.addEventListener('click',() => (cargo_area_group.clear(),present_object_parameters()));
 

@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {Cuboid} from './classes.js';
 import {cargo_group,cargo_area_group,scene,animate} from './three_cargo_canvas.js';
+import { Color } from 'three';
 
 
 
@@ -103,7 +104,7 @@ export function present_object_parameters()
                 if( cargo.length_X == 0 ||
                     cargo.width_Y == 0 ||
                     cargo.height_Z == 0)
-                   {console.log("Cargo size not valid. Please enter correct size and try again.")}
+                   {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
                 
                 console.log('     Number of object: ',i+1,'\n',
                             '    UUID: ',cargo.uuid,'\n',
@@ -121,7 +122,7 @@ export function present_object_parameters()
 
 
 
-export function palette_adding()   
+export function cargo_area_adding()   
 {
 cargo_area_group.clear();
 
@@ -151,6 +152,7 @@ export function threejs_scena_to_cuboid_obj()
             let children_cube = create_cuboid_from_helper(cargo_group.children[i])
             parent_cube.array_of_inner_objects.push(children_cube);
         }
+        // console.log(parent_cube)
     return parent_cube
 }
 
@@ -168,40 +170,40 @@ export function placement_cargo_according_to_algorithm()
             .then((data) => {
                 cargo_area_group.clear()
                 cargo_group.clear()
-
-                let parent_cube = data;
-
-                let uuid = data.uuid
-                let lenght = Number(parent_cube.length); 
-                let width = Number(parent_cube.width);
-                let height = Number(parent_cube.height); 
-                let x = Number(parent_cube.x);
-                let y = Number(parent_cube.y);
-                let z = Number(parent_cube.z);
-
-                const box_three = new THREE.Box3();
-                box_three.setFromCenterAndSize(new THREE.Vector3( x+(lenght/2), y+(width/2), z+(height/2)), new THREE.Vector3( lenght,width,height,) );
-                const helper = new THREE.Box3Helper(box_three, 0xdf0707 );
-                helper.uuid = uuid;
-                cargo_area_group.add(helper);
                 
-                for(let i = 0; i < parent_cube.array_of_inner_objects.length; i++)
+                let cube = new Cuboid
+
+                cube.uuid = data.uuid
+                cube.length_X = data.length_X
+                cube.width_Y = data.width_Y
+                cube.height_Z = data.height_Z
+                cube.x = data.x
+                cube.y = data.y
+                cube.z = data.z
+
+                let parent_cube = create_helper_from_cuboid(cube)
+                parent_cube.material.color.setHex(0xdf0707)
+                
+                cargo_area_group.add(parent_cube);
+                
+                for(let i = 0; i < data.array_of_inner_objects.length; i++)
                 {
-                    let children_cube = parent_cube.array_of_inner_objects[i]
-
-                    let uuid = children_cube.uuid;
-                    let lenght = Number(children_cube.length); 
-                    let width = Number(children_cube.width);
-                    let height = Number(children_cube.height); 
-                    let x = Number(children_cube.x);
-                    let y = Number(children_cube.y);
-                    let z = Number(children_cube.z);
-
-                    const box_three = new THREE.Box3();
-                    box_three.setFromCenterAndSize(new THREE.Vector3( x+(lenght/2), y+(width/2), z+(height/2)), new THREE.Vector3( lenght,width,height,) );
-                    const helper = new THREE.Box3Helper(box_three, 0x000000 );
-                    helper.uuid  = uuid;
-                    cargo_group.add(helper);
+                    let inner_cube = data.array_of_inner_objects[i]
+                    
+                    let children_cube = new Cuboid
+                    
+                    children_cube.uuid = inner_cube.uuid
+                    children_cube.length_X = inner_cube.length_X
+                    children_cube.width_Y = inner_cube.width_Y
+                    children_cube.height_Z = inner_cube.height_Z
+                    children_cube.x = inner_cube.x
+                    children_cube.y = inner_cube.y
+                    children_cube.z = inner_cube.z
+                    
+                    let children = create_helper_from_cuboid(children_cube)
+                    
+                    cargo_group.add(children);
+                    
                 }
                 present_object_parameters();
             });
