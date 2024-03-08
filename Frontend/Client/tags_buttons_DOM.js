@@ -3,7 +3,8 @@ import * as THREE from 'three';
 import {cargo_area_group,cargo_group,scene} from './three_cargo_canvas.js';
 import {present_object_parameters, 
 		 placement_cargo_according_to_algorithm,
-		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper, cargo_area_adding} from './functions.js';
+		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper, cargo_area_adding,
+		create_cargo_from_input} from './functions.js';
 // create_object_and_adding_to_scene,create_object_and_present_object_parameters,
 
 		//Creating Form2 - Adding/delete cargo area to scene
@@ -55,6 +56,10 @@ let form4_html = `
 				<legend>Создание объекта, удаление всех объектов</legend>
 					<table>
 						<tr>
+							<td><label >Колличество</label></td>
+							<td><input id="quantity4" type="number"/></td>
+						</tr>
+						<tr>
 							<td><label >Длина</label></td>
 							<td><input id="lenght4" type="number"/></td>
 						</tr>
@@ -96,7 +101,14 @@ document.body.append(form4);
 //Button42(Form 4) - Creating object
 let button42 = document.querySelector('#button42');
 // button42.addEventListener('click',create_object_and_present_object_parameters);
-button42.addEventListener('click',() => (cargo_group.add(create_helper_from_cuboid(create_cuboid_from_input())),present_object_parameters()));
+button42.addEventListener('click',create_cargo_from_input)
+	// (cargo_group.add
+	// 	(create_helper_from_cuboid
+	// 		(create_cuboid_from_input()
+	// 		)
+	// 	),present_object_parameters()
+	// )
+// ;
 
 
 //Button 43(Form4) - Delete all objects in scene

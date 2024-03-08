@@ -53,7 +53,6 @@ export function create_helper_from_cuboid(Cuboid)
 
 
 
-
 export function create_cuboid_from_helper(helper1)
 {
     let helper = helper1
@@ -130,12 +129,12 @@ let x = Number(document.querySelector("#lenght_palette").value);
 let y = Number(document.querySelector("#width_palette").value);
 let z = Number(document.querySelector("#height_palette").value);
 
-//Create/adding palette to scene.
-const palette_box = new THREE.Box3();
-palette_box.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
-const palette_helper = new THREE.Box3Helper( palette_box, 0xdf0707 );
+//Create/adding cargo area to scene.
+const area = new THREE.Box3();
+area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
+const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
 
-cargo_area_group.add(palette_helper);
+cargo_area_group.add(cargo_area);
 animate()
 present_object_parameters()
 };
@@ -152,7 +151,6 @@ export function threejs_scena_to_cuboid_obj()
             let children_cube = create_cuboid_from_helper(cargo_group.children[i])
             parent_cube.array_of_inner_objects.push(children_cube);
         }
-        // console.log(parent_cube)
     return parent_cube
 }
 
@@ -210,4 +208,26 @@ export function placement_cargo_according_to_algorithm()
 }
 
 
+export function create_cargo_from_input()
+{
+    let quantity = Number(document.querySelector("#quantity4").value);
+    
+    if(quantity != 0)
+    {
+        for(let i = 0; i<quantity; i++)
+        {
+            let cube1 = create_cuboid_from_input();
+            let helper2 = create_helper_from_cuboid(cube1);
+            cargo_group.add(helper2);
+            animate();
+        }
+    } 
+    else {
+        let cube2 = create_cuboid_from_input();
+        let helper3 = create_helper_from_cuboid(cube2);
+        cargo_group.add(helper3);
+        animate();
+    }
+    present_object_parameters()
+}
     
