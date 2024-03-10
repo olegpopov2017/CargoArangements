@@ -47,7 +47,7 @@ export function create_helper_from_cuboid(Cuboid)
     const helper = new THREE.Box3Helper(box_three, 0x000000 );
     if (typeof(cube.uuid) != "undefined"){helper.uuid = uuid}
 
-    animate()
+    // animate()
     return helper
 }
 
@@ -68,7 +68,7 @@ export function create_cuboid_from_helper(helper1)
     
     cube.uuid = helper.uuid
     
-    animate()       
+    // animate()       
    
     return cube
 }
@@ -76,6 +76,7 @@ export function create_cuboid_from_helper(helper1)
 
 export function present_object_parameters()
 {
+    
     try{
         console.clear()
         
@@ -110,7 +111,8 @@ export function present_object_parameters()
                             '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
                             '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
                             );
-                animate()
+                
+                // animate()
                 }
         } 
         catch (err) 
@@ -135,7 +137,7 @@ area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3
 const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
 
 cargo_area_group.add(cargo_area);
-animate()
+// animate()
 present_object_parameters()
 };
 
@@ -210,6 +212,7 @@ export function placement_cargo_according_to_algorithm()
 
 export function create_cargo_from_input()
 {
+    
     let quantity = Number(document.querySelector("#quantity4").value);
     
     if(quantity != 0)
@@ -219,14 +222,14 @@ export function create_cargo_from_input()
             let cube1 = create_cuboid_from_input();
             let helper2 = create_helper_from_cuboid(cube1);
             cargo_group.add(helper2);
-            animate();
+            // animate();
         }
     } 
     else {
         let cube2 = create_cuboid_from_input();
         let helper3 = create_helper_from_cuboid(cube2);
         cargo_group.add(helper3);
-        animate();
+        // animate();
     }
     present_object_parameters()
 }
