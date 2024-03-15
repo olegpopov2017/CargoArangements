@@ -232,5 +232,6 @@ export function create_cargo_from_input()
         // animate();
     }
     present_object_parameters()
+    
 }
     
