@@ -101,14 +101,8 @@ document.body.append(form4);
 //Button42(Form 4) - Creating object
 let button42 = document.querySelector('#button42');
 // button42.addEventListener('click',create_object_and_present_object_parameters);
-button42.addEventListener('click',create_cargo_from_input)
-	// (cargo_group.add
-	// 	(create_helper_from_cuboid
-	// 		(create_cuboid_from_input()
-	// 		)
-	// 	),present_object_parameters()
-	// )
-// ;
+button42.addEventListener('click',() => (create_cargo_from_input(),present_object_parameters()))
+// button42.addEventListener('click',present_object_parameters)
 
 
 //Button 43(Form4) - Delete all objects in scene
