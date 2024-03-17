@@ -1,71 +1,49 @@
 #include <iostream>
 #include <stdlib.h>
 #include <sstream>
+#include <cstdio>
+#include <fstream>
 
+#include "cpp-jsonlib/single_include/nlohmann/json.hpp"     //подключение библиотеки для обработки JSON "Nloahman lib"
+#include "cpp-httplib/httplib.h"                            //подключение библиотеки для создания сервера "httplib"
 
-#include "cpp-jsonlib/single_include/nlohmann/json.hpp"
-
-#include "cpp-httplib/httplib.h"
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 
 
 using json = nlohmann::json;
 using namespace httplib;
-//std::string data = 0;
-//std::string d = "qqq";
 
-int main(void) {
-  Server svr;
-    std::string s;
-    svr.Post("/",[&](const Request &req, Response &res, const ContentReader &content_reader) {
-        if (req.is_multipart_form_data())
-        {
-              // NOTE: `content_reader` is blocking until every form data field is read
-            MultipartFormDataItems files;
-              content_reader(
-                [&](const MultipartFormData &file)
+std::string response_json = "";     //создаем переменную типа string для помещения в нее обработанных данных для отправки клиенту
+
+
+int main(void)
+{
+    Server svr;
+
+    svr.Post("/", [](const Request& req, Response &res)
                     {
-                      files.push_back(file);
-                      return true;
-                    },
-                [&](const char *data, size_t data_length)
-                    {
-                      files.back().content.append(data, data_length);
-                      return true;
-                    });
-        } else
-        {
-            std::string body;
-            content_reader(
-                [&](const char *data, size_t data_length)
-                    {
-                        body.append(data, data_length);
-                        s = body;
-                        return true;
-                    });
-        }
-                        std::cout<<s;
-      });
+                        json data_json = json::parse(req.body);     //создаем обьект "data_json" типа json.парсим в него данные из тела запроса от клиента "req.body"
 
+                        std::ofstream out;                                 // создаем поток для записи
+                        out.open("cuboid_from_client.json");               // создаем и открывем файл для записи в папке с проектом.каждый раз данные будут перезаписываться
+                        if (out.is_open())
+                            {
+                            out << data_json.dump(4) << std::endl;     //через поток записываем в файл данные из "data_json"
+                            }
+                        out.close();
 
-    //svr.Post("/", [](const Request & req, Response &res) { //По запросу к адресу 127.0.0.1/ Вернуть текст как страницу
+                        data_json["height_Z"] = 5;                       //меняем размеры грузового помещения везде на 5
+                        data_json["length_X"] = 5;
+                        data_json["width_Y"] = 5;
 
-    //j = json::parse(req.body);
-    //std::cout << j;
-
-    //});
-
-
-  svr.listen("127.0.0.1", 3000);
-
-
-
-  // 127.0.0.1, 3000 Ип куда розшарить, Ип вашого пк ну и порт какой то главное чтобы не был занят всякими торрентами иле open server
-  //Команда запускает цикл так что в реальных проектах в отдельный процесс её
-    //std::cout << "Server start at 127.0.0.1 port:3000";
-  //Проверок не делаем , по этому если программа просто завершала роботу то нужно использовать правильный ип
-  //список можно получить командой в консоли ipconfig берем ип lan иле wlan
-  }
+                        response_json = data_json.dump();                   //записываем в переменную "response_json" типа string измененные параметры.
+                        res.set_content(response_json, "text/plain");       //Установка и отправка ответа к клиенту
+                    }
+                    );
+    std::cout << "The server started 127.0.0.1 3000." << std::endl;
+    svr.listen("127.0.0.1", 3000);  // команда на включение сервера.адрес и порт можно менять.
+    return 0;
+}
 
 
 

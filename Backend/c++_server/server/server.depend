@@ -1,7 +1,8 @@
 # depslib dependency file v1.0
-1710609539 source:/home/oleg/programming/CargoArangements/Backend/c++_server/server/main.cpp
+1710695312 source:/home/oleg/programming/CargoArangements/Backend/c++_server/server/main.cpp
 	<iostream>
 	<stdlib.h>
+	<sstream>
 	"cpp-jsonlib/single_include/nlohmann/json.hpp"
 	"cpp-httplib/httplib.h"
 
