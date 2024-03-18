@@ -32,7 +32,7 @@ export class Cuboid
 {
   uuid
   array_of_inner_objects
-
+  array_of_outer_objects
   constructor(length_X,width_Y,height_Z,x,y,z) 
   {
     this.array_of_inner_objects = [];

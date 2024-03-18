@@ -36,6 +36,8 @@ int main(void)
                         data_json["length_X"] = 5;
                         data_json["width_Y"] = 5;
 
+                        std::cout<<data_json<<std::endl;;                   //вывод пришедших данных в консоль. консрукция std::endl помогает выводить даже один объект
+
                         response_json = data_json.dump();                   //записываем в переменную "response_json" типа string измененные параметры.
                         res.set_content(response_json, "text/plain");       //Установка и отправка ответа к клиенту
                     }
