@@ -165,10 +165,12 @@ export function placement_cargo_according_to_algorithm()
     
     fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box)})
         .then((response) => {
-            // console.log(response)
+            
             return response.json();
         })
             .then((data) => {
+                let cube1 = data//
+
                 cargo_area_group.clear()
                 cargo_group.clear()
                 
@@ -204,10 +206,61 @@ export function placement_cargo_according_to_algorithm()
                     let children = create_helper_from_cuboid(children_cube)
                     
                     cargo_group.add(children);
-                    
                 }
-                present_object_parameters();
-            });
+                return cube1
+                
+               // present_object_parameters();
+                
+            })
+            .then((cube1)=>
+                                                    {
+                                            
+                                                        try{
+                                                            console.clear()
+                                                            
+                                                            //let car_area = create_cuboid_from_helper(cube)
+                                                            
+                                                           //if(typeof(cube1) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
+                                                    
+                                                            if( cube1.length_X == 0 ||
+                                                            cube1.width_Y == 0 ||
+                                                            cube1.height_Z == 0)
+                                                            {throw new Error("Cargo area size not valid. Please enter correct size and try again.")}
+                                                            
+                                                            if(cube1.array_of_inner_objects.length == 0) {throw new Error("No objects in cargo area.")}
+                                                    
+                                                            console.log(' Cargo area UUID: ',cube1.uuid,'\n',
+                                                                            'Cargo area scale:  ','Lenght =',cube1.length_X,'; Width =',cube1.width_Y,'; Height =',cube1.height_Z,'\n',
+                                                                            'Number of objects in the cargo area:',cube1.array_of_inner_objects.length,'\n',)
+                                                                    
+                                                    
+                                                    
+                                                                for (let i = 0; i < cube1.array_of_inner_objects.length; ++i)
+                                                                    {
+                                                                    let cargo = cube1.array_of_inner_objects[i];
+                                                    
+                                                                    if( cargo.length_X == 0 ||
+                                                                        cargo.width_Y == 0 ||
+                                                                        cargo.height_Z == 0)
+                                                                    {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
+                                                                    
+                                                                    console.log('     Number of object: ',i+1,'\n',
+                                                                                '    UUID: ',cargo.uuid,'\n',
+                                                                                '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
+                                                                                '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
+                                                                                );
+                                                                    
+                                                                    // animate()
+                                                                    }
+                                                            } 
+                                                            catch (err) 
+                                                            {
+                                                                console.log(err.message)
+                                                            }
+                                                    }
+
+                
+                );
 }
 
 

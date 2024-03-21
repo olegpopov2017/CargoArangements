@@ -11,6 +11,7 @@ const server = http.createServer((req, res) =>
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Access-Control-Allow-Methods", "*");
         res.setHeader("Access-Control-Allow-headers", "Origin, X-Requested-With, Content-Type, Accept");
+        
         res.setHeader('Content-Type','application/json');     
        
         // Post
@@ -27,9 +28,9 @@ const server = http.createServer((req, res) =>
             let x = JSON.parse(body);
             // console.log(x);
             
-            // x.x = x.x +1;
-            // x.y = x.y +1;
-            // x.z = x.z + 1;
+            x.x = x.x +1;
+            x.y = x.y +1;
+            x.z = x.z + 1;
             
             console.log(x);
 

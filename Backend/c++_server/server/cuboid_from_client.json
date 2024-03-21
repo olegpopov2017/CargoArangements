@@ -2,10 +2,30 @@
     "array_of_inner_objects": [
         {
             "array_of_inner_objects": [],
-            "height_Z": 2,
+            "height_Z": 4,
             "length_X": 2,
-            "uuid": "64b9f90e-8292-42c5-af70-2993764e446d",
-            "width_Y": 2,
+            "uuid": "91eba337-cfdc-41e6-ac6a-4cc7b517c8fa",
+            "width_Y": 3,
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        {
+            "array_of_inner_objects": [],
+            "height_Z": 4,
+            "length_X": 2,
+            "uuid": "1dcb5227-f0f3-4a8c-b8f7-a8570695a058",
+            "width_Y": 3,
+            "x": 0,
+            "y": 0,
+            "z": 0
+        },
+        {
+            "array_of_inner_objects": [],
+            "height_Z": 4,
+            "length_X": 2,
+            "uuid": "dd6a61d6-f174-4b31-9123-db0fd3815fd7",
+            "width_Y": 3,
             "x": 0,
             "y": 0,
             "z": 0
@@ -13,7 +33,7 @@
     ],
     "height_Z": 5,
     "length_X": 5,
-    "uuid": "c10c1d01-ef45-4b24-8e59-3cc2b0c3023e",
+    "uuid": "c0013915-afe5-4cad-8e58-d0ffd4b151b8",
     "width_Y": 5,
     "x": 0,
     "y": 0,
