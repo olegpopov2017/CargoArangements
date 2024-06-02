@@ -61,7 +61,7 @@ controls.zoomSpeed = 6;
 // controls.enabled = false
 
 
-//Adding drag and drop objets
+//Adding drag and drop objets from "controls"(not a raycasting)
 
 // let controls2 = new DragControls(cargo_group.children,camera,renderer.domElement);
 
@@ -81,6 +81,7 @@ const raycaster = new THREE.Raycaster(); // create once
 const clickMouse = new THREE.Vector2();  // create once
 const moveMouse = new THREE.Vector2();   // create once
 let  draggable = new THREE.Object3D;
+// let cargo_area = cargo_area_group[0].object;
 
 window.addEventListener('click', event => {
 	if (draggable) {
@@ -132,9 +133,26 @@ function dragObject() {
 			for (let o of found) {
 				if(!o.object.userData.ground)
 				continue
-				draggable.position.x = (o.point.x + draggable.scale.x)
+
+				// if(o.point.x + draggable.position.x <= 0 || (cargo_area_group.children[0].scale.x*2+draggable.scale.x) <= cargo_area_group.children[0].scale.x*2)
+				// continue
+
+				if(
+					o.point.x+Number(draggable.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
+					&& o.point.x >= Number(draggable.geometry.parameters.depth)/2  											//MAX X axis limitation draggable
+					&& o.point.y+Number(draggable.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
+					&& o.point.y >= Number(draggable.geometry.parameters.width)/2											//MAX Y axis limitation draggable
+				)
+				{
+				// continue  && o.point.y+draggable.scale.y <= cargo_area_group.children[0].scale.y*2 && o.point.y >= draggable.scale.y
+				// console.log(draggable.geometry.parameters.width)
+				// console.log(draggable.geometry.parameters.depth)
+
+				draggable.position.x = o.point.x
 				draggable.position.y = o.point.y
-	
+				
+				}
+
 			}
 		}
 	}
