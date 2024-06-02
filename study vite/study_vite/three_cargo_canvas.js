@@ -85,18 +85,19 @@ let  draggable = new THREE.Object3D;
 window.addEventListener('click', event => {
 	if (draggable) {
 		controls.enabled = false
-		console.log(`dropping draggable`)
+		console.log(`Dropping draggable object`)
 	    draggable = null 
-		
-				return;
-	  }
-	if(!draggable){
-		controls.enabled = true
+		if(!draggable){
+			controls.enabled = true
+		return;
+	}
 	}
 	
 	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();
+
 	clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
 	clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
+	// console.log(clickMouse.x)
 	
 	raycaster.setFromCamera(clickMouse, camera);
 
@@ -105,16 +106,20 @@ window.addEventListener('click', event => {
 
 	if(found.length>0){
 		draggable = found[0].object
-		console.log("its ok",draggable)
+		console.log("Found object:",draggable)
 		
 	}
 	})
 
 
-window.addEventListener('moveMouse', event => {
-	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();
-	moveMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
-	moveMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
+window.addEventListener('mousemove', event => {
+
+	let canvasBounds2 = renderer.getContext().canvas.getBoundingClientRect();
+
+	moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
+	moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
+	
+	// console.log(moveMouse.x)
 })
 
 function dragObject() {
@@ -127,17 +132,16 @@ function dragObject() {
 			for (let o of found) {
 				if(!o.object.userData.ground)
 				continue
-				
-				draggable.position.x = o.point.x
+				draggable.position.x = (o.point.x + draggable.scale.x)
 				draggable.position.y = o.point.y
 	
 			}
 		}
 	}
 		
-	  }
+}
 	
-	
+//
 	
 
 export function animate() 
