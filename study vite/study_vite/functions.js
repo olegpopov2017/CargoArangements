@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import {Cuboid} from './classes.js';
-import {cargo_group,cargo_area_group,scene,animate,helper,colorful_box,colors,camera, controls,renderer, draggable_objects_group} from './three_cargo_canvas.js';
+import {cargo_group,cargo_area_group,scene,animate,colors,camera, controls,renderer, draggable_objects_group} from './three_cargo_canvas.js';
 import { Color } from 'three';
+import {} from './NEW_functions.js';
 
-        //Change screen size before pushing button "f".
+//Change screen size before pushing button "f".
 export function resize_renderer()
 {	
 	let height = Number(window.innerHeight)
@@ -18,9 +19,9 @@ export function resize_renderer()
 		{
 			renderer.setSize(600,300)
 		}
-	}
+}
 
-        //Creating object by class "Cuboid" after input user data in fields of cargo. return object 'cube' by type cuboid.
+//Creating object by class "Cuboid" after input user data in fields of cargo. return object 'cube' by type cuboid.Using in handle input
 export function create_cuboid_from_input()
 {   
     let length = Number(document.querySelector("#lenght4").value);
@@ -41,10 +42,28 @@ export function create_cuboid_from_input()
     return cube
 }
 
-        //Creating colorful objects with black frame with objects by type 'cuboid'. 
-        //First-create object by type 'THREE.Mesh".
-        //Second-create object by type "THREE.LineSegments"
-        //Third-object "THREE.LineSegments" adding to object "THREE.Mesh"
+//Create cuboid from cargo.Using in API
+export function create_cuboid_from_cargo(cargo)
+    {
+    
+    let cube = new Cuboid
+    
+    cube.length_X = cargo.geometry.parameters.width
+    cube.width_Y = cargo.geometry.parameters.height
+    cube.height_Z = cargo.geometry.parameters.depth
+    cube.x = cargo.position.x-0.5*(cargo.geometry.parameters.width)
+    cube.y = cargo.position.y-0.5*(cargo.geometry.parameters.height)
+    cube.z = cargo.position.z-0.5*(cargo.geometry.parameters.depth)
+    
+    cube.uuid = cargo.uuid
+    
+    return cube
+    }
+
+//Creating colorful objects with black frame with objects by type 'cuboid'.Using in API and handle input.
+//First-create object by type 'THREE.Mesh".
+//Second-create object by type "THREE.LineSegments"
+//Third-object "THREE.LineSegments" adding to object "THREE.Mesh"
 export function create_cargo_from_cuboid(Cuboid)
 {
     let cube = Cuboid
@@ -87,8 +106,8 @@ export function create_cargo_from_cuboid(Cuboid)
     return box1
 }
 
-        //Adding cargo to scene.
-export function create_cargo_and_adding_to_scene()
+//Adding cargo to scene after input user data.Using in handle input data.
+export function create_cargo_after_input_data_and_adding_to_scene()
 {
     
     let quantity = Number(document.querySelector("#quantity4").value);
@@ -100,145 +119,123 @@ export function create_cargo_and_adding_to_scene()
             let cube3 = create_cuboid_from_input();
             let colorful_box1 = create_cargo_from_cuboid(cube3);
             cargo_group.add(colorful_box1);
-            // draggable_objects_group.add(colorful_box1);
             console.log(colorful_box1)
-            // animate();
         }
     } 
     else {
         let cube2 = create_cuboid_from_input();
         let colorful_box2 = create_cargo_from_cuboid(cube2);
-       
         cargo_group.add(colorful_box2);
-        // draggable_objects_group.add(colorful_box2);
         console.log(colorful_box2)
-        // animate();
-    }
-    //present_object_parameters()
-    
-}
-
-
-
-
-
-
-
-
-
-export function create_cuboid_from_cargo(cargo)
-{
-    let cube = new Cuboid
-        
-    cube.length_X = cargo.scale.x*2
-    cube.width_Y = cargo.scale.y*2
-    cube.height_Z = cargo.scale.z*2
-    cube.x = cargo.position.x-0.5*(cargo.scale.x*2)
-    cube.y = cargo.position.y-0.5*(cargo.scale.y*2)
-    cube.z = cargo.position.z-0.5*(cargo.scale.z*2)
-    
-    cube.uuid = cargo.uuid
-    
-       
-    return cube
-}
-
-
-        //Present parameters of cargo area and cargos in console.
-export function present_object_parameters()
-{
-    
-    try{
-        console.clear()
-        
-        let car_area = create_cuboid_from_cargo(cargo_area_group.children[0])
-        
-        if(typeof(car_area) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
-
-        if( car_area.length_X == 0 ||
-         car_area.width_Y == 0 ||
-         car_area.height_Z == 0)
-        {throw new Error("Cargo area size not valid. Please enter correct size and try again.")}
-        
-        if(cargo_group.children.length == 0) {throw new Error("No objects in cargo area.")}
-
-        console.log(' Cargo area UUID: ',car_area.uuid,'\n',
-                        'Cargo area scale:  ','Lenght =',car_area.length_X,'; Width =',car_area.width_Y,'; Height =',car_area.height_Z,'\n',
-                        'Number of objects in the cargo area:',cargo_group.children.length,'\n',)
-                 
-
-
-            for (let i = 0; i < cargo_group.children.length; ++i)
-                {
-                let cargo = create_cuboid_from_cargo(cargo_group.children[i]);
-
-                if( cargo.length_X == 0 ||
-                    cargo.width_Y == 0 ||
-                    cargo.height_Z == 0)
-                   {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
-                
-                console.log('     Number of object: ',i+1,'\n',
-                            '    UUID: ',cargo.uuid,'\n',
-                            '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
-                            '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
-                            );
-                
-                // animate()
-                }
-        } 
-        catch (err) 
-        {
-            console.log(err.message)
         }
+        
 }
 
 
-        //Create and add to scene cargo area from user input data. Camera look up to center of new cargo area.
+//Create and add to scene cargo area from user input data. Camera look up to center of new cargo area.Using in handle input data.
 export function cargo_area_adding()   
 {
-cargo_area_group.clear();
+    cargo_area_group.clear();
 
-let x = Number(document.querySelector("#lenght_palette").value);
-let y = Number(document.querySelector("#width_palette").value);
-let z = Number(document.querySelector("#height_palette").value);
+    let x = Number(document.querySelector("#lenght_palette").value);
+    let y = Number(document.querySelector("#width_palette").value);
+    let z = Number(document.querySelector("#height_palette").value);
 
-//Create/adding cargo area to scene.
-const area = new THREE.Box3();
-area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
-const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
+    //Create/adding cargo area to scene.
+    const area = new THREE.Box3();
+    area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
+    const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
 
-cargo_area_group.add(cargo_area);
-// animate()
-let geometry = new THREE.PlaneGeometry( x, y );
-let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-let plane1 = new THREE.Mesh( geometry, material );
-plane1.position.x = x/2
-plane1.position.y = y/2
-plane1.material.opacity = 0.9
-plane1.userData.ground = true;
-cargo_area_group.add(plane1)
+    cargo_area_group.add(cargo_area);
+    // animate()
+    let geometry = new THREE.PlaneGeometry( x, y );
+    let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    let plane1 = new THREE.Mesh( geometry, material );
+    plane1.position.x = x/2
+    plane1.position.y = y/2
+    plane1.material.opacity = 0.9
+    plane1.userData.ground = true;
+    cargo_area_group.add(plane1)
 
-//Camera look at control target
-controls.target = new THREE.Vector3( x/2,y/2 ,0 )
+    //Camera look at control target
+    controls.target = new THREE.Vector3( x/2,y/2 ,0 )
 
-present_object_parameters()
 };
 
 
 
-        //Create object by type "Cuboid" using data from scena. As a result main object has parameters of cargo area and his parameter "array of inner objects" 
-        //includes all cargos from scene
-export function threejs_scena_to_cuboid_obj()
+
+
+//Create cuboid from cargo area without inner objects.For present parameters.Using in API and viewing data.
+export function create_cuboid_from_cargo_area(cargo_area)
 {
-   let parent_cube = create_cuboid_from_cargo(cargo_area_group.children[0])
-   
-       for(let i =0; i<cargo_group.children.length; i++)
+    let cube = new Cuboid
+        
+    cube.length_X = cargo_area.scale.x*2
+    cube.width_Y = cargo_area.scale.y*2
+    cube.height_Z = cargo_area.scale.z*2
+    cube.x = cargo_area.position.x-0.5*(cargo_area.scale.x*2)
+    cube.y = cargo_area.position.y-0.5*(cargo_area.scale.y*2)
+    cube.z = cargo_area.position.z-0.5*(cargo_area.scale.z*2)
+    
+    cube.uuid = cargo_area.uuid
+          
+    return cube
+}
+
+//Create cuboid with inner object from cargo area and cargos.Using in API
+export function threejs_scena_to_cuboid_with_inner_objects()
+    {
+    let parent_cube = create_cuboid_from_cargo_area(cargo_area_group.children[0])
+
+    for(let i =0; i<cargo_group.children.length; i++)
         {   
             let children_cube = create_cuboid_from_cargo(cargo_group.children[i])
             parent_cube.array_of_inner_objects.push(children_cube);
         }
     return parent_cube
-}
+    }
+
+      
+//Create cargo area with colored ground.Using in API
+export function cargo_area_adding_from_cuboid(cube)   
+    {
+    cargo_area_group.clear();
+
+    let x = Number(cube.length_X)
+    let y = Number(cube.width_Y)
+    let z = Number(cube.height_Z)
+
+    //Create/adding cargo area to scene.
+    const area = new THREE.Box3();
+    area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
+    const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
+
+    cargo_area_group.add(cargo_area);
+    let geometry = new THREE.PlaneGeometry( x, y );
+    let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    let plane1 = new THREE.Mesh( geometry, material );
+    plane1.position.x = x/2
+    plane1.position.y = y/2
+    plane1.material.opacity = 0.9
+    plane1.userData.ground = true;
+
+    return plane1
+    };   
+      
+ 
+
+
+
+
+        
+
+
+        
+
+
+
+        
 
 
 

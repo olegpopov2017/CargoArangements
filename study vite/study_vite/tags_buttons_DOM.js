@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import {cargo_area_group,cargo_group,scene,renderer, animate} from './three_cargo_canvas.js';
-import {present_object_parameters, cargo_area_adding,resize_renderer,create_cargo_and_adding_to_scene} from './functions.js';
-	
-import {placement_cargo_according_to_algorithm_on_local_server} from './NEW_functions.js';
+import {cargo_area_group,cargo_group} from './three_cargo_canvas.js';
+import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
+import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
 
 
 
@@ -114,7 +113,7 @@ let button42 = document.querySelector('#button42');
 // button42.addEventListener('click',present_object_parameters)
 
 let button45 = document.querySelector('#button45');
-button45.addEventListener('click',create_cargo_and_adding_to_scene)
+button45.addEventListener('click',create_cargo_after_input_data_and_adding_to_scene)
 
 //Button 43(Form4) - Delete all objects in scene
 let button43 = document.querySelector('#button43');

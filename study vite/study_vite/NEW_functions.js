@@ -1,76 +1,14 @@
 import * as THREE from 'three';
-import { create_cuboid_from_cargo,create_cargo_from_cuboid } from './functions';
+import { create_cuboid_from_cargo_area,create_cargo_from_cuboid,threejs_scena_to_cuboid_with_inner_objects,create_cuboid_from_cargo,cargo_area_adding_from_cuboid } from './functions';
 import {Cuboid} from './classes.js';
-import {cargo_area_group,cargo_group,scene,animate, helper} from './three_cargo_canvas.js';
+import {cargo_area_group,cargo_group} from './three_cargo_canvas.js';
 
-        //Create cuboid with inner object from cargo area and cargos.Using in API
-export function threejs_scena_to_cuboid_with_inner_objects()
-{
-   let parent_cube = create_cuboid_from_cargo(cargo_area_group.children[0])
-   
-       for(let i =0; i<cargo_group.children.length; i++)
-        {   
-            let children_cube = create_cuboid_from_colorfulbox(cargo_group.children[i])
-            parent_cube.array_of_inner_objects.push(children_cube);
-        }
-    return parent_cube
-}
+       
 
-
-export function create_cuboid_from_colorfulbox(colorfulbox)
-{
-    
-    let cube = new Cuboid
-    
-    cube.length_X = colorfulbox.geometry.parameters.width
-    cube.width_Y = colorfulbox.geometry.parameters.height
-    cube.height_Z = colorfulbox.geometry.parameters.depth
-    cube.x = colorfulbox.position.x-0.5*(colorfulbox.geometry.parameters.width)
-    cube.y = colorfulbox.position.y-0.5*(colorfulbox.geometry.parameters.height)
-    cube.z = colorfulbox.position.z-0.5*(colorfulbox.geometry.parameters.depth)
-    
-    cube.uuid = helper.uuid
-    
-    return cube
-}
-
-
-export function cargo_area_adding_from_cuboid(cube)   
-    {
-    cargo_area_group.clear();
-    // let cube = cube1;
-    let x = Number(cube.length_X)
-    let y = Number(cube.width_Y)
-    let z = Number(cube.height_Z)
-
-    //Create/adding cargo area to scene.
-    const area = new THREE.Box3();
-    area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
-    const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
-
-    cargo_area_group.add(cargo_area);
-    // animate()
-    let geometry = new THREE.PlaneGeometry( x, y );
-    let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    let plane1 = new THREE.Mesh( geometry, material );
-    plane1.position.x = x/2
-    plane1.position.y = y/2
-    plane1.material.opacity = 0.9
-    plane1.userData.ground = true;
-    // cargo_area_group.add(plane1)
-
-    //Camera look at control target
-    // controls.target = new THREE.Vector3( x/2,y/2 ,0 )
-
-    // present_object_parameters()
-    return plane1
-    };
-
-
+//Send data of scena(cargo area,cargos) to local algorithm and come back result on the screen.
 export function placement_cargo_according_to_algorithm_on_local_server()
     {
     let box = threejs_scena_to_cuboid_with_inner_objects()
-    // console.log(box)
     
     fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box)})
         .then((response) => {
@@ -78,8 +16,7 @@ export function placement_cargo_according_to_algorithm_on_local_server()
             return response.json();
         })
             .then((data) => {
-                let cube1 = data//
-
+                
                 cargo_area_group.clear()
                 cargo_group.clear()
                 
@@ -94,8 +31,7 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                 cube.z = data.z
 
                 let parent_cube = cargo_area_adding_from_cuboid(cube)
-                // parent_cube.material.color.setHex(0xdf0707)
-                
+                                
                 cargo_area_group.add(parent_cube);
                 
                 for(let i = 0; i < data.array_of_inner_objects.length; i++)
@@ -115,11 +51,61 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                     let children = create_cargo_from_cuboid(children_cube)
                     
                     cargo_group.add(children);
-                    // console.log(cube1)
+                    
                 }
-                console.log(cube1)
-                return cube1
-               // present_object_parameters();
                 
+                return data
+                               
             })
-}
+    }
+
+
+
+
+//Present parameters of cargo area and cargos in console.
+export function present_object_parameters()
+    {
+        
+        try{
+            console.clear()
+            
+            let car_area = create_cuboid_from_cargo_area(cargo_area_group.children[0])
+            
+            if(typeof(car_area) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
+
+            if( car_area.length_X == 0 ||
+            car_area.width_Y == 0 ||
+            car_area.height_Z == 0)
+            {throw new Error("Cargo area size not valid. Please enter correct size and try again.")}
+            
+            if(cargo_group.children.length == 0) {throw new Error("No objects in cargo area.")}
+
+            console.log(' Cargo area UUID: ',car_area.uuid,'\n',
+                            'Cargo area scale:  ','Lenght =',car_area.length_X,'; Width =',car_area.width_Y,'; Height =',car_area.height_Z,'\n',
+                            'Number of objects in the cargo area:',cargo_group.children.length,'\n',)
+                    
+
+
+                for (let i = 0; i < cargo_group.children.length; ++i)
+                    {
+                    let cargo = create_cuboid_from_cargo(cargo_group.children[i]);
+
+                    if( cargo.length_X == 0 ||
+                        cargo.width_Y == 0 ||
+                        cargo.height_Z == 0)
+                    {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
+                    
+                    console.log('     Number of object: ',i+1,'\n',
+                                '    UUID: ',cargo.uuid,'\n',
+                                '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
+                                '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
+                                );
+                    
+                    // animate()
+                    }
+            } 
+            catch (err) 
+            {
+                console.log(err.message)
+            }
+    }
