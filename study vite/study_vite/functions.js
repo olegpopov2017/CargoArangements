@@ -3,7 +3,7 @@ import {Cuboid} from './classes.js';
 import {cargo_group,cargo_area_group,scene,animate,helper,colorful_box,colors,camera, controls,renderer, draggable_objects_group} from './three_cargo_canvas.js';
 import { Color } from 'three';
 
-
+        //Change screen size before pushing button "f".
 export function resize_renderer()
 {	
 	let height = Number(window.innerHeight)
@@ -20,7 +20,7 @@ export function resize_renderer()
 		}
 	}
 
-
+        //Creating object by class "Cuboid" after input user data in fields of cargo. return object 'cube' by type cuboid.
 export function create_cuboid_from_input()
 {   
     let length = Number(document.querySelector("#lenght4").value);
@@ -41,30 +41,11 @@ export function create_cuboid_from_input()
     return cube
 }
 
-
-
-
-export function create_helper_from_cuboid(Cuboid)
-{
-    let cube = Cuboid
-    let uuid,x,y,z,lenght,width,height
-
-    uuid = cube.uuid
-    x = Number(cube.x)   
-    y = Number(cube.y)
-    z = Number(cube.z)
-    lenght = Number(cube.length_X)
-    width = Number(cube.width_Y)
-    height = Number(cube.height_Z)
-
-    box_three.setFromCenterAndSize(new THREE.Vector3( x+(lenght/2), y+(width/2),  z+(height/2)), new THREE.Vector3( lenght,width,height) );
-    const helper = new THREE.Box3Helper(box_three, 0x000000 );
-    if (typeof(cube.uuid) != "undefined"){helper.uuid = uuid}
-
-    return helper
-}
-
-export function create_colorful_box_from_cuboid(Cuboid)
+        //Creating colorful objects with black frame with objects by type 'cuboid'. 
+        //First-create object by type 'THREE.Mesh".
+        //Second-create object by type "THREE.LineSegments"
+        //Third-object "THREE.LineSegments" adding to object "THREE.Mesh"
+export function create_cargo_from_cuboid(Cuboid)
 {
     let cube = Cuboid
     let uuid,x,y,z,lenght,width,height
@@ -106,36 +87,71 @@ export function create_colorful_box_from_cuboid(Cuboid)
     return box1
 }
 
-
-
-export function create_cuboid_from_helper(helper1)
+        //Adding cargo to scene.
+export function create_cargo_and_adding_to_scene()
 {
-    let helper = helper1
+    
+    let quantity = Number(document.querySelector("#quantity4").value);
+    
+    if(quantity != 0)
+    {
+        for(let i = 0; i<quantity; i++)
+        {
+            let cube3 = create_cuboid_from_input();
+            let colorful_box1 = create_cargo_from_cuboid(cube3);
+            cargo_group.add(colorful_box1);
+            // draggable_objects_group.add(colorful_box1);
+            console.log(colorful_box1)
+            // animate();
+        }
+    } 
+    else {
+        let cube2 = create_cuboid_from_input();
+        let colorful_box2 = create_cargo_from_cuboid(cube2);
+       
+        cargo_group.add(colorful_box2);
+        // draggable_objects_group.add(colorful_box2);
+        console.log(colorful_box2)
+        // animate();
+    }
+    //present_object_parameters()
+    
+}
+
+
+
+
+
+
+
+
+
+export function create_cuboid_from_cargo(cargo)
+{
     let cube = new Cuboid
+        
+    cube.length_X = cargo.scale.x*2
+    cube.width_Y = cargo.scale.y*2
+    cube.height_Z = cargo.scale.z*2
+    cube.x = cargo.position.x-0.5*(cargo.scale.x*2)
+    cube.y = cargo.position.y-0.5*(cargo.scale.y*2)
+    cube.z = cargo.position.z-0.5*(cargo.scale.z*2)
     
+    cube.uuid = cargo.uuid
     
-    cube.length_X = helper.scale.x*2
-    cube.width_Y = helper.scale.y*2
-    cube.height_Z = helper.scale.z*2
-    cube.x = helper.position.x-0.5*(helper.scale.x*2)
-    cube.y = helper.position.y-0.5*(helper.scale.y*2)
-    cube.z = helper.position.z-0.5*(helper.scale.z*2)
-    
-    cube.uuid = helper.uuid
-    
-    // animate()       
-   
+       
     return cube
 }
 
 
+        //Present parameters of cargo area and cargos in console.
 export function present_object_parameters()
 {
     
     try{
         console.clear()
         
-        let car_area = create_cuboid_from_helper(cargo_area_group.children[0])
+        let car_area = create_cuboid_from_cargo(cargo_area_group.children[0])
         
         if(typeof(car_area) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
 
@@ -154,7 +170,7 @@ export function present_object_parameters()
 
             for (let i = 0; i < cargo_group.children.length; ++i)
                 {
-                let cargo = create_cuboid_from_helper(cargo_group.children[i]);
+                let cargo = create_cuboid_from_cargo(cargo_group.children[i]);
 
                 if( cargo.length_X == 0 ||
                     cargo.width_Y == 0 ||
@@ -177,7 +193,7 @@ export function present_object_parameters()
 }
 
 
-
+        //Create and add to scene cargo area from user input data. Camera look up to center of new cargo area.
 export function cargo_area_adding()   
 {
 cargo_area_group.clear();
@@ -210,14 +226,15 @@ present_object_parameters()
 
 
 
-
+        //Create object by type "Cuboid" using data from scena. As a result main object has parameters of cargo area and his parameter "array of inner objects" 
+        //includes all cargos from scene
 export function threejs_scena_to_cuboid_obj()
 {
-   let parent_cube = create_cuboid_from_helper(cargo_area_group.children[0])
+   let parent_cube = create_cuboid_from_cargo(cargo_area_group.children[0])
    
        for(let i =0; i<cargo_group.children.length; i++)
         {   
-            let children_cube = create_cuboid_from_helper(cargo_group.children[i])
+            let children_cube = create_cuboid_from_cargo(cargo_group.children[i])
             parent_cube.array_of_inner_objects.push(children_cube);
         }
     return parent_cube
@@ -225,165 +242,4 @@ export function threejs_scena_to_cuboid_obj()
 
 
 
-
-export function placement_cargo_according_to_algorithm()
-{
-    let box = threejs_scena_to_cuboid_obj()
-    
-    fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box)})
-        .then((response) => {
-            
-            return response.json();
-        })
-            .then((data) => {
-                let cube1 = data//
-
-                cargo_area_group.clear()
-                cargo_group.clear()
-                
-                let cube = new Cuboid
-
-                cube.uuid = data.uuid
-                cube.length_X = data.length_X
-                cube.width_Y = data.width_Y
-                cube.height_Z = data.height_Z
-                cube.x = data.x
-                cube.y = data.y
-                cube.z = data.z
-
-                let parent_cube = create_helper_from_cuboid(cube)
-                parent_cube.material.color.setHex(0xdf0707)
-                
-                cargo_area_group.add(parent_cube);
-                
-                for(let i = 0; i < data.array_of_inner_objects.length; i++)
-                {
-                    let inner_cube = data.array_of_inner_objects[i]
-                    
-                    let children_cube = new Cuboid
-                    
-                    children_cube.uuid = inner_cube.uuid
-                    children_cube.length_X = inner_cube.length_X
-                    children_cube.width_Y = inner_cube.width_Y
-                    children_cube.height_Z = inner_cube.height_Z
-                    children_cube.x = inner_cube.x
-                    children_cube.y = inner_cube.y
-                    children_cube.z = inner_cube.z
-                    
-                    let children = create_helper_from_cuboid(children_cube)
-                    
-                    cargo_group.add(children);
-                }
-                return cube1
-                
-               // present_object_parameters();
-                
-            })
-            .then((cube1)=>
-                                                    {
-                                            
-                                                        try{
-                                                            console.clear()
-                                                            
-                                                            //let car_area = create_cuboid_from_helper(cube)
-                                                            
-                                                           //if(typeof(cube1) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
-                                                    
-                                                            if( cube1.length_X == 0 ||
-                                                            cube1.width_Y == 0 ||
-                                                            cube1.height_Z == 0)
-                                                            {throw new Error("Cargo area size not valid. Please enter correct size and try again.")}
-                                                            
-                                                            if(cube1.array_of_inner_objects.length == 0) {throw new Error("No objects in cargo area.")}
-                                                    
-                                                            console.log(' Cargo area UUID: ',cube1.uuid,'\n',
-                                                                            'Cargo area scale:  ','Lenght =',cube1.length_X,'; Width =',cube1.width_Y,'; Height =',cube1.height_Z,'\n',
-                                                                            'Number of objects in the cargo area:',cube1.array_of_inner_objects.length,'\n',)
-                                                                    
-                                                    
-                                                    
-                                                                for (let i = 0; i < cube1.array_of_inner_objects.length; ++i)
-                                                                    {
-                                                                    let cargo = cube1.array_of_inner_objects[i];
-                                                    
-                                                                    if( cargo.length_X == 0 ||
-                                                                        cargo.width_Y == 0 ||
-                                                                        cargo.height_Z == 0)
-                                                                    {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
-                                                                    
-                                                                    console.log('     Number of object: ',i+1,'\n',
-                                                                                '    UUID: ',cargo.uuid,'\n',
-                                                                                '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
-                                                                                '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
-                                                                                );
-                                                                    
-                                                                    // animate()
-                                                                    }
-                                                            } 
-                                                            catch (err) 
-                                                            {
-                                                                console.log(err.message)
-                                                            }
-                                                    }
-
-                
-                );
-}
-
-
-export function create_cargo_from_input()
-{
-    
-    let quantity = Number(document.querySelector("#quantity4").value);
-    
-    if(quantity != 0)
-    {
-        for(let i = 0; i<quantity; i++)
-        {
-            let cube1 = create_cuboid_from_input();
-            let helper2 = create_helper_from_cuboid(cube1);
-            cargo_group.add(helper2);
-            // animate();
-        }
-    } 
-    else {
-        let cube2 = create_cuboid_from_input();
-        let helper3 = create_helper_from_cuboid(cube2);
-        cargo_group.add(helper3);
-        // animate();
-    }
-    present_object_parameters()
-    
-}
-
-
-export function create_cargo_colorful_box_from_input()
-{
-    
-    let quantity = Number(document.querySelector("#quantity4").value);
-    
-    if(quantity != 0)
-    {
-        for(let i = 0; i<quantity; i++)
-        {
-            let cube3 = create_cuboid_from_input();
-            let colorful_box1 = create_colorful_box_from_cuboid(cube3);
-            cargo_group.add(colorful_box1);
-            // draggable_objects_group.add(colorful_box1);
-            console.log(colorful_box1)
-            // animate();
-        }
-    } 
-    else {
-        let cube2 = create_cuboid_from_input();
-        let colorful_box2 = create_colorful_box_from_cuboid(cube2);
-       
-        cargo_group.add(colorful_box2);
-        // draggable_objects_group.add(colorful_box2);
-        console.log(colorful_box2)
-        // animate();
-    }
-    //present_object_parameters()
-    
-}
     

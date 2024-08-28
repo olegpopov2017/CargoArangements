@@ -35,7 +35,7 @@ const light = new THREE.DirectionalLight( 0xffffff, 4 );
 export let renderer = new THREE.WebGLRenderer({canvas: canvas_three});
 renderer.setSize( 600, 300 );
 
-//Adding groups for objects and another for pallets.
+	//Adding groups for objects and another for pallets.
 export const cargo_area_group = new THREE.Group();
 export const cargo_group = new THREE.Group();
 export const draggable_objects_group = new THREE.Group();
@@ -43,7 +43,7 @@ scene.add(draggable_objects_group);
 scene.add(cargo_area_group);
 scene.add(cargo_group);
 
-//Adding odject to scene.
+	//Adding odject to scene.
 
 let boxGeometry = new THREE.BoxGeometry(10, 10, 10);
 var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xff0000});
@@ -54,14 +54,14 @@ export let helper = new THREE.Mesh(boxGeometry, cubeMaterial);
 export let colorful_box = new THREE.Mesh(boxGeometry, cubeMaterial);
 
 
-//Rotation camera with orbit controls.
+	//Rotation camera with orbit controls.
 export let controls = new OrbitControls(camera, canvas_three);
 controls.enableDamping = true;
 controls.zoomSpeed = 6;
 // controls.enabled = false
 
 
-//Adding drag and drop objets from "controls"(not a raycasting)
+	//Adding drag and drop objets from "controls"(not a raycasting)
 
 // let controls2 = new DragControls(cargo_group.children,camera,renderer.domElement);
 
@@ -76,7 +76,7 @@ controls.zoomSpeed = 6;
 
 								//Addinng raycaster for mousr picking objects.	
 
-//3333333333333333333
+
 const raycaster = new THREE.Raycaster(); // create once
 const clickMouse = new THREE.Vector2();  // create once
 const moveMouse = new THREE.Vector2();   // create once
@@ -134,20 +134,16 @@ function dragObject() {
 				if(!o.object.userData.ground)
 				continue
 
-				// if(o.point.x + draggable.position.x <= 0 || (cargo_area_group.children[0].scale.x*2+draggable.scale.x) <= cargo_area_group.children[0].scale.x*2)
-				// continue
-
+				
 				if(
-					o.point.x+Number(draggable.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
-					&& o.point.x >= Number(draggable.geometry.parameters.depth)/2  											//MAX X axis limitation draggable
-					&& o.point.y+Number(draggable.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
-					&& o.point.y >= Number(draggable.geometry.parameters.width)/2											//MAX Y axis limitation draggable
+					o.point.x+Number(draggable.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
+					&& o.point.x >= Number(draggable.geometry.parameters.width)/2  											//MAX X axis limitation draggable
+					
+					&& o.point.y+Number(draggable.geometry.parameters.height)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
+					&& o.point.y >= Number(draggable.geometry.parameters.height)/2											//MAX Y axis limitation draggable
 				)
 				{
-				// continue  && o.point.y+draggable.scale.y <= cargo_area_group.children[0].scale.y*2 && o.point.y >= draggable.scale.y
-				// console.log(draggable.geometry.parameters.width)
-				// console.log(draggable.geometry.parameters.depth)
-
+				
 				draggable.position.x = o.point.x
 				draggable.position.y = o.point.y
 				
@@ -159,9 +155,6 @@ function dragObject() {
 		
 }
 	
-//
-	
-
 export function animate() 
 {	
 	dragObject();

@@ -1,33 +1,3 @@
-export class Box
-{
-  class_name = 'box';
-  uuid = 0;
-  inner_objects; //Array of inner objects.
-  
-  constructor(length,width,height,x,y,z,inner_objects) 
-  {
-    this.inner_objects = inner_objects
-    this.length = length;
-    this.width = width;
-    this.height = height;    
-    this.x = x;
-    this.y = y;
-    this.z = z;
-  }
-};
-
-
-export class Palette
-{
-  class_name = 'Palette'
-  constructor(lenght_palette,width_palette,height_palette)
-  {
-    this.lenght_palette = lenght_palette;
-    this.width_palette = width_palette;
-    this.height_palette = height_palette;
-  }
-}
-
 export class Cuboid
 {
   uuid

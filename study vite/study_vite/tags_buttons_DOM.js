@@ -1,21 +1,12 @@
 import * as THREE from 'three';
-// import {Box} from './classes.js';
 import {cargo_area_group,cargo_group,scene,renderer, animate} from './three_cargo_canvas.js';
-import {present_object_parameters, 
-		 placement_cargo_according_to_algorithm,
-		create_cuboid_from_input,create_helper_from_cuboid,create_cuboid_from_helper, cargo_area_adding,
-		create_cargo_from_input,resize_renderer,
-		create_cargo_colorful_box_from_input} from './functions.js';
-// create_object_and_adding_to_scene,create_object_and_present_object_parameters,
+import {present_object_parameters, cargo_area_adding,resize_renderer,create_cargo_and_adding_to_scene} from './functions.js';
+	
+import {placement_cargo_according_to_algorithm_on_local_server} from './NEW_functions.js';
 
 
-//Enteractive with canvas three js
-// let canvas_obj = document.querySelector("#canvas_three");
-// canvas_obj.wid
 
-
-// let canvas_obj = document.getElementById("canvas_three");
-
+		//Adding button "f" to change screen size.
 document.addEventListener('keydown', function(event) {
     if (event.key === 'f') 
 	{
@@ -101,8 +92,8 @@ let form4_html = `
 							<td><input id="z4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><button id = "button42" type="button" >Создать</button></td>
-							<td><button id = "button45" type="button" >Создать colorful_box</button></td>
+							<td><button id = "button42" type="button" >Не работает</button></td>
+							<td><button id = "button45" type="button" >Добавить обьекты</button></td>
 							<td><button id = "button43" type="button" >Удалить все обьекты</button></td>
 							<td><button id = "button44" type="button" >Показать параметры объектов</button></td>
 
@@ -119,11 +110,11 @@ document.body.append(form4);
 //Button42(Form 4) - Creating object
 let button42 = document.querySelector('#button42');
 // button42.addEventListener('click',create_object_and_present_object_parameters);
-button42.addEventListener('click',() => (create_cargo_from_input(),present_object_parameters()))
+
 // button42.addEventListener('click',present_object_parameters)
 
 let button45 = document.querySelector('#button45');
-button45.addEventListener('click',create_cargo_colorful_box_from_input)
+button45.addEventListener('click',create_cargo_and_adding_to_scene)
 
 //Button 43(Form4) - Delete all objects in scene
 let button43 = document.querySelector('#button43');
@@ -142,7 +133,7 @@ let form5_html = `
 <fieldset>
 <legend>Расстановка грузов по алгоритму согласно размеров грузового помещения</legend>
     <table>
-        <td><button id = "button53" type="button" class = "button1">Расчитать</button></td>
+        <td><button id = "button53" type="button" class = "button1">Не работает</button></td>
 		<td><button id = "button54" type="button" class = "button1">Расчитать на локальном сервере</button></td>
 </table>
 </fieldset>
@@ -156,7 +147,11 @@ document.body.append(form5);
                
 //Button 53 - creating buttons 'placement cargo according with algorithm"
 let button53 = document.querySelector('#button53');
-button53.addEventListener('click',placement_cargo_according_to_algorithm);
+
+
+//Button 54 - creating buttons 'placement cargo according with algorithm"
+let button54 = document.querySelector('#button54');
+button54.addEventListener('click',placement_cargo_according_to_algorithm_on_local_server);
 
 
 
