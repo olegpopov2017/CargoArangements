@@ -20,17 +20,18 @@ let form2_html = `
 <legend>Создание грузового помещения</legend>
     <table>
         <tr>
-            <td><label >Длина</label></td>
+            <td><label style="color:Red;">Ширина</label></td>
             <td><input id="lenght_palette" type="number"/></td>
         </tr>
         <tr>
-            <td><label>Ширина</label></td>
+            <td><label style="color:Green;">Высота</label></td>
             <td><input id="width_palette" type="number"/></td>
         </tr>
         <tr>
-            <td><label>Высота</label></td>
+            <td><label style="color:Blue;">Длинна</label></td>
             <td><input id="height_palette" type="number"/></td>
         </tr>
+		<td> </td>
         <tr>
             <td><button id = "button24" type="button" >Добавить / Изменить</button></td>
             <td><button id = "button25" type="button" >Удалить все</button></td>
@@ -67,34 +68,34 @@ let form4_html = `
 							<td><input id="quantity4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label >Длина</label></td>
+							<td><label style="color:Red;">Ширина (width,x)</label></td>
 							<td><input id="lenght4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Ширина</label></td>
+							<td><label style="color:Green;">Высота (height,y)</label></td>
 							<td><input id="width4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Высота</label></td>
+							<td><label style="color:Blue;">Длинна (depth,z)</label></td>
 							<td><input id="height4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>X</label></td>
+							<td><label style="color:Red;">X (position)</label></td>
 							<td><input id="x4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Y</label></td>
+							<td><label style="color:Green;">Y (position)</label></td>
 							<td><input id="y4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label>Z</label></td>
+							<td><label style="color:Blue;">Z (position) </label></td>
 							<td><input id="z4" type="number"/></td>
 						</tr>
 						<tr>
 							<td><button id = "button42" type="button" >Не работает</button></td>
 							<td><button id = "button45" type="button" >Добавить обьекты</button></td>
 							<td><button id = "button43" type="button" >Удалить все обьекты</button></td>
-							<td><button id = "button44" type="button" >Показать параметры объектов</button></td>
+							<td><button id = "button44" type="button" >Параметры</button></td>
 
 						</tr>
 					</table>

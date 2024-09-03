@@ -19,9 +19,9 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 
 	export let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-	camera.position.set(0, 50, 0);
-	camera.up.set(0, 0, 1);
-	camera.lookAt(20, 20, 0);
+	// camera.position.set(0, 50, 0);
+	// camera.up.set(0, 0, 1);
+	// camera.lookAt(20, 20, 0);
 
 	camera.position.x = 7;
 	camera.position.z = 7;
@@ -52,7 +52,7 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 	// controls.enabled = false
 
 //Adding coloreful axeshelper
-	const axesHelper = new THREE.AxesHelper( 30 );
+	const axesHelper = new THREE.AxesHelper( 15	 );
 	scene.add( axesHelper );
 
 //Adding drag and drop objets from "controls"(not a raycasting)
