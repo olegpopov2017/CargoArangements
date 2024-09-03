@@ -38,10 +38,12 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 //Adding groups for objects and another for pallets.
 	export const cargo_area_group = new THREE.Group();
 	export const cargo_group = new THREE.Group();
-	export const draggable_objects_group = new THREE.Group();
-	scene.add(draggable_objects_group);
+	export const intersected_objects_group = new THREE.Group();
+	export const group_of_grounds_for_draggable_objects = new THREE.Group();
+	scene.add(intersected_objects_group);
 	scene.add(cargo_area_group);
 	scene.add(cargo_group);
+	scene.add(group_of_grounds_for_draggable_objects);
 
 //Rotation camera with orbit controls.
 	export let controls = new OrbitControls(camera, canvas_three);
@@ -49,6 +51,9 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 	controls.zoomSpeed = 6;
 	// controls.enabled = false
 
+//Adding coloreful axeshelper
+	const axesHelper = new THREE.AxesHelper( 30 );
+	scene.add( axesHelper );
 
 //Adding drag and drop objets from "controls"(not a raycasting)
 
@@ -63,79 +68,105 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 	
 
 
-//Addinng raycaster for mousr picking objects.	
+//Addinng raycaster for mouse picking objects.	
 
 	const raycaster = new THREE.Raycaster(); // create once
 	const clickMouse = new THREE.Vector2();  // create once
 	const moveMouse = new THREE.Vector2();   // create once
-	let  draggable = new THREE.Object3D;
-	// let cargo_area = cargo_area_group[0].object;
-
+	let  draggable_cargo = new THREE.Object3D;
+	// let  intersected_cargo = new THREE.Object3D;
+	
+	
+	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable"
 	window.addEventListener('click', event => {
-		if (draggable) {
+		
+		if (draggable_cargo) 
+		{
 			controls.enabled = false
+			// console.clear
 			console.log(`Dropping draggable object`)
-			draggable = null 
-			if(!draggable){
+			draggable_cargo = null 
+
+			if(!draggable_cargo)	
+			{
+				// console.clear
 				controls.enabled = true
-			return;
-		}
+				return;
+			}
 		}
 		
-		let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();
-
-		clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
-		clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
-		// console.log(clickMouse.x)
-		
-		raycaster.setFromCamera(clickMouse, camera);
-
-		const found = raycaster.intersectObjects(cargo_group.children,false);
-		// console.log(found)
-
-		if(found.length>0){
-			draggable = found[0].object
-			console.log("Found object:",draggable)
+		//Founding ClickMouse position and set this parameters to variable "raycaster"
+			let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	
+			clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
+			clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
+					
+		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable"
+			raycaster.setFromCamera(clickMouse, camera);
+			const found = raycaster.intersectObjects(cargo_group.children,false);
 			
-		}
-		})
+			if(found.length>0)
+			{
+				draggable_cargo = found[0].object
+				console.log("Found object:",draggable_cargo)
+			}
+			}
+	)
 
-
+	//Realtime record mouse position to variable "moveMouse"
 	window.addEventListener('mousemove', event => {
 
 		let canvasBounds2 = renderer.getContext().canvas.getBoundingClientRect();
-
 		moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
 		moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
 		
+		//Seraching intersecting cargo after mouse moving
+			const intersected_cargo = raycaster.intersectObjects(cargo_group.children,false);	
+			// intersected_cargo.
+			if (intersected_cargo.length>0) 
+				{
+				console.log(`Finding intersected cargo`,intersected_cargo)
+				}
+					
+			if(intersected_cargo.length == 0)	
+				{
+				console.clear
+				// intersected_cargo = null
+				// console.clear()
+				console.log(`Droping intersected cargo`)
+				// intersected_cargo = null;	
+				}
+				
+
+		
+		
 		// console.log(moveMouse.x)
-	})
+		
+	
+	}
+	)
 
 	function dragObject() {
-		if (draggable != null) {
+		
+		raycaster.setFromCamera(moveMouse, camera);
+		
+		if (draggable_cargo != null) {
+			const found = raycaster.intersectObjects(group_of_grounds_for_draggable_objects.children)
 			// controls.enabled = false
-			raycaster.setFromCamera(moveMouse, camera);
-			const found = raycaster.intersectObjects(cargo_area_group.children)  
+			
 			if (found.length > 0) {
-				
 				for (let o of found) {
-					if(!o.object.userData.ground)
-					continue
-
-					
-					if(
-						o.point.x+Number(draggable.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
-						&& o.point.x >= Number(draggable.geometry.parameters.width)/2  											//MAX X axis limitation draggable
+						if(
+						o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
+						&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
 						
-						&& o.point.y+Number(draggable.geometry.parameters.height)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
-						&& o.point.y >= Number(draggable.geometry.parameters.height)/2											//MAX Y axis limitation draggable
-					)
-					{
-					
-					draggable.position.x = o.point.x
-					draggable.position.y = o.point.y
-					
-					}
+						&& o.point.y+Number(draggable_cargo.geometry.parameters.height)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
+						&& o.point.y >= Number(draggable_cargo.geometry.parameters.height)/2											//MAX Y axis limitation draggable
+						)
+						{
+						draggable_cargo.position.x = o.point.x
+						draggable_cargo.position.y = o.point.y
+						// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.length)/2
+						}
 
 				}
 			}

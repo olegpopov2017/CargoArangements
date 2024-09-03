@@ -113,7 +113,7 @@ let button42 = document.querySelector('#button42');
 // button42.addEventListener('click',present_object_parameters)
 
 let button45 = document.querySelector('#button45');
-button45.addEventListener('click',create_cargo_after_input_data_and_adding_to_scene)
+button45.addEventListener('click',() => (create_cargo_after_input_data_and_adding_to_scene(),present_object_parameters()))
 
 //Button 43(Form4) - Delete all objects in scene
 let button43 = document.querySelector('#button43');

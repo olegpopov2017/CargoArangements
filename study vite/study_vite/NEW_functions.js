@@ -56,7 +56,7 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                 
                 return data
                                
-            })
+            }).then(present_object_parameters)
     }
 
 
