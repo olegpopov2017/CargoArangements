@@ -28,9 +28,10 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 	camera.position.y = 7;
 
 
-	const light = new THREE.DirectionalLight( 0xffffff, 4 );
-					light.position.set( 3000, 7000, 10000 ).normalize();
-					scene.add( light );
+	// const light = new THREE.DirectionalLight( 0xffffff, 4 );
+	// 				light.position.set( 3000, 7000, 10000 ).normalize();
+					const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
+					// scene.add( light );
 
 	export let renderer = new THREE.WebGLRenderer({canvas: canvas_three});
 	renderer.setSize( 600, 300 );
@@ -53,6 +54,7 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 
 //Adding coloreful axeshelper
 	const axesHelper = new THREE.AxesHelper( 15	 );
+	axesHelper.material.linewidth = 2
 	scene.add( axesHelper );
 
 //Adding drag and drop objets from "controls"(not a raycasting)
@@ -159,12 +161,12 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 						o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
 						&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
 						
-						&& o.point.y+Number(draggable_cargo.geometry.parameters.height)/2 <= cargo_area_group.children[0].scale.y*2 	//MIN Y axis limitation draggable
-						&& o.point.y >= Number(draggable_cargo.geometry.parameters.height)/2											//MAX Y axis limitation draggable
+						&& o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
+						&& o.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
 						)
 						{
 						draggable_cargo.position.x = o.point.x
-						draggable_cargo.position.y = o.point.y
+						draggable_cargo.position.z = o.point.z
 						// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.length)/2
 						}
 

@@ -143,28 +143,17 @@ export function cargo_area_adding()
     const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
     cargo_area_group.add(cargo_area);
     
-    //Create/adding yellow floor
-    let geometry = new THREE.PlaneGeometry( x, y );
-    let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    let plane = new THREE.Mesh( geometry, material );
-    plane.position.x = x/2
-    plane.position.y = y/2
-    plane.material.opacity = 0.9
-    cargo_area_group.add(plane)
-
-    //Create/adding transparent floor for reading mouse moving position
-    let geometry1 = new THREE.PlaneGeometry( x, y );
-    let material1 = new THREE.MeshBasicMaterial;
-    let floor_for_read_mouse_position = new THREE.Mesh( geometry1, material1 );
-    floor_for_read_mouse_position.position.x = x/2
-    floor_for_read_mouse_position.position.y = y/2
-    floor_for_read_mouse_position.material.transparent = true;
-    floor_for_read_mouse_position.material.opacity = 0;
-    floor_for_read_mouse_position.userData.ground = true;
-    group_of_grounds_for_draggable_objects.add(floor_for_read_mouse_position)
+    
+    //Create/adding transparent yellow floor for reading mouse moving position
+    let boxGeometry = new THREE.BoxGeometry(x, 0, z);
+    let cubeMaterial =new THREE.MeshBasicMaterial({color: 0xffff00})
+    let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
+    cargo_area_floor.position.x = x/2;
+    cargo_area_floor.position.z = z/2;                  
+    group_of_grounds_for_draggable_objects.add(cargo_area_floor)
 
     //Camera look at control target
-    controls.target = new THREE.Vector3( x/2,y/2 ,0 )
+    controls.target = new THREE.Vector3( x/2,z/2 ,0 )
     // console.log(group_of_grounds_for_draggable_objects.children)
 };
 

@@ -28,7 +28,7 @@ let form2_html = `
             <td><input id="width_palette" type="number"/></td>
         </tr>
         <tr>
-            <td><label style="color:Blue;">Длинна</label></td>
+            <td><label style="color:Blue;">Длина</label></td>
             <td><input id="height_palette" type="number"/></td>
         </tr>
 		<td> </td>
@@ -76,7 +76,7 @@ let form4_html = `
 							<td><input id="width4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label style="color:Blue;">Длинна (depth,z)</label></td>
+							<td><label style="color:Blue;">Длина (depth,z)</label></td>
 							<td><input id="height4" type="number"/></td>
 						</tr>
 						<tr>
