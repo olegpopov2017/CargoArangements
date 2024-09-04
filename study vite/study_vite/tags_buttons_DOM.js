@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {cargo_area_group,cargo_group} from './three_cargo_canvas.js';
+import {cargo_area_group,cargo_group, group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
 import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
 import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
 
@@ -21,15 +21,15 @@ let form2_html = `
     <table>
         <tr>
             <td><label style="color:Red;">Ширина</label></td>
-            <td><input id="lenght_palette" type="number"/></td>
-        </tr>
-        <tr>
-            <td><label style="color:Green;">Высота</label></td>
             <td><input id="width_palette" type="number"/></td>
         </tr>
         <tr>
-            <td><label style="color:Blue;">Длина</label></td>
+            <td><label style="color:Green;">Высота</label></td>
             <td><input id="height_palette" type="number"/></td>
+        </tr>
+        <tr>
+            <td><label style="color:Blue;">Длина</label></td>
+            <td><input id="depth_palette" type="number"/></td>
         </tr>
 		<td> </td>
         <tr>
@@ -52,7 +52,7 @@ button24.addEventListener('click',cargo_area_adding);
 
 //Button 25 - Delete all cargo areas in scene
 let button25 = document.querySelector('#button25');
-button25.addEventListener('click',() => (cargo_area_group.clear(),present_object_parameters()));
+button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_grounds_for_draggable_objects.clear(),present_object_parameters()));
 
 
 
@@ -69,15 +69,15 @@ let form4_html = `
 						</tr>
 						<tr>
 							<td><label style="color:Red;">Ширина (width,x)</label></td>
-							<td><input id="lenght4" type="number"/></td>
-						</tr>
-						<tr>
-							<td><label style="color:Green;">Высота (height,y)</label></td>
 							<td><input id="width4" type="number"/></td>
 						</tr>
 						<tr>
-							<td><label style="color:Blue;">Длина (depth,z)</label></td>
+							<td><label style="color:Green;">Высота (height,y)</label></td>
 							<td><input id="height4" type="number"/></td>
+						</tr>
+						<tr>
+							<td><label style="color:Blue;">Длина (depth,z)</label></td>
+							<td><input id="depth4" type="number"/></td>
 						</tr>
 						<tr>
 							<td><label style="color:Red;">X (position)</label></td>

@@ -25,17 +25,17 @@ export function resize_renderer()
 //Creating object by class "Cuboid" after input user data in fields of cargo. return object 'cube' by type cuboid.Using in handle input
 export function create_cuboid_from_input()
 {   
-    let length = Number(document.querySelector("#lenght4").value);
     let width = Number(document.querySelector("#width4").value);
     let height = Number(document.querySelector("#height4").value);
+    let depth = Number(document.querySelector("#depth4").value);
     let x = Number(document.querySelector("#x4").value);
     let y = Number(document.querySelector("#y4").value);
     let z = Number(document.querySelector("#z4").value);
 
     let cube = new Cuboid
-    cube.length_X = length
-    cube.width_Y = width
-    cube.height_Z = height
+    cube.length_X = width   //change length_X on width_X!!!!!
+    cube.width_Y = height   //change width_Y on height_Y!!!!!!
+    cube.height_Z = depth   //change height_Z on depth_Z!!!!!
     cube.x = x
     cube.y = y
     cube.z = z
@@ -131,11 +131,12 @@ export function create_cargo_after_input_data_and_adding_to_scene()
 export function cargo_area_adding()   
 {
     cargo_area_group.clear();
+    // group_of_grounds_for_draggable_objects.clear()
     group_of_grounds_for_draggable_objects.clear();
 
-    let x = Number(document.querySelector("#lenght_palette").value);
-    let y = Number(document.querySelector("#width_palette").value);
-    let z = Number(document.querySelector("#height_palette").value);
+    let x = Number(document.querySelector("#width_palette").value);
+    let y = Number(document.querySelector("#height_palette").value);
+    let z = Number(document.querySelector("#depth_palette").value);
 
     //Create/adding cargo area to scene.
     const area = new THREE.Box3();
@@ -149,7 +150,8 @@ export function cargo_area_adding()
     let cubeMaterial =new THREE.MeshBasicMaterial({color: 0xffff00})
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
-    cargo_area_floor.position.z = z/2;                  
+    cargo_area_floor.position.z = z/2;
+    // cargo_area.add(cargo_area_floor)                  
     group_of_grounds_for_draggable_objects.add(cargo_area_floor)
 
     //Camera look at control target
@@ -198,9 +200,9 @@ export function cargo_area_adding_from_cuboid(cube)
     cargo_area_group.clear();
     group_of_grounds_for_draggable_objects.clear();
 
-    let x = Number(cube.length_X)
-    let y = Number(cube.width_Y)
-    let z = Number(cube.height_Z)
+    let x = Number(cube.width_X)
+    let y = Number(cube.height_Y)
+    let z = Number(cube.lenght_Z)
 
     //Create/adding cargo area to scene.
     const area = new THREE.Box3();
@@ -208,24 +210,32 @@ export function cargo_area_adding_from_cuboid(cube)
     const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
     cargo_area_group.add(cargo_area);
     
-    //Create/adding yellow floor
-    let geometry = new THREE.PlaneGeometry( x, y );
-    let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    let plane1 = new THREE.Mesh( geometry, material );
-    plane1.position.x = x/2
-    plane1.position.y = y/2
-    plane1.material.opacity = 0.9
+    // //Create/adding yellow floor
+    // let geometry = new THREE.PlaneGeometry( x, y );
+    // let material = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    // let plane1 = new THREE.Mesh( geometry, material );
+    // plane1.position.x = x/2
+    // plane1.position.y = y/2
+    // plane1.material.opacity = 0.9
     
-    //Create/adding transparent floor for reading mouse moving position
-    let geometry1 = new THREE.PlaneGeometry( x, y );
-    let material1 = new THREE.MeshBasicMaterial;
-    let floor_for_read_mouse_position = new THREE.Mesh( geometry1, material1 );
-    floor_for_read_mouse_position.position.x = x/2
-    floor_for_read_mouse_position.position.y = y/2
-    floor_for_read_mouse_position.material.transparent = true;
-    floor_for_read_mouse_position.material.opacity = 0;
-    floor_for_read_mouse_position.userData.ground = true;
-    group_of_grounds_for_draggable_objects.add(floor_for_read_mouse_position)
+    // //Create/adding transparent floor for reading mouse moving position
+    // let geometry1 = new THREE.PlaneGeometry( x, y );
+    // let material1 = new THREE.MeshBasicMaterial;
+    // let floor_for_read_mouse_position = new THREE.Mesh( geometry1, material1 );
+    // floor_for_read_mouse_position.position.x = x/2
+    // floor_for_read_mouse_position.position.y = y/2
+    // floor_for_read_mouse_position.material.transparent = true;
+    // floor_for_read_mouse_position.material.opacity = 0;
+    // floor_for_read_mouse_position.userData.ground = true;
+    // group_of_grounds_for_draggable_objects.add(floor_for_read_mouse_position)
+
+    //Create/adding transparent yellow floor for reading mouse moving position
+    let boxGeometry = new THREE.BoxGeometry(x, 0, z);
+    let cubeMaterial =new THREE.MeshBasicMaterial({color: 0xffff00})
+    let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
+    cargo_area_floor.position.x = x/2;
+    cargo_area_floor.position.z = z/2;                  
+    group_of_grounds_for_draggable_objects.add(cargo_area_floor)
 
     return plane1
     };   

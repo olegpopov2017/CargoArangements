@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls';
 // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
+import { FontLoader } from '/node_modules/three/examples/jsm/loaders/FontLoader.js';
 import { DragControls } from '/node_modules/three/examples/jsm/controls/DragControls.js';
-import { any } from 'three/examples/jsm/nodes/Nodes.js';
+import { TextGeometry } from '/node_modules/three/examples/jsm/geometries/TextGeometry.js';
+import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/renderers/CSS3DRenderer.js';
+// import { any } from 'three/examples/jsm/nodes/Nodes.js';
 // import { EffectComposer } from '/node_modules/three/examples/jsm/postprocessing/EffectComposer.js';
 // import { RenderPass } from '/node_modules/three/examples/jsm/postprocessing/RenderPass.js';
 // import { GlitchPass } from '/node_modules/three/examples/jsm/postprocessing/GlitchPass.js';
@@ -29,9 +32,9 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 
 
 	// const light = new THREE.DirectionalLight( 0xffffff, 4 );
-	// 				light.position.set( 3000, 7000, 10000 ).normalize();
-					const light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 )
-					// scene.add( light );
+	const light = new THREE.DirectionalLight( 0xffffbb, 0x080820, 1 )
+					light.position.set( 30, 30, 30 ).normalize();
+					scene.add( light );
 
 	export let renderer = new THREE.WebGLRenderer({canvas: canvas_three});
 	renderer.setSize( 600, 300 );
@@ -55,8 +58,42 @@ import { any } from 'three/examples/jsm/nodes/Nodes.js';
 //Adding coloreful axeshelper
 	const axesHelper = new THREE.AxesHelper( 15	 );
 	axesHelper.material.linewidth = 2
+	console.log(axesHelper)
+	axesHelper.position.x = -3
+	// axesHelper.position.y = -3
+	axesHelper.position.z = -3
 	scene.add( axesHelper );
 
+//Adding text X Y Z on axes
+	const loader = new FontLoader();
+	loader.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
+		const text_geometry = new TextGeometry( 'X (width)', {
+			font: font,
+			size: 80,
+			depth: 5,
+			curveSegments: 12,
+			bevelEnabled: true,
+			bevelThickness: 10,
+			bevelSize: 8,
+			bevelOffset: 0,
+			bevelSegments: 5
+			} );
+		
+	let text_material =new THREE.MeshBasicMaterial({color: "red"})
+	let text = new THREE.Mesh(text_geometry, text_material);
+
+	text.scale.set(0.01,0.01,0.001)
+	text.position.x = 12
+	text.position.y = 0
+	text.position.z = -4
+	
+	scene.add(text)
+	} );
+
+
+	
+
+	
 //Adding drag and drop objets from "controls"(not a raycasting)
 
 	// let controls2 = new DragControls(cargo_group.children,camera,renderer.domElement);
