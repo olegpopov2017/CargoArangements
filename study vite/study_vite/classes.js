@@ -2,15 +2,15 @@ export class Cuboid
 {
   uuid
   
-  constructor(length_X,width_Y,height_Z,x,y,z) 
+  constructor(width_X,height_Y,depth_Z,position_x,position_y,position_z) 
   {
     this.array_of_inner_objects = [];
-    this.length_X = length_X;
-    this.width_Y = width_Y;
-    this.height_Z = height_Z;    
-    this.x = x;
-    this.y = y;
-    this.z = z;
+    this.width_X = width_X;      
+    this.height_Y = height_Y;       
+    this.depth_Z = depth_Z;     
+    this.position_x = position_x;
+    this.position_y = position_y;
+    this.position_z = position_z;
   }
   array_of_inner_objects
   array_of_outer_objects

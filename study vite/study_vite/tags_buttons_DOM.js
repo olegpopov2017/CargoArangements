@@ -62,7 +62,7 @@ button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_groun
 let form4_html = `
 <fieldset>
 				<legend>Создание объекта, удаление всех объектов</legend>
-					<table>
+					<table  >
 						<tr>
 							<td><label >Колличество</label></td>
 							<td><input id="quantity4" type="number"/></td>
@@ -79,6 +79,9 @@ let form4_html = `
 							<td><label style="color:Blue;">Длина (depth,z)</label></td>
 							<td><input id="depth4" type="number"/></td>
 						</tr>
+					</table  >
+					<br>
+					<table  >
 						<tr>
 							<td><label style="color:Red;">X (position)</label></td>
 							<td><input id="x4" type="number"/></td>

@@ -55,40 +55,10 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	controls.zoomSpeed = 6;
 	// controls.enabled = false
 
-//Adding coloreful axeshelper
-	const axesHelper = new THREE.AxesHelper( 15	 );
-	axesHelper.material.linewidth = 2
-	console.log(axesHelper)
-	axesHelper.position.x = -3
-	// axesHelper.position.y = -3
-	axesHelper.position.z = -3
-	scene.add( axesHelper );
 
-//Adding text X Y Z on axes
-	const loader = new FontLoader();
-	loader.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
-		const text_geometry = new TextGeometry( 'X (width)', {
-			font: font,
-			size: 80,
-			depth: 5,
-			curveSegments: 12,
-			bevelEnabled: true,
-			bevelThickness: 10,
-			bevelSize: 8,
-			bevelOffset: 0,
-			bevelSegments: 5
-			} );
-		
-	let text_material =new THREE.MeshBasicMaterial({color: "red"})
-	let text = new THREE.Mesh(text_geometry, text_material);
 
-	text.scale.set(0.01,0.01,0.001)
-	text.position.x = 12
-	text.position.y = 0
-	text.position.z = -4
-	
-	scene.add(text)
-	} );
+
+
 
 
 	
@@ -197,15 +167,15 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 						if(
 						o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
 						&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
-						
-						&& o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
+						)
+							{draggable_cargo.position.x = o.point.x}
+						if(
+						o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
 						&& o.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
 						)
-						{
-						draggable_cargo.position.x = o.point.x
-						draggable_cargo.position.z = o.point.z
-						// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.length)/2
-						}
+							{draggable_cargo.position.z = o.point.z}
+						
+					// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.depth)/2
 
 				}
 			}

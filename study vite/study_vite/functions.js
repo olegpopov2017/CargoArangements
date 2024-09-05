@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import {Cuboid} from './classes.js';
 import {cargo_group,cargo_area_group,scene,animate,colors,camera, controls,renderer,
      intersected_objects_group, group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
+import{create_RGB_axes_helper_with_symbols} from './RGB_helper.js'
 import { Color } from 'three';
 import {} from './NEW_functions.js';
 
@@ -33,12 +34,12 @@ export function create_cuboid_from_input()
     let z = Number(document.querySelector("#z4").value);
 
     let cube = new Cuboid
-    cube.length_X = width   //change length_X on width_X!!!!!
-    cube.width_Y = height   //change width_Y on height_Y!!!!!!
-    cube.height_Z = depth   //change height_Z on depth_Z!!!!!
-    cube.x = x
-    cube.y = y
-    cube.z = z
+    cube.width_X = width   
+    cube.height_Y = height   
+    cube.depth_Z = depth   
+    cube.position_x = x
+    cube.position_y = y
+    cube.position_z = z
 
     return cube
 }
@@ -49,12 +50,12 @@ export function create_cuboid_from_cargo(cargo)
     
     let cube = new Cuboid
     
-    cube.length_X = cargo.geometry.parameters.width
-    cube.width_Y = cargo.geometry.parameters.height
-    cube.height_Z = cargo.geometry.parameters.depth
-    cube.x = cargo.position.x-0.5*(cargo.geometry.parameters.width)
-    cube.y = cargo.position.y-0.5*(cargo.geometry.parameters.height)
-    cube.z = cargo.position.z-0.5*(cargo.geometry.parameters.depth)
+    cube.width_X = cargo.geometry.parameters.width
+    cube.height_Y = cargo.geometry.parameters.height
+    cube.depth_Z = cargo.geometry.parameters.depth
+    cube.position_x = cargo.position.x-0.5*(cargo.geometry.parameters.width)
+    cube.position_y = cargo.position.y-0.5*(cargo.geometry.parameters.height)
+    cube.position_z = cargo.position.z-0.5*(cargo.geometry.parameters.depth)
     
     cube.uuid = cargo.uuid
     
@@ -68,18 +69,18 @@ export function create_cuboid_from_cargo(cargo)
 export function create_cargo_from_cuboid(Cuboid)
 {
     let cube = Cuboid
-    let uuid,x,y,z,lenght,width,height
+    let uuid,x,y,z,width,height,depth
 
     uuid = cube.uuid
-    x = Number(cube.x)   
-    y = Number(cube.y)
-    z = Number(cube.z)
-    lenght = Number(cube.length_X)
-    width = Number(cube.width_Y)
-    height = Number(cube.height_Z)
+    x = Number(cube.position_x)   
+    y = Number(cube.position_y)
+    z = Number(cube.position_z)
+    width = Number(cube.width_X)
+    height = Number(cube.height_Y)
+    depth = Number(cube.depth_Z)
 
     let random_color_index = Math.floor(Math.random() * colors.length)
-    let boxGeometry = new THREE.BoxGeometry(lenght, width, height);
+    let boxGeometry = new THREE.BoxGeometry(width, height, depth);
     let cubeMaterial =new THREE.MeshBasicMaterial({color: colors[random_color_index]})                  
     let box1 = new THREE.Mesh(boxGeometry, cubeMaterial);
     
@@ -90,9 +91,9 @@ export function create_cargo_from_cuboid(Cuboid)
     // line.material.linewidth = 1 
     box1.add(line)
         
-    box1.position.x = x + lenght/2;
-    box1.position.y = y + width/2;
-    box1.position.z = z + height/2;
+    box1.position.x = x + width/2;
+    box1.position.y = y + height/2;
+    box1.position.z = z + depth/2;
         
     //Adding user data to box
     if (typeof(cube.uuid) != "undefined"){box1.uuid = uuid}
@@ -153,10 +154,11 @@ export function cargo_area_adding()
     cargo_area_floor.position.z = z/2;
     // cargo_area.add(cargo_area_floor)                  
     group_of_grounds_for_draggable_objects.add(cargo_area_floor)
+    create_RGB_axes_helper_with_symbols(x,y,z)
 
     //Camera look at control target
-    controls.target = new THREE.Vector3( x/2,z/2 ,0 )
-    // console.log(group_of_grounds_for_draggable_objects.children)
+    camera.position.set(x*1.4,y*1.4,z)
+    
 };
 
 
@@ -168,12 +170,12 @@ export function create_cuboid_from_cargo_area(cargo_area)
 {
     let cube = new Cuboid
         
-    cube.length_X = cargo_area.scale.x*2
-    cube.width_Y = cargo_area.scale.y*2
-    cube.height_Z = cargo_area.scale.z*2
-    cube.x = cargo_area.position.x-0.5*(cargo_area.scale.x*2)
-    cube.y = cargo_area.position.y-0.5*(cargo_area.scale.y*2)
-    cube.z = cargo_area.position.z-0.5*(cargo_area.scale.z*2)
+    cube.width_X = cargo_area.scale.x*2
+    cube.height_Y = cargo_area.scale.y*2
+    cube.depth_Z = cargo_area.scale.z*2
+    cube.position_x = cargo_area.position.x-0.5*(cargo_area.scale.x*2)
+    cube.position_y = cargo_area.position.y-0.5*(cargo_area.scale.y*2)
+    cube.position_z = cargo_area.position.z-0.5*(cargo_area.scale.z*2)
     
     cube.uuid = cargo_area.uuid
           
@@ -202,7 +204,7 @@ export function cargo_area_adding_from_cuboid(cube)
 
     let x = Number(cube.width_X)
     let y = Number(cube.height_Y)
-    let z = Number(cube.lenght_Z)
+    let z = Number(cube.depth_Z)
 
     //Create/adding cargo area to scene.
     const area = new THREE.Box3();

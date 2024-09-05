@@ -23,12 +23,12 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                 let cube = new Cuboid
 
                 cube.uuid = data.uuid
-                cube.length_X = data.length_X
-                cube.width_Y = data.width_Y
-                cube.height_Z = data.height_Z
-                cube.x = data.x
-                cube.y = data.y
-                cube.z = data.z
+                cube.width_X = data.width_X
+                cube.height_Y = data.height_Y
+                cube.depth_Z = data.depth_Z
+                cube.position_x = data.x
+                cube.position_y = data.y
+                cube.position_z = data.z
 
                 let parent_cube = cargo_area_adding_from_cuboid(cube)
                                 
@@ -41,12 +41,12 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                     let children_cube = new Cuboid
                     
                     children_cube.uuid = inner_cube.uuid
-                    children_cube.length_X = inner_cube.length_X
-                    children_cube.width_Y = inner_cube.width_Y
-                    children_cube.height_Z = inner_cube.height_Z
-                    children_cube.x = inner_cube.x
-                    children_cube.y = inner_cube.y
-                    children_cube.z = inner_cube.z
+                    children_cube.width_X = inner_cube.width_X
+                    children_cube.height_Y = inner_cube.height_Y
+                    children_cube.depth_Z = inner_cube.depth_Z
+                    children_cube.position_x = inner_cube.x
+                    children_cube.position_y = inner_cube.y
+                    children_cube.position_z = inner_cube.z
                     
                     let children = create_cargo_from_cuboid(children_cube)
                     
@@ -73,15 +73,15 @@ export function present_object_parameters()
             
             if(typeof(car_area) === "undefined"){throw new Error("Cargo area not createted. Please create cargo area and try again.")}
 
-            if( car_area.length_X == 0 ||
-            car_area.width_Y == 0 ||
-            car_area.height_Z == 0)
+            if( car_area.width_X == 0 ||
+            car_area.height_Y == 0 ||
+            car_area.depth_Z == 0)
             {throw new Error("Cargo area size not valid. Please enter correct size and try again.")}
             
             if(cargo_group.children.length == 0) {throw new Error("No objects in cargo area.")}
 
             console.log(' Cargo area UUID: ',car_area.uuid,'\n',
-                            'Cargo area scale:  ','Lenght =',car_area.length_X,'; Width =',car_area.width_Y,'; Height =',car_area.height_Z,'\n',
+                            'Cargo area size:  ','Width =',car_area.width_X,'; Height =',car_area.height_Y,'; depth =',car_area.depth_Z,'\n',
                             'Number of objects in the cargo area:',cargo_group.children.length,'\n',)
                     
 
@@ -90,15 +90,15 @@ export function present_object_parameters()
                     {
                     let cargo = create_cuboid_from_cargo(cargo_group.children[i]);
 
-                    if( cargo.length_X == 0 ||
-                        cargo.width_Y == 0 ||
-                        cargo.height_Z == 0)
+                    if( cargo.width_X == 0 ||
+                        cargo.height_Y == 0 ||
+                        cargo.depth_Z == 0)
                     {console.log("Cargo uuid",cargo.uuid ,"size not valid. Please enter correct size and try again.")}
                     
                     console.log('     Number of object: ',i+1,'\n',
                                 '    UUID: ',cargo.uuid,'\n',
-                                '    Scale:  ','Lenght =',cargo.length_X,'; Width =',cargo.width_Y,'; Height =',cargo.height_Z,'\n',
-                                '    Coordinates:  ','X =',cargo.x,'; Y =',cargo.y, '; Z =',cargo.z
+                                '    Size:  ','Width =',cargo.width_X,'; Height =',cargo.height_Y,'; Depth =',cargo.depth_Z,'\n',
+                                '    Coordinates:  ','X =',cargo.position_x,'; Y =',cargo.position_y, '; Z =',cargo.position_z
                                 );
                     
                     // animate()
