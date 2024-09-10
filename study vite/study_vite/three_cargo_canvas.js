@@ -84,7 +84,6 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	const moveMouse = new THREE.Vector2();   // create once
 	let  draggable_cargo = new THREE.Object3D;
 	scene.add(draggable_cargo)
-	// let  intersected_cargo = new THREE.Object3D;
 	
 	
 	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable"
@@ -94,13 +93,10 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		{
 			controls.enabled = false
 			console.log(`Dropping draggable object`)
-			draggable_cargo.userData.intersecteble = true
-			// group_of_grounds_for_draggable_objects.clear()
-			draggable_cargo.removeFromParent()
-			cargo_group.add(draggable_cargo)
 			
-			// draggable_cargo.parent.add(cargo_group)			//need for jumping cargos
-			// draggable_cargo.parent.remove(scene)  //need for jumping cargos
+			draggable_cargo.removeFromParent()		//Need for jumping cargos after mouse moving  and intersect mouse with other object
+			cargo_group.add(draggable_cargo)		//Need for jumping cargos after mouse moving  and intersect mouse with other object
+			
 			
 			draggable_cargo = null 
 			
@@ -126,11 +122,8 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 				console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
 				
-				// group_of_grounds_for_draggable_objects = cargo_group.clone()
-				draggable_cargo.removeFromParent()
-				scene.add(draggable_cargo)
-				
-							
+				draggable_cargo.removeFromParent()			//Need for jumping cargos after mouse moving  and intersect mouse with other object
+				scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
 				
 			}
 			}
@@ -143,61 +136,11 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
 		moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
 		
-		//Seraching intersecting cargo after mouse moving. Nees for cargo jumping.
-			// const intersected_cargo = raycaster.intersectObjects(cargo_group.children,false);	
-			// if (intersected_cargo.length>1 && !intersected_cargo[0].object.userData.intersecteble) // Set condition when 1 cargo is find and draggable
-			// 	{
-			// 	console.log(intersected_cargo[1].object.userData.intersecteble)
-			// 	console.log(`Finding intersected cargo :`,intersected_cargo[1].faceIndex)
-			// 	}
-					
-			// if(intersected_cargo.length == 0)	
-			// 	{
-			// 	console.clear
-			// 	console.log(`Droping intersected cargo`)
-			// 	}
-				
-
-		
-		
-		// console.log(moveMouse.x)
-		
-	
 	}
 	)
 
 	function dragObject() {
 		
-	//Use for NON jumping cargos. 
-		// 	raycaster.setFromCamera(moveMouse, camera);
-		
-	// 	if (draggable_cargo != null) {
-	// 		const found = raycaster.intersectObjects(group_of_grounds_for_draggable_objects.children)
-			
-	// 		if (found.length > 0) {
-	// 			for (let o of found) {
-						
-					
-					
-	// 					if(
-	// 					o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
-	// 					&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
-	// 					)
-	// 						{draggable_cargo.position.x = o.point.x}
-	// 					if(
-	// 					o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
-	// 					&& o.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
-	// 					)
-	// 						{draggable_cargo.position.z = o.point.z}
-						
-	// 				// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.depth)/2
-
-	// 			}
-	// 		}
-	// 	}
-			
-	// }
-	
 	//Use for cargos jumping 
 	
 		raycaster.setFromCamera(moveMouse, camera);
@@ -206,35 +149,37 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			const cargos_on_ray = raycaster.intersectObjects(cargo_group.children,false)
 				
 			if (cargos_on_ray.length > 0) {
+
+				let found = cargos_on_ray[0]
 					
-									
-					for (let found of cargos_on_ray) {
-					
-					// console.log(found)
 					console.log(found)
+
+					//Condition for cargo moving only upper faces.
+					if(found.faceIndex == 4 || found.faceIndex == 5){		
 						
-					// if (found.length>1){
-						
-						// draggable_cargo.position.y = 0
 						if(
 						found.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
 						&& found.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
 						)
 							{draggable_cargo.position.x = found.point.x}
+						
 						if(
 						found.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
 						&& found.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
 						)
 							{draggable_cargo.position.z = found.point.z}
-					// }	
-					draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2
-
-				}
+						
+						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2					//Set Y position of dragable object.		
+					}
+				
 			}
 		}
 			
 	}
 	
+
+
+
 export function animate() 
 {	
 	dragObject();

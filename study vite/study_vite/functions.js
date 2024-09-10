@@ -88,7 +88,6 @@ export function create_cargo_from_cuboid(Cuboid)
     //Adding edge frame for a box
     let edges = new THREE.EdgesGeometry( boxGeometry ); 
     let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: "black" } ) );
-    // line.material.linewidth = 1 
     box1.add(line)
         
     box1.position.x = x + width/2;
@@ -97,8 +96,7 @@ export function create_cargo_from_cuboid(Cuboid)
         
     //Adding user data to box
     if (typeof(cube.uuid) != "undefined"){box1.uuid = uuid}
-    box1.userData.isFloor = false //Need for jumping cargos
-    box1.userData.intersecteble = true; //Need for jumping cargos
+    box1.userData.isFloor = false                               //Need for jumping cargos
     
     return box1
 }
@@ -133,8 +131,6 @@ export function create_cargo_after_input_data_and_adding_to_scene()
 export function cargo_area_adding()   
 {
     cargo_area_group.clear();
-    // group_of_grounds_for_draggable_objects.clear()
-    group_of_grounds_for_draggable_objects.clear();
 
     let x = Number(document.querySelector("#width_palette").value);
     let y = Number(document.querySelector("#height_palette").value);
@@ -154,7 +150,6 @@ export function cargo_area_adding()
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
     cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
-    // group_of_grounds_for_draggable_objects.add(cargo_area_floor)     //this use before cargo jumping
     cargo_group.add(cargo_area_floor)                                   //this use for cargo jumping
     create_RGB_axes_helper_with_symbols(x,y,z)
 
@@ -239,7 +234,7 @@ export function cargo_area_adding_from_cuboid(cube)
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;                  
-    group_of_grounds_for_draggable_objects.add(cargo_area_floor)
+    group_of_grounds_for_draggable_objects.add(cargo_area_floor) 
 
     return plane1
     };   
