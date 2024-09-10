@@ -152,6 +152,7 @@ export function cargo_area_adding()
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
+    cargo_area_floor.userData.isFloor = true
     // cargo_area.add(cargo_area_floor)                  
     group_of_grounds_for_draggable_objects.add(cargo_area_floor)
     create_RGB_axes_helper_with_symbols(x,y,z)

@@ -92,16 +92,15 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		if (draggable_cargo) 
 		{
 			controls.enabled = false
-			// console.clear
 			console.log(`Dropping draggable object`)
+			draggable_cargo.userData.intersecteble = true
 			draggable_cargo = null 
 
-			if(!draggable_cargo)	
-			{
-				// console.clear
-				controls.enabled = true
-				return;
-			}
+				if(!draggable_cargo)	
+				{
+					controls.enabled = true
+					return;
+				}
 		}
 		
 		//Founding ClickMouse position and set this parameters to variable "raycaster"
@@ -117,6 +116,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			{
 				draggable_cargo = found[0].object
 				console.log("Found object:",draggable_cargo)
+				draggable_cargo.userData.intersecteble = false
 			}
 			}
 	)
@@ -128,21 +128,18 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
 		moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
 		
-		//Seraching intersecting cargo after mouse moving
+		//Seraching intersecting cargo after mouse moving. Nees for cargo jumping.
 			const intersected_cargo = raycaster.intersectObjects(cargo_group.children,false);	
-			// intersected_cargo.
-			if (intersected_cargo.length>0) 
+			if (intersected_cargo.length>1 && !intersected_cargo[0].object.userData.intersecteble) // Set condition when 1 cargo is find and draggable
 				{
-				console.log(`Finding intersected cargo`,intersected_cargo)
+				console.log(intersected_cargo[1].object.userData.intersecteble)
+				console.log(`Finding intersected cargo :`,intersected_cargo[1].faceIndex)
 				}
 					
 			if(intersected_cargo.length == 0)	
 				{
 				console.clear
-				// intersected_cargo = null
-				// console.clear()
 				console.log(`Droping intersected cargo`)
-				// intersected_cargo = null;	
 				}
 				
 
@@ -164,6 +161,9 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			
 			if (found.length > 0) {
 				for (let o of found) {
+						
+					
+					
 						if(
 						o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
 						&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
