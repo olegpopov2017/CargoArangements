@@ -43,7 +43,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	export const cargo_area_group = new THREE.Group();
 	export const cargo_group = new THREE.Group();
 	export const intersected_objects_group = new THREE.Group();
-	export const group_of_grounds_for_draggable_objects = new THREE.Group();
+	export let group_of_grounds_for_draggable_objects = new THREE.Group();
 	scene.add(intersected_objects_group);
 	scene.add(cargo_area_group);
 	scene.add(cargo_group);
@@ -83,6 +83,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	const clickMouse = new THREE.Vector2();  // create once
 	const moveMouse = new THREE.Vector2();   // create once
 	let  draggable_cargo = new THREE.Object3D;
+	scene.add(draggable_cargo)
 	// let  intersected_cargo = new THREE.Object3D;
 	
 	
@@ -94,8 +95,15 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			controls.enabled = false
 			console.log(`Dropping draggable object`)
 			draggable_cargo.userData.intersecteble = true
+			// group_of_grounds_for_draggable_objects.clear()
+			draggable_cargo.removeFromParent()
+			cargo_group.add(draggable_cargo)
+			
+			// draggable_cargo.parent.add(cargo_group)			//need for jumping cargos
+			// draggable_cargo.parent.remove(scene)  //need for jumping cargos
+			
 			draggable_cargo = null 
-
+			
 				if(!draggable_cargo)	
 				{
 					controls.enabled = true
@@ -112,11 +120,18 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			raycaster.setFromCamera(clickMouse, camera);
 			const found = raycaster.intersectObjects(cargo_group.children,false);
 			
-			if(found.length>0)
+			if(found.length>0 && found[0].object.userData.isFloor == false)
 			{
 				draggable_cargo = found[0].object
 				console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
+				
+				// group_of_grounds_for_draggable_objects = cargo_group.clone()
+				draggable_cargo.removeFromParent()
+				scene.add(draggable_cargo)
+				
+							
+				
 			}
 			}
 	)
@@ -129,18 +144,18 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
 		
 		//Seraching intersecting cargo after mouse moving. Nees for cargo jumping.
-			const intersected_cargo = raycaster.intersectObjects(cargo_group.children,false);	
-			if (intersected_cargo.length>1 && !intersected_cargo[0].object.userData.intersecteble) // Set condition when 1 cargo is find and draggable
-				{
-				console.log(intersected_cargo[1].object.userData.intersecteble)
-				console.log(`Finding intersected cargo :`,intersected_cargo[1].faceIndex)
-				}
+			// const intersected_cargo = raycaster.intersectObjects(cargo_group.children,false);	
+			// if (intersected_cargo.length>1 && !intersected_cargo[0].object.userData.intersecteble) // Set condition when 1 cargo is find and draggable
+			// 	{
+			// 	console.log(intersected_cargo[1].object.userData.intersecteble)
+			// 	console.log(`Finding intersected cargo :`,intersected_cargo[1].faceIndex)
+			// 	}
 					
-			if(intersected_cargo.length == 0)	
-				{
-				console.clear
-				console.log(`Droping intersected cargo`)
-				}
+			// if(intersected_cargo.length == 0)	
+			// 	{
+			// 	console.clear
+			// 	console.log(`Droping intersected cargo`)
+			// 	}
 				
 
 		
@@ -153,29 +168,66 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 	function dragObject() {
 		
+	//Use for NON jumping cargos. 
+		// 	raycaster.setFromCamera(moveMouse, camera);
+		
+	// 	if (draggable_cargo != null) {
+	// 		const found = raycaster.intersectObjects(group_of_grounds_for_draggable_objects.children)
+			
+	// 		if (found.length > 0) {
+	// 			for (let o of found) {
+						
+					
+					
+	// 					if(
+	// 					o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
+	// 					&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
+	// 					)
+	// 						{draggable_cargo.position.x = o.point.x}
+	// 					if(
+	// 					o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
+	// 					&& o.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
+	// 					)
+	// 						{draggable_cargo.position.z = o.point.z}
+						
+	// 				// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.depth)/2
+
+	// 			}
+	// 		}
+	// 	}
+			
+	// }
+	
+	//Use for cargos jumping 
+	
 		raycaster.setFromCamera(moveMouse, camera);
 		
 		if (draggable_cargo != null) {
-			const found = raycaster.intersectObjects(group_of_grounds_for_draggable_objects.children)
-			// controls.enabled = false
-			
-			if (found.length > 0) {
-				for (let o of found) {
-						
+			const cargos_on_ray = raycaster.intersectObjects(cargo_group.children,false)
+				
+			if (cargos_on_ray.length > 0) {
 					
+									
+					for (let found of cargos_on_ray) {
 					
-						if(
-						o.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
-						&& o.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
-						)
-							{draggable_cargo.position.x = o.point.x}
-						if(
-						o.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
-						&& o.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
-						)
-							{draggable_cargo.position.z = o.point.z}
+					// console.log(found)
+					console.log(found)
 						
-					// draggable.position.z = o.point.z+Number(draggable.geometry.parameters.depth)/2
+					// if (found.length>1){
+						
+						// draggable_cargo.position.y = 0
+						if(
+						found.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
+						&& found.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
+						)
+							{draggable_cargo.position.x = found.point.x}
+						if(
+						found.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
+						&& found.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
+						)
+							{draggable_cargo.position.z = found.point.z}
+					// }	
+					draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2
 
 				}
 			}

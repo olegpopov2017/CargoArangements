@@ -97,7 +97,8 @@ export function create_cargo_from_cuboid(Cuboid)
         
     //Adding user data to box
     if (typeof(cube.uuid) != "undefined"){box1.uuid = uuid}
-    box1.userData.intersecteble = true;
+    box1.userData.isFloor = false //Need for jumping cargos
+    box1.userData.intersecteble = true; //Need for jumping cargos
     
     return box1
 }
@@ -152,9 +153,9 @@ export function cargo_area_adding()
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
-    cargo_area_floor.userData.isFloor = true
-    // cargo_area.add(cargo_area_floor)                  
-    group_of_grounds_for_draggable_objects.add(cargo_area_floor)
+    cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
+    // group_of_grounds_for_draggable_objects.add(cargo_area_floor)     //this use before cargo jumping
+    cargo_group.add(cargo_area_floor)                                   //this use for cargo jumping
     create_RGB_axes_helper_with_symbols(x,y,z)
 
     //Camera look at control target
