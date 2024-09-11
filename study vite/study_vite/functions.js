@@ -83,12 +83,15 @@ export function create_cargo_from_cuboid(Cuboid)
     let boxGeometry = new THREE.BoxGeometry(width, height, depth);
     let cubeMaterial =new THREE.MeshBasicMaterial({color: colors[random_color_index]})                  
     let box1 = new THREE.Mesh(boxGeometry, cubeMaterial);
+    box1.material.side = THREE.DoubleSide
     
     
     //Adding edge frame for a box
     let edges = new THREE.EdgesGeometry( boxGeometry ); 
     let line = new THREE.LineSegments(edges, new THREE.LineBasicMaterial( { color: "black" } ) );
     box1.add(line)
+    
+    
         
     box1.position.x = x + width/2;
     box1.position.y = y + height/2;

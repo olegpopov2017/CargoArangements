@@ -82,25 +82,31 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	const raycaster = new THREE.Raycaster(); // create once
 	const clickMouse = new THREE.Vector2();  // create once
 	const moveMouse = new THREE.Vector2();   // create once
-	let  draggable_cargo = new THREE.Object3D;
-	scene.add(draggable_cargo)
+	let  draggable_cargo = null;
+	// scene.add(draggable_cargo)
 	
 	
 	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable"
 	window.addEventListener('click', event => {
 		
+		// if (typeof(draggable_cargo) != "undefined") 
 		if (draggable_cargo) 
+
 		{
 			controls.enabled = false
 			console.log(`Dropping draggable object`)
+			draggable_cargo.material.opacity = 1
+			draggable_cargo.material.transparent = false
+			draggable_cargo.children[0].material.color.set("black")
 			
+			console.log(draggable_cargo)
 			draggable_cargo.removeFromParent()		//Need for jumping cargos after mouse moving  and intersect mouse with other object
 			cargo_group.add(draggable_cargo)		//Need for jumping cargos after mouse moving  and intersect mouse with other object
 			
 			
 			draggable_cargo = null 
 			
-				if(!draggable_cargo)	
+			if(!draggable_cargo)	
 				{
 					controls.enabled = true
 					return;
@@ -112,7 +118,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
 			clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
 					
-		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable"
+		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
 			raycaster.setFromCamera(clickMouse, camera);
 			const found = raycaster.intersectObjects(cargo_group.children,false);
 			
@@ -123,8 +129,14 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 				draggable_cargo.userData.intersecteble = false
 				
 				draggable_cargo.removeFromParent()			//Need for jumping cargos after mouse moving  and intersect mouse with other object
-				scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
 				
+				draggable_cargo.material.opacity = 0.2
+				draggable_cargo.material.transparent = true
+				draggable_cargo.children[0].material.color.set("red")
+				
+				console.log(draggable_cargo)
+				scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
+				// animate()
 			}
 			}
 	)
@@ -154,7 +166,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 					
 					console.log(found)
 
-					//Condition for cargo moving only upper faces.
+					//Condition for cargo moving only upper faces(upper faces consist of two triangles with numbers 4 and 5).
 					if(found.faceIndex == 4 || found.faceIndex == 5){		
 						
 						if(
