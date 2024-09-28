@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitControls';
 // import { GLTFLoader } from './node_modules/three/examples/jsm/loaders/GLTFLoader.js';
 import { FontLoader } from '/node_modules/three/examples/jsm/loaders/FontLoader.js';
+import { TextureLoader } from '/node_modules/three/src/loaders/TextureLoader.js';
+
 import { DragControls } from '/node_modules/three/examples/jsm/controls/DragControls.js';
 import { TextGeometry } from '/node_modules/three/examples/jsm/geometries/TextGeometry.js';
 import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/renderers/CSS3DRenderer.js';
@@ -14,7 +16,17 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 // import {} from './classes.js';
 // DragControls.install({THREE: THREE})
 
-
+// const textureLoader = new THREE.TextureLoader();
+// export const texture = textureLoader.load('./image/conteiner_side.jpg',
+//   (texture) => {
+//     // Успешная загрузка
+//     console.log('Texture loaded successfully');
+// 	console.log(texture)
+//   },undefined,
+//   (error) => {
+//     // Ошибка загрузки
+//     console.error('An error occurred while loading the texture:', error);
+//   })
 
 //Intialization scene,camera,plane,renderer
 	export const scene = new THREE.Scene();
@@ -55,15 +67,6 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	controls.zoomSpeed = 6;
 	// controls.enabled = false
 
-
-
-
-
-
-
-	
-
-	
 //Adding drag and drop objets from "controls"(not a raycasting)
 
 	// let controls2 = new DragControls(cargo_group.children,camera,renderer.domElement);
@@ -132,9 +135,9 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 				
 				draggable_cargo.material.opacity = 0.2
 				draggable_cargo.material.transparent = true
-				draggable_cargo.children[0].material.color.set("red")
+				draggable_cargo.children[0].material.color.set("GREEN")
 				
-				console.log(draggable_cargo)
+				// console.log(draggable_cargo)
 				scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
 				// animate()
 			}
@@ -169,17 +172,17 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 					//Condition for cargo moving only upper faces(upper faces consist of two triangles with numbers 4 and 5).
 					if(found.faceIndex == 4 || found.faceIndex == 5){		
 						
-						if(
-						found.point.x+Number(draggable_cargo.geometry.parameters.width)/2 <= cargo_area_group.children[0].scale.x*2     	//MIN X axis limitation draggable
-						&& found.point.x >= Number(draggable_cargo.geometry.parameters.width)/2  											//MAX X axis limitation draggable
-						)
-							{draggable_cargo.position.x = found.point.x}
+						if(found.point.x <= Number(draggable_cargo.geometry.parameters.width)/2)     											//MIN X axis limitation draggable
+							{draggable_cargo.position.x = Number(draggable_cargo.geometry.parameters.width)/2}
+						else if(found.point.x+Number(draggable_cargo.geometry.parameters.width)/2 >= cargo_area_group.children[0].scale.x*2)  	//MAX X axis limitation draggable
+							{draggable_cargo.position.x = cargo_area_group.children[0].scale.x*2-Number(draggable_cargo.geometry.parameters.width)/2}
+						else {draggable_cargo.position.x = found.point.x}
 						
-						if(
-						found.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 <= cargo_area_group.children[0].scale.z*2 	//MIN Z axis limitation draggable
-						&& found.point.z >= Number(draggable_cargo.geometry.parameters.depth)/2											//MAX Z axis limitation draggable
-						)
-							{draggable_cargo.position.z = found.point.z}
+						if(found.point.z <= Number(draggable_cargo.geometry.parameters.depth)/2)     											//MIN Z axis limitation draggable
+							{draggable_cargo.position.z = Number(draggable_cargo.geometry.parameters.depth)/2}
+						else if(found.point.z+Number(draggable_cargo.geometry.parameters.depth)/2 >= cargo_area_group.children[0].scale.z*2)  	//MAX Z axis limitation draggable
+							{draggable_cargo.position.z = cargo_area_group.children[0].scale.z*2-Number(draggable_cargo.geometry.parameters.depth)/2}
+						else {draggable_cargo.position.z = found.point.z}
 						
 						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2					//Set Y position of dragable object.		
 					}

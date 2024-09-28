@@ -83,6 +83,7 @@ export function create_cargo_from_cuboid(Cuboid)
     let boxGeometry = new THREE.BoxGeometry(width, height, depth);
     let cubeMaterial =new THREE.MeshBasicMaterial({color: colors[random_color_index]})                  
     let box1 = new THREE.Mesh(boxGeometry, cubeMaterial);
+    
     box1.material.side = THREE.DoubleSide
     
     
@@ -148,7 +149,11 @@ export function cargo_area_adding()
     
     //Create/adding transparent yellow floor for reading mouse moving position
     let boxGeometry = new THREE.BoxGeometry(x, 0, z);
+    
+    // const cubeMaterial = new THREE.MeshStandardMaterial({ map: texture }); //Test image in cargo area
+    
     let cubeMaterial =new THREE.MeshBasicMaterial({color: 0xffff00})
+    
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
