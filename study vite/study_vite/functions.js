@@ -144,21 +144,24 @@ export function cargo_area_adding()
     const area = new THREE.Box3();
     area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
     const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
-    cargo_area_group.add(cargo_area);
+    // cargo_area_group.add(cargo_area);
     
     
     //Create/adding transparent yellow floor for reading mouse moving position
     let boxGeometry = new THREE.BoxGeometry(x, 0, z);
     
-    // const cubeMaterial = new THREE.MeshStandardMaterial({ map: texture }); //Test image in cargo area
-    
-    let cubeMaterial =new THREE.MeshBasicMaterial({color: 0xffff00})
+    let cubeMaterial = new THREE.MeshBasicMaterial({color: 0xffff00})
     
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
+    // cargo_area_floor.position.y = -1;
     cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
-    cargo_group.add(cargo_area_floor)                                   //this use for cargo jumping
+    scene.add(cargo_area_floor)                                   //this use for cargo jumping
+    // cargo_area.add(cargo_area_floor)
+    cargo_area_group.add(cargo_area_floor)
+    cargo_area_group.add(cargo_area);
+    // console.log(cargo_area_group)
     create_RGB_axes_helper_with_symbols(x,y,z)
 
     //Camera look at control target

@@ -116,7 +116,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
             text.position.y = 0
             text.position.z = depth*1.3+min//+ Number(text.geometry.parameters.options.size)
             text.rotation.y = Math.PI/2 
-            console.log(text)
+            // console.log(text)
             cargo_area_group.add(text)
         } );
 

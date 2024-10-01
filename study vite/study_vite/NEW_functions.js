@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { create_cuboid_from_cargo_area,create_cargo_from_cuboid,threejs_scena_to_cuboid_with_inner_objects,create_cuboid_from_cargo,cargo_area_adding_from_cuboid } from './functions';
 import {Cuboid} from './classes.js';
-import {cargo_area_group,cargo_group} from './three_cargo_canvas.js';
 
-       
+      
 
 //Send data of scena(cargo area,cargos) to local algorithm and come back result on the screen.
 export function placement_cargo_according_to_algorithm_on_local_server()
@@ -106,6 +105,6 @@ export function present_object_parameters()
             } 
             catch (err) 
             {
-                console.log(err.message)
+                // console.log(err.message)
             }
     }

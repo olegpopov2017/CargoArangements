@@ -7,6 +7,8 @@ import { TextureLoader } from '/node_modules/three/src/loaders/TextureLoader.js'
 import { DragControls } from '/node_modules/three/examples/jsm/controls/DragControls.js';
 import { TextGeometry } from '/node_modules/three/examples/jsm/geometries/TextGeometry.js';
 import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/renderers/CSS3DRenderer.js';
+
+
 // import { any } from 'three/examples/jsm/nodes/Nodes.js';
 // import { EffectComposer } from '/node_modules/three/examples/jsm/postprocessing/EffectComposer.js';
 // import { RenderPass } from '/node_modules/three/examples/jsm/postprocessing/RenderPass.js';
@@ -78,14 +80,29 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	// controls2.addEventListener ( 'drag', function( event ){event.object.position.z = Number(event.object.geometry.parameters.height/2);});
 	// controls2.addEventListener ( 'drag', function( event ){if(event.object.position.x > 10){event.object.position.x = 10}});
 	
+//Check the collisions of draggable cargo and other cargos.
+export function check_collision_of_draggable_cargo_and_other_cargos()
+{
+ console.log("check collisions")
+//  console.log(draggable_cargo)
+ let width = Number(draggable_cargo.geometry.parameters.width)
+ let height = Number(draggable_cargo.geometry.parameters.height)
+ let depth = Number(draggable_cargo.geometry.parameters.depth)
+ let x = Number(draggable_cargo.position.x)
+ let y = Number(draggable_cargo.position.y)
+ let z = Number(draggable_cargo.position.z)
+ const box1 = new THREE.Box3().setFromObject(draggable_cargo)
+ console.log(box1)
+//  console.log(cargo_group.children.length)
 
+} 
 
 //Addinng raycaster for mouse picking objects.	
 
 	const raycaster = new THREE.Raycaster(); // create once
 	const clickMouse = new THREE.Vector2();  // create once
 	const moveMouse = new THREE.Vector2();   // create once
-	let  draggable_cargo = null;
+	export let  draggable_cargo = null;
 	// scene.add(draggable_cargo)
 	
 	
@@ -98,11 +115,14 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		{
 			controls.enabled = false
 			console.log(`Dropping draggable object`)
+
+			check_collision_of_draggable_cargo_and_other_cargos()
+
 			draggable_cargo.material.opacity = 1
 			draggable_cargo.material.transparent = false
 			draggable_cargo.children[0].material.color.set("black")
 			
-			console.log(draggable_cargo)
+			// console.log(draggable_cargo)
 			draggable_cargo.removeFromParent()		//Need for jumping cargos after mouse moving  and intersect mouse with other object
 			cargo_group.add(draggable_cargo)		//Need for jumping cargos after mouse moving  and intersect mouse with other object
 			
@@ -123,12 +143,30 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 					
 		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
 			raycaster.setFromCamera(clickMouse, camera);
+
+			
+			
+			
+			
+			
+			// let a = cargo_area_group.children[0]
+			// console.log(a)
+			let b = cargo_area_group.children[0]
+			console.log(b)
+
+			
+			
+			
+			
+			
+			
+			
 			const found = raycaster.intersectObjects(cargo_group.children,false);
 			
 			if(found.length>0 && found[0].object.userData.isFloor == false)
 			{
 				draggable_cargo = found[0].object
-				console.log("Found object:",draggable_cargo)
+				// console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
 				
 				draggable_cargo.removeFromParent()			//Need for jumping cargos after mouse moving  and intersect mouse with other object
@@ -167,7 +205,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 				let found = cargos_on_ray[0]
 					
-					console.log(found)
+					// console.log(found)
 
 					//Condition for cargo moving only upper faces(upper faces consist of two triangles with numbers 4 and 5).
 					if(found.faceIndex == 4 || found.faceIndex == 5){		
