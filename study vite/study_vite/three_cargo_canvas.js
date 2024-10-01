@@ -93,7 +93,14 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
  let z = Number(draggable_cargo.position.z)
  const box1 = new THREE.Box3().setFromObject(draggable_cargo)
  console.log(box1)
-//  console.log(cargo_group.children.length)
+ console.log(cargo_group.children)
+ for (let i=0;i<=cargo_group.children.length;i++){
+	// let box2 = new THREE.Box3().setFromObject(cargo_group.children[i])
+	let box2 =cargo_group.children[i]
+	console.log("box 2 is", box2)
+
+	// if(box1.intersectsBox(box2)){console.log('collision detected')}
+ }
 
 } 
 
@@ -144,23 +151,6 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
 			raycaster.setFromCamera(clickMouse, camera);
 
-			
-			
-			
-			
-			
-			// let a = cargo_area_group.children[0]
-			// console.log(a)
-			let b = cargo_area_group.children[0]
-			console.log(b)
-
-			
-			
-			
-			
-			
-			
-			
 			const found = raycaster.intersectObjects(cargo_group.children,false);
 			
 			if(found.length>0 && found[0].object.userData.isFloor == false)
