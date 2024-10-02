@@ -93,8 +93,8 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			let box2 = new THREE.Box3().setFromObject(cargo_group.children[i])
 			if(box1.intersectsBox(box2)){
 				console.log('collision detected')
-				console.log(draggable_cargo)
-				console.log(backup_draggable_cargo)
+				console.log("draggable is ",draggable_cargo)
+				console.log("backup is",backup_draggable_cargo)
 				// draggable_cargo.position.x = backup_draggable_cargo.position.x		//Need for backup cargo position to start when collision is exist
 				// draggable_cargo.position.y = backup_draggable_cargo.position.y		//Need for backup cargo position to start when collision is exist
 				// draggable_cargo.position.z = backup_draggable_cargo.position.z		//Need for backup cargo position to start when collision is exist
@@ -159,9 +159,10 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 			if(found.length>0 && found[0].object.userData.isFloor == false)
 			{
 				draggable_cargo = found[0].object
-				// backup_draggable_cargo = found[0].object
-				// Object.assign(backup_draggable_cargo,found[0].object);
-				// backup_draggable_cargo = {...found[0].object}
+				// if(!backup_draggable_cargo){backup_draggable_cargo = found[0].object}
+				// Object.assign(backup_draggable_cargo,draggable_cargo);
+				// backup_draggable_cargo = {...draggable_cargo}
+				// backup_draggable_cargo = structuredClone(found[0].object)
 				// console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
 				
@@ -195,6 +196,8 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		raycaster.setFromCamera(moveMouse, camera);
 		
 		if (draggable_cargo != null) {
+			if(!backup_draggable_cargo){backup_draggable_cargo = {...draggable_cargo}}
+
 
 			let array_of_floors_for_draggable = [...group_of_cargo_area_floor.children,...cargo_group.children]
 
