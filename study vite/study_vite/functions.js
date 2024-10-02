@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {Cuboid} from './classes.js';
 import {cargo_group,cargo_area_group,scene,animate,colors,camera, controls,renderer,
-     intersected_objects_group, group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
+     intersected_objects_group, group_of_grounds_for_draggable_objects,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import{create_RGB_axes_helper_with_symbols} from './RGB_helper.js'
 import { Color } from 'three';
 import {} from './NEW_functions.js';
@@ -157,15 +157,17 @@ export function cargo_area_adding()
     cargo_area_floor.position.z = z/2;
     // cargo_area_floor.position.y = -1;
     cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
-    scene.add(cargo_area_floor)                                   //this use for cargo jumping
+    // scene.add(cargo_area_floor)                                   //this use for cargo jumping
     // cargo_area.add(cargo_area_floor)
-    cargo_area_group.add(cargo_area_floor)
     cargo_area_group.add(cargo_area);
-    // console.log(cargo_area_group)
     create_RGB_axes_helper_with_symbols(x,y,z)
-
+    
     //Camera look at control target
     camera.position.set(x*1.4,y*1.4,z)
+
+    // cargo_area_group.add(cargo_area_floor)
+    group_of_cargo_area_floor.add(cargo_area_floor)
+    console.log(cargo_area_group.children)
     
 };
 

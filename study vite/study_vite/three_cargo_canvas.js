@@ -58,9 +58,12 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	export const cargo_group = new THREE.Group();
 	export const intersected_objects_group = new THREE.Group();
 	export let group_of_grounds_for_draggable_objects = new THREE.Group();
+	export let group_of_cargo_area_floor = new THREE.Group();
 	scene.add(intersected_objects_group);
 	scene.add(cargo_area_group);
 	scene.add(cargo_group);
+	scene.add(group_of_cargo_area_floor)
+
 	scene.add(group_of_grounds_for_draggable_objects);
 
 //Rotation camera with orbit controls.
@@ -81,28 +84,28 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	// controls2.addEventListener ( 'drag', function( event ){if(event.object.position.x > 10){event.object.position.x = 10}});
 	
 //Check the collisions of draggable cargo and other cargos.
-export function check_collision_of_draggable_cargo_and_other_cargos()
-{
- console.log("check collisions")
-//  console.log(draggable_cargo)
- let width = Number(draggable_cargo.geometry.parameters.width)
- let height = Number(draggable_cargo.geometry.parameters.height)
- let depth = Number(draggable_cargo.geometry.parameters.depth)
- let x = Number(draggable_cargo.position.x)
- let y = Number(draggable_cargo.position.y)
- let z = Number(draggable_cargo.position.z)
- const box1 = new THREE.Box3().setFromObject(draggable_cargo)
- console.log(box1)
- console.log(cargo_group.children)
- for (let i=0;i<=cargo_group.children.length;i++){
-	// let box2 = new THREE.Box3().setFromObject(cargo_group.children[i])
-	let box2 =cargo_group.children[i]
-	console.log("box 2 is", box2)
+	export function check_collision_of_draggable_cargo_and_other_cargos()
+	{
+	const box1 = new THREE.Box3().setFromObject(draggable_cargo)
+	
+	if(cargo_group.children.length > 0){
+		for (let i=0;i<cargo_group.children.length;i++){
+			let box2 = new THREE.Box3().setFromObject(cargo_group.children[i])
+			if(box1.intersectsBox(box2)){
+				console.log('collision detected')
+				console.log(draggable_cargo)
+				console.log(backup_draggable_cargo)
+				// draggable_cargo.position.x = backup_draggable_cargo.position.x		//Need for backup cargo position to start when collision is exist
+				// draggable_cargo.position.y = backup_draggable_cargo.position.y		//Need for backup cargo position to start when collision is exist
+				// draggable_cargo.position.z = backup_draggable_cargo.position.z		//Need for backup cargo position to start when collision is exist
 
-	// if(box1.intersectsBox(box2)){console.log('collision detected')}
- }
 
-} 
+			} else {console.log("collision not detected")}
+			
+		}
+	}
+
+	} 
 
 //Addinng raycaster for mouse picking objects.	
 
@@ -110,13 +113,12 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 	const clickMouse = new THREE.Vector2();  // create once
 	const moveMouse = new THREE.Vector2();   // create once
 	export let  draggable_cargo = null;
-	// scene.add(draggable_cargo)
+	export let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
 	
 	
 	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable"
 	window.addEventListener('click', event => {
 		
-		// if (typeof(draggable_cargo) != "undefined") 
 		if (draggable_cargo) 
 
 		{
@@ -134,7 +136,8 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 			cargo_group.add(draggable_cargo)		//Need for jumping cargos after mouse moving  and intersect mouse with other object
 			
 			
-			draggable_cargo = null 
+			draggable_cargo = null
+			backup_draggable_cargo = null 
 			
 			if(!draggable_cargo)	
 				{
@@ -148,7 +151,7 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 			clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
 			clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
 					
-		//Create array "found" from interection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
+		//Create array "found" from intersection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
 			raycaster.setFromCamera(clickMouse, camera);
 
 			const found = raycaster.intersectObjects(cargo_group.children,false);
@@ -156,6 +159,9 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 			if(found.length>0 && found[0].object.userData.isFloor == false)
 			{
 				draggable_cargo = found[0].object
+				// backup_draggable_cargo = found[0].object
+				// Object.assign(backup_draggable_cargo,found[0].object);
+				// backup_draggable_cargo = {...found[0].object}
 				// console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
 				
@@ -189,14 +195,15 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 		raycaster.setFromCamera(moveMouse, camera);
 		
 		if (draggable_cargo != null) {
-			const cargos_on_ray = raycaster.intersectObjects(cargo_group.children,false)
+
+			let array_of_floors_for_draggable = [...group_of_cargo_area_floor.children,...cargo_group.children]
+
+			const cargos_on_ray = raycaster.intersectObjects(array_of_floors_for_draggable,false)
 				
 			if (cargos_on_ray.length > 0) {
 
 				let found = cargos_on_ray[0]
 					
-					// console.log(found)
-
 					//Condition for cargo moving only upper faces(upper faces consist of two triangles with numbers 4 and 5).
 					if(found.faceIndex == 4 || found.faceIndex == 5){		
 						
@@ -212,7 +219,7 @@ export function check_collision_of_draggable_cargo_and_other_cargos()
 							{draggable_cargo.position.z = cargo_area_group.children[0].scale.z*2-Number(draggable_cargo.geometry.parameters.depth)/2}
 						else {draggable_cargo.position.z = found.point.z}
 						
-						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2					//Set Y position of dragable object.		
+						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2 + 0.001					//Set Y position of dragable object.		
 					}
 				
 			}

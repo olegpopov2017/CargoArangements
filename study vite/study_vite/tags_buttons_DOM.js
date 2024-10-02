@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {cargo_area_group,cargo_group, group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
+import {cargo_area_group,cargo_group, group_of_grounds_for_draggable_objects,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
 import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
 
@@ -52,7 +52,7 @@ button24.addEventListener('click',cargo_area_adding);
 
 //Button 25 - Delete all cargo areas in scene
 let button25 = document.querySelector('#button25');
-button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_grounds_for_draggable_objects.clear(),present_object_parameters()));
+button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_grounds_for_draggable_objects.clear(),group_of_cargo_area_floor.clear(),present_object_parameters()));
 
 
 
