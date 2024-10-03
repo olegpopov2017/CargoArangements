@@ -87,17 +87,26 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	export function check_collision_of_draggable_cargo_and_other_cargos()
 	{
 	const box1 = new THREE.Box3().setFromObject(draggable_cargo)
+	// console.log(box1)
+	box1.min.x = box1.min.x + 0.01
+	box1.min.y = box1.min.y + 0.01
+	box1.min.z = box1.min.z + 0.01
+
+	box1.max.x = box1.max.x - 0.01
+	box1.max.y = box1.max.y - 0.01
+	box1.max.z = box1.max.z - 0.01
+
 	
 	if(cargo_group.children.length > 0){
 		for (let i=0;i<cargo_group.children.length;i++){
 			let box2 = new THREE.Box3().setFromObject(cargo_group.children[i])
 			if(box1.intersectsBox(box2)){
 				console.log('collision detected')
-				console.log("draggable is ",draggable_cargo)
-				console.log("backup is",backup_draggable_cargo)
-				// draggable_cargo.position.x = backup_draggable_cargo.position.x		//Need for backup cargo position to start when collision is exist
-				// draggable_cargo.position.y = backup_draggable_cargo.position.y		//Need for backup cargo position to start when collision is exist
-				// draggable_cargo.position.z = backup_draggable_cargo.position.z		//Need for backup cargo position to start when collision is exist
+				// console.log("draggable is ",draggable_cargo)
+				// console.log("backup is",backup_draggable_cargo)
+				draggable_cargo.position.x = backup_draggable_cargo.position.x		//Need for backup cargo position to start when collision is exist
+				draggable_cargo.position.y = backup_draggable_cargo.position.y		//Need for backup cargo position to start when collision is exist
+				draggable_cargo.position.z = backup_draggable_cargo.position.z		//Need for backup cargo position to start when collision is exist
 
 
 			} else {console.log("collision not detected")}
@@ -123,7 +132,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 		{
 			controls.enabled = false
-			console.log(`Dropping draggable object`)
+			// console.log(`Dropping draggable object`)
 
 			check_collision_of_draggable_cargo_and_other_cargos()
 
@@ -161,7 +170,8 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 				draggable_cargo = found[0].object
 				// if(!backup_draggable_cargo){backup_draggable_cargo = found[0].object}
 				// Object.assign(backup_draggable_cargo,draggable_cargo);
-				// backup_draggable_cargo = {...draggable_cargo}
+				backup_draggable_cargo = found[0].object.clone()
+				
 				// backup_draggable_cargo = structuredClone(found[0].object)
 				// console.log("Found object:",draggable_cargo)
 				draggable_cargo.userData.intersecteble = false
@@ -196,7 +206,8 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		raycaster.setFromCamera(moveMouse, camera);
 		
 		if (draggable_cargo != null) {
-			if(!backup_draggable_cargo){backup_draggable_cargo = {...draggable_cargo}}
+			// if(!backup_draggable_cargo){backup_draggable_cargo = {...draggable_cargo}}
+			// if(!backup_draggable_cargo){backup_draggable_cargo = draggable_cargo}
 
 
 			let array_of_floors_for_draggable = [...group_of_cargo_area_floor.children,...cargo_group.children]
@@ -222,7 +233,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 							{draggable_cargo.position.z = cargo_area_group.children[0].scale.z*2-Number(draggable_cargo.geometry.parameters.depth)/2}
 						else {draggable_cargo.position.z = found.point.z}
 						
-						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2 + 0.001					//Set Y position of dragable object.		
+						draggable_cargo.position.y = found.point.y+Number(draggable_cargo.geometry.parameters.height)/2				//Set Y position of dragable object.		
 					}
 				
 			}
