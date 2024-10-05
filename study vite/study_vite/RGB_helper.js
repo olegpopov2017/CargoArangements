@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import { FontLoader } from '/node_modules/three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from '/node_modules/three/examples/jsm/geometries/TextGeometry.js';
-import {cargo_group,cargo_area_group,scene,animate,colors,camera, controls,renderer,
-    intersected_objects_group, group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
+import {cargo_group,cargo_area_group,scene,colors,camera, controls,renderer,
+     group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
 // import { PI } from 'three/webgpu';
 
 
