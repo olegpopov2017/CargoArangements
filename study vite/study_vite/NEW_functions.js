@@ -8,6 +8,7 @@ import {Cuboid} from './classes.js';
 export function placement_cargo_according_to_algorithm_on_local_server()
     {
     let box = threejs_scena_to_cuboid_with_inner_objects()
+    console.log(box)
     
     fetch('http://127.0.0.1:3000',{method: 'post',body: JSON.stringify(box)})
         .then((response) => {

@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import {cargo_area_group,cargo_group, group_of_grounds_for_draggable_objects,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
 import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
+import {import_from_excel} from './excel.js';
+
 
 
 
@@ -34,7 +36,7 @@ let form2_html = `
 		<td> </td>
         <tr>
             <td><button id = "button24" type="button" >Добавить / Изменить</button></td>
-            <td><button id = "button25" type="button" >Удалить все</button></td>
+            <td><button id = "button25" type="button" >Удалить грузовое помещение</button></td>
             
         </tr>
     </table>
@@ -61,8 +63,9 @@ button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_groun
 			//Creating Form4 - Creating object,delete object on scene.
 let form4_html = `
 <fieldset>
-				<legend>Создание объекта, удаление всех объектов</legend>
-					<table  >
+				<legend>Создание грузов</legend>
+					<table>
+						<label>Ручное добавление грузов </label>
 						<tr>
 							<td><label >Колличество</label></td>
 							<td><input id="quantity4" type="number"/></td>
@@ -79,9 +82,9 @@ let form4_html = `
 							<td><label style="color:Blue;">Длина (depth,z)</label></td>
 							<td><input id="depth4" type="number"/></td>
 						</tr>
-					</table  >
+					</table>
 					<br>
-					<table  >
+					<table>
 						<tr>
 							<td><label style="color:Red;">X (position)</label></td>
 							<td><input id="x4" type="number"/></td>
@@ -94,14 +97,27 @@ let form4_html = `
 							<td><label style="color:Blue;">Z (position) </label></td>
 							<td><input id="z4" type="number"/></td>
 						</tr>
+						<td><button id = "button45" type="button" >Добавить груз</button></td>
+					</table>
+					<br>
+					<br>
+					<table>
+						<tr>
+							<td><label>Импорт грузов из Excel 2007-365 (.xlsx) </label></td>
+						</tr>
+							<td><input type="file" id="myImportExcelfile" ></td>
+							<td><button id = "LoadOnScreenMyFile" type="button" >Добавить грузы на экран</button></td>
+					</table>
+					<br>
+					<br>
+					<table>				
 						<tr>
 							<td><button id = "button42" type="button" >Не работает</button></td>
-							<td><button id = "button45" type="button" >Добавить обьекты</button></td>
-							<td><button id = "button43" type="button" >Удалить все обьекты</button></td>
-							<td><button id = "button44" type="button" >Параметры</button></td>
-
+							<td><button id = "button43" type="button" >Удалить все грузы</button></td>
+							<td><button id = "button44" type="button" >Вывести параметры грузов</button></td>
 						</tr>
-					</table>
+					<table/>
+					
     </fieldset>
     `;
         
@@ -126,6 +142,10 @@ button43.addEventListener('click',() => (cargo_group.clear(),present_object_para
 //Button 44(Form4) - Present object parameters
 let button44 = document.querySelector('#button44');
 button44.addEventListener('click',present_object_parameters);
+
+//Button 44(Form4) - Present object parameters
+let button_LoadOnScreenMyFile = document.querySelector('#LoadOnScreenMyFile');
+button_LoadOnScreenMyFile.addEventListener('click',import_from_excel);
 
 
 
