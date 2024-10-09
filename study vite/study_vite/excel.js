@@ -1,5 +1,5 @@
 import {Cuboid} from './classes.js'; 
-import {create_cargo_from_cuboid} from './functions.js';  
+import {create_cargo_from_cuboid,create_cuboid_from_cargo,threejs_scena_to_cuboid_with_inner_objects} from './functions.js';  
 import {cargo_group} from './three_cargo_canvas.js';  
 
 
@@ -91,7 +91,7 @@ export function import_from_excel(){
                     cargo_group.add(cargo)
 
                     // console.log(cube)
-                    }
+               }
 
           });
                
@@ -103,13 +103,33 @@ export function import_from_excel(){
 export function export_to_excel(){
 
      console.log('export')
+
+     let array_of_cuboids = new Array;
+
+     for (let i = 0; i < cargo_group.children.length; i++){                     //Create array of cuboids from cargo group         
+          let cube = create_cuboid_from_cargo(cargo_group.children[i])
+          array_of_cuboids.push(cube)
+     }
+
+     let json = array_of_cuboids                                                //Create json from cargo group
+     json.forEach((cargo) => {cargo.toJSON})                                    //Create json from cargo group
+
      
-     // let json = cargo_group.children                   //Create json from cargo group
-     // json.forEach((cargo) => {cargo.toJSON})           //Create json from cargo group
+     const worksheet = XLSX.utils.json_to_sheet(json);
+     const workbook = XLSX.utils.book_new();
+     XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
 
-     // let data = XLSX.write(workbook, opts);
+     /* fix headers */
+     // XLSX.utils.sheet_add_aoa(worksheet, [["Name", "Birthday"]], { origin: "A1" });
 
-     // console.log(data    )
+     /* calculate column width */
+     // const max_width = rows.reduce((w, r) => Math.max(w, r.name.length), 10);
+     // worksheet["!cols"] = [ { wch: max_width } ];
+
+     /* create an XLSX file and try to save to Presidents.xlsx */
+     
+     // let time_stamp = new Ti
+  XLSX.writeFile(workbook, "Arranged cargos.xlsx", { compression: true });
 
 
 }
