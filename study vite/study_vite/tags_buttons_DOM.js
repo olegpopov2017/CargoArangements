@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {cargo_area_group,cargo_group, group_of_grounds_for_draggable_objects,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
 import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
-import {import_from_excel} from './excel.js';
+import {import_from_excel,export_to_excel} from './excel.js';
 
 
 
@@ -103,7 +103,7 @@ let form4_html = `
 					<br>
 					<table>
 						<tr>
-							<td><label>Импорт грузов из Excel 2007-365 (.xlsx) </label></td>
+							<td><label>Импорт грузов из Excel </label></td>
 						</tr>
 							<td><input type="file" id="myImportExcelfile" ></td>
 							<td><button id = "LoadOnScreenMyFile" type="button" >Добавить грузы на экран</button></td>
@@ -154,11 +154,16 @@ button_LoadOnScreenMyFile.addEventListener('click',import_from_excel);
 							//Creating Form5 - Placement cargo according to algorithm
 let form5_html = `
 <fieldset>
-<legend>Расстановка грузов по алгоритму согласно размеров грузового помещения</legend>
+<legend>Автоматическая расстановка. Экспорт в Excel.</legend>
     <table>
         <td><button id = "button53" type="button" class = "button1">Не работает</button></td>
 		<td><button id = "button54" type="button" class = "button1">Расчитать на локальном сервере</button></td>
-</table>
+	</table>
+	<br>
+	<br>
+	<table>
+		<td><button id = "button55" type="button" class = "button1">Экспорт параметров грузов в документ Excel</button></td>
+	</table>
 </fieldset>
     `;
     
@@ -175,6 +180,10 @@ let button53 = document.querySelector('#button53');
 //Button 54 - creating buttons 'placement cargo according with algorithm"
 let button54 = document.querySelector('#button54');
 button54.addEventListener('click',placement_cargo_according_to_algorithm_on_local_server);
+
+//Button 54 - creating buttons 'placement cargo according with algorithm"
+let button55 = document.querySelector('#button55');
+button55.addEventListener('click',export_to_excel);
 
 
 

@@ -5,7 +5,7 @@ import {cargo_group} from './three_cargo_canvas.js';
 
 
 
-//Adding function export cargos from excel file.
+//Adding function import cargos from excel file.
 export function import_from_excel(){
 
      let load_file = document.querySelector("#myImportExcelfile");    //Save data from input user file.
@@ -27,38 +27,90 @@ export function import_from_excel(){
 
           json.forEach((box) => {
 
-               let cube = new Cuboid
+               let quantity = box['quantity']                         //Quantity of cargos in raw of excel document
                
-               if(typeof(box['id']) != "undefined"){
-                    cube.uuid = box['id']
-               }
+               
+               if(typeof(quantity) != "undefined"){                   //Adding equals cargos by user number of quantity in excel.
+                    for (let i = 1; i<=quantity; i++){
+                         let cube = new Cuboid
                
 
-               if(typeof(box['position X']) != "undefined"){
-                   cube.position_x = box['position X']
-               } else {cube.position_x = 1}
+                              if(typeof(box['id']) != "undefined"){
+                                   cube.uuid = box['id']
+                              }
+                              
+
+                              if(typeof(box['position X']) != "undefined"){
+                              cube.position_x = box['position X']
+                              } else {cube.position_x = 1}
+                              
+                              if(typeof(box['position Y']) != "undefined"){
+                                   cube.position_y = box['position Y']
+                              } else {cube.position_y = 0}
+
+                              if(typeof(box['position Z']) != "undefined"){
+                                   cube.position_z = box['position Z']
+                              } else {cube.position_z = 1}
+
+                              
+                              cube.width_X = box['size X (width)']
+                              cube.height_Y = box['size Y (height)']
+                              cube.depth_Z = box['size Z (depth)']
+
+                              let cargo = create_cargo_from_cuboid(cube);
+                              cargo_group.add(cargo)
+                                   }
+               }else {                                                //Adding one rargo if quantity is not defined by user  in excel.
                
-               if(typeof(box['position Y']) != "undefined"){
-                    cube.position_y = box['position Y']
-               } else {cube.position_y = 0}
+                    let cube = new Cuboid
+                    
 
-               if(typeof(box['position Z']) != "undefined"){
-                    cube.position_z = box['position Z']
-               } else {cube.position_z = 1}
+                    if(typeof(box['id']) != "undefined"){
+                         cube.uuid = box['id']
+                    }
+                    
 
+                    if(typeof(box['position X']) != "undefined"){
+                    cube.position_x = box['position X']
+                    } else {cube.position_x = 1}
+                    
+                    if(typeof(box['position Y']) != "undefined"){
+                         cube.position_y = box['position Y']
+                    } else {cube.position_y = 0}
+
+                    if(typeof(box['position Z']) != "undefined"){
+                         cube.position_z = box['position Z']
+                    } else {cube.position_z = 1}
+
+                    
+                    cube.width_X = box['size X (width)']
+                    cube.height_Y = box['size Y (height)']
+                    cube.depth_Z = box['size Z (depth)']
+
+                    let cargo = create_cargo_from_cuboid(cube);
+                    cargo_group.add(cargo)
+
+                    // console.log(cube)
+                    }
+
+          });
                
-               cube.width_X = box['size X (width)']
-               cube.height_Y = box['size X (width)']
-               cube.depth_Z = box['size X (width)']
-
-               let cargo = create_cargo_from_cuboid(cube);
-               cargo_group.add(cargo)
-
-               // console.log(cube)
-
-
-               });
-               
-          }
+     }
      reader.readAsArrayBuffer(file)
 }
+
+//Adding function export cargos to excel file.
+export function export_to_excel(){
+
+     console.log('export')
+     
+     // let json = cargo_group.children                   //Create json from cargo group
+     // json.forEach((cargo) => {cargo.toJSON})           //Create json from cargo group
+
+     // let data = XLSX.write(workbook, opts);
+
+     // console.log(data    )
+
+
+}
+
