@@ -3,8 +3,6 @@ import {create_cargo_from_cuboid,create_cuboid_from_cargo,threejs_scena_to_cuboi
 import {cargo_group} from './three_cargo_canvas.js';  
 
 
-
-
 //Adding function import cargos from excel file.
 export function import_from_excel(){
 
@@ -35,9 +33,9 @@ export function import_from_excel(){
                          let cube = new Cuboid
                
 
-                              if(typeof(box['id']) != "undefined"){
-                                   cube.uuid = box['id']
-                              }
+                              // if(typeof(box['id']) != "undefined"){
+                              //      cube.uuid = box['id']
+                              // }
                               
 
                               if(typeof(box['position X']) != "undefined"){
@@ -89,12 +87,8 @@ export function import_from_excel(){
 
                     let cargo = create_cargo_from_cuboid(cube);
                     cargo_group.add(cargo)
-
-                    // console.log(cube)
                }
-
           });
-               
      }
      reader.readAsArrayBuffer(file)
 }
@@ -108,29 +102,42 @@ export function export_to_excel(){
 
      for (let i = 0; i < cargo_group.children.length; i++){                     //Create array of cuboids from cargo group         
           let cube = create_cuboid_from_cargo(cargo_group.children[i])
+
+          delete cube.array_of_inner_objects                                    //Delete unwanted parameter in cube
+          delete cube.array_of_outer_objects                                    //Delete unwanted parameter in cube
+
+          cube.position_x = Number(cube.position_x).toFixed(2)                  //Fix value 2 numbers after float
+          cube.position_y = Number(cube.position_y).toFixed(2)                  //Fix value 2 numbers after float
+          cube.position_z = Number(cube.position_z).toFixed(2)                  //Fix value 2 numbers after float
+
           array_of_cuboids.push(cube)
      }
 
      let json = array_of_cuboids                                                //Create json from cargo group
-     json.forEach((cargo) => {cargo.toJSON})                                    //Create json from cargo group
+     json.forEach((cargo) => {cargo})                                           //Create json from cargo group
 
      
      const worksheet = XLSX.utils.json_to_sheet(json);
      const workbook = XLSX.utils.book_new();
+     
+     //Rename headers according to excel file
+     XLSX.utils.sheet_add_aoa(worksheet, [["id", "size X (width)","size Y (height)","size Z (depth)","position X","position Y","position Z","quantity",]], { origin: "A1" });
+     
      XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
 
-     /* fix headers */
-     // XLSX.utils.sheet_add_aoa(worksheet, [["Name", "Birthday"]], { origin: "A1" });
-
-     /* calculate column width */
-     // const max_width = rows.reduce((w, r) => Math.max(w, r.name.length), 10);
-     // worksheet["!cols"] = [ { wch: max_width } ];
-
-     /* create an XLSX file and try to save to Presidents.xlsx */
+     //Set size of columns
+     if(!worksheet["!cols"]) worksheet["!cols"] = [];
+     worksheet["!cols"][0]= {wch: 38}
+     worksheet["!cols"][1]= {wch: 12}
+     worksheet["!cols"][2]= {wch: 12}
+     worksheet["!cols"][3]= {wch: 12}
+     worksheet["!cols"][4]= {wch: 12}
+     worksheet["!cols"][5]= {wch: 12}
+     worksheet["!cols"][6]= {wch: 12}
+     worksheet["!cols"][7]= {wch: 12}
      
-     // let time_stamp = new Ti
-  XLSX.writeFile(workbook, "Arranged cargos.xlsx", { compression: true });
-
+     // worksheet["!cols"][0].alignment = { horizontal: 'center' };        //Setting parametrs of the cell.In trial version of library not working.
+     
+     XLSX.writeFile(workbook, "Arranged cargos.xlsx", { compression: true });   //Create file and save them
 
 }
-

@@ -135,6 +135,7 @@ export function create_cargo_after_input_data_and_adding_to_scene()
 export function cargo_area_adding()   
 {
     cargo_area_group.clear();
+    group_of_cargo_area_floor.clear()
 
     let x = Number(document.querySelector("#width_palette").value);
     let y = Number(document.querySelector("#height_palette").value);
