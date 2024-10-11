@@ -21,7 +21,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	export let scene = new THREE.Scene();
 	scene.background = new THREE.Color( 0xf0ecf3 );
 
-	export let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+	export let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000 );
 
 	camera.position.x = 7;
 	camera.position.z = 7;
@@ -61,6 +61,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	let clickMouse = new THREE.Vector2();  // create once
 	let  draggable_cargo = null;			//Variable that containe draggable cargo
 	let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
+	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	//Using for only checking mouse coordinstes in canvas.
 
 	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
 	window.addEventListener('click', event => {
@@ -91,36 +92,39 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 		}
 		
 		//Founding ClickMouse position and set this parameters to variable "raycaster".Use in raycaster dragging object
-			let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	
-			clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
-			clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
-					
-		//Create array "found" from intersection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
-			raycaster.setFromCamera(clickMouse, camera);
 
-			const found = raycaster.intersectObjects(cargo_group.children,false);
-			
-			if(found.length > 0 && found[0].object.userData.isFloor == false)
-			{
-				draggable_cargo = found[0].object
-				backup_draggable_cargo = found[0].object.clone()
+		clickMouse.x = ( ( event.clientX - canvasBounds.left ) / ( canvasBounds.right - canvasBounds.left ) ) * 2 - 1;
+		clickMouse.y = - ( ( event.clientY - canvasBounds.top ) / ( canvasBounds.bottom - canvasBounds.top) ) * 2 + 1;
+		
+		//Create array "found" from intersection raycast and cargos. Set value from first element of array to variable "draggable".Replace draggable from "cargo_group" to scene.
+		raycaster.setFromCamera(clickMouse, camera);
+		
+		if(event.clientX > canvasBounds.left && event.clientX < canvasBounds.right && event.clientY < canvasBounds.bottom && event.clientY > canvasBounds.top){		//Condition for pick objects when mouse clc only on canvas.			
+				const found = raycaster.intersectObjects(cargo_group.children,false);
 				
-				draggable_cargo.userData.intersecteble = false
-				
-				draggable_cargo.removeFromParent()			//Need for jumping cargos after mouse moving  and intersect mouse with other object
-				
-				draggable_cargo.material.opacity = 0.2
-				draggable_cargo.material.transparent = true
-				draggable_cargo.children[0].material.color.set("GREEN")
-				
-				scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
+				if(found.length > 0 && found[0].object.userData.isFloor == false)
+				{
+					draggable_cargo = found[0].object
+					backup_draggable_cargo = found[0].object.clone()
+					
+					draggable_cargo.userData.intersecteble = false
+					
+					draggable_cargo.removeFromParent()			//Need for jumping cargos after mouse moving  and intersect mouse with other object
+					
+					draggable_cargo.material.opacity = 0.2
+					draggable_cargo.material.transparent = true
+					draggable_cargo.children[0].material.color.set("GREEN")
+					
+					scene.add(draggable_cargo)					//Need for jumping cargos after mouse moving  and intersect mouse with other object
+				}
 			}
-			}
+		}
 	)
 
 	//Realtime record mouse position to variable "moveMouse".Use in raycaster dragging objects.
 	window.addEventListener('mousemove', event => {
 
+		
 		let canvasBounds2 = renderer.getContext().canvas.getBoundingClientRect();
 		moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
 		moveMouse.y = - ( ( event.clientY - canvasBounds2.top ) / ( canvasBounds2.bottom - canvasBounds2.top) ) * 2 + 1;
