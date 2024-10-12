@@ -63,7 +63,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
 	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	//Using for only checking mouse coordinstes in canvas.
 
-	//Realtime catching object after mouse clicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
+	//Realtime catching object after mouse cошибкаlicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
 	window.addEventListener('click', event => {
 		
 		if (draggable_cargo) 	//If we will dropping draggable cargo.

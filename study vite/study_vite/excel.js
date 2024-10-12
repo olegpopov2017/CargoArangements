@@ -107,9 +107,11 @@ export function export_to_excel(){
           delete cube.array_of_outer_objects                                    //Delete unwanted parameter in cube
 
           cube.position_x = Number(cube.position_x).toFixed(2)                  //Fix value 2 numbers after float
-          cube.position_y = Number(cube.position_y).toFixed(2)                  //Fix value 2 numbers after float
           cube.position_z = Number(cube.position_z).toFixed(2)                  //Fix value 2 numbers after float
-
+          
+          if(Number(cube.position_y) < 1){cube.position_y = 0} else {
+               cube.position_y = Number(cube.position_y).toFixed(2)                  //Fix value 2 numbers after float
+               }
           array_of_cuboids.push(cube)
      }
 
@@ -123,7 +125,7 @@ export function export_to_excel(){
      //Rename headers according to excel file
      XLSX.utils.sheet_add_aoa(worksheet, [["id", "size X (width)","size Y (height)","size Z (depth)","position X","position Y","position Z","quantity",]], { origin: "A1" });
      
-     XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
+     XLSX.utils.book_append_sheet(workbook, worksheet, "Cargos");
 
      //Set size of columns
      if(!worksheet["!cols"]) worksheet["!cols"] = [];
