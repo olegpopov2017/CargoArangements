@@ -1,6 +1,8 @@
+import * as XLSX from 'xlsx';
 import {Cuboid} from './classes.js'; 
 import {create_cargo_from_cuboid,create_cuboid_from_cargo,threejs_scena_to_cuboid_with_inner_objects} from './functions.js';  
-import {cargo_group} from './three_cargo_canvas.js';  
+import {cargo_group} from './three_cargo_canvas.js'; 
+// import { read, writeFileXLSX} from "xlsx"; 
 
 
 //Adding function import cargos from excel file.
