@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { FontLoader } from '/node_modules/three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from '/node_modules/three/examples/jsm/geometries/TextGeometry.js';
+import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import {cargo_group,cargo_area_group,scene,colors,camera, controls,renderer,
      group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
 // import { PI } from 'three/webgpu';
@@ -24,7 +24,9 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
     //Create red axe with text "X"
         //Create text "x"
         const loader_x = new FontLoader();
-        loader_x.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
+        // loader_x.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
+        loader_x.load( './optimer_regular.typeface.json', function ( font ) {
+
             const text_geometry = new TextGeometry( 'X', {
                 font: font,
                 size: 80,
@@ -60,7 +62,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
     //Create green axe with text "Y"
         //Create text "y"
         const loader_y = new FontLoader();
-        loader_y.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
+        loader_y.load( './optimer_regular.typeface.json', function ( font ) {
             const text_geometry = new TextGeometry( 'Y', {
                 font: font,
                 size: 80,
@@ -96,7 +98,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
     //Create red axe with text "Z"
         //Create text "Z"
         const loader_z = new FontLoader();
-        loader_z.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
+        loader_z.load( './optimer_regular.typeface.json', function ( font ) {
             const text_geometry = new TextGeometry( 'Z', {
                 font: font,
                 size: 80,
