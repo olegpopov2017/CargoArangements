@@ -227,7 +227,7 @@ export function cargo_area_adding_from_cuboid(cube)
     cargo_area_floor.position.z = z/2;                  
     group_of_grounds_for_draggable_objects.add(cargo_area_floor) 
 
-    return plane1
+    return cargo_area
     };   
       
  

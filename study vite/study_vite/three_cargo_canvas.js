@@ -19,20 +19,20 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 //Intialization scene,camera,plane,renderer
 	export let scene = new THREE.Scene();
-	scene.background = new THREE.Color( 0xf0ecf3 );
+		scene.background = new THREE.Color( 0xf0ecf3 );
 
 	export let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000 );
 
-	camera.position.x = 7;
-	camera.position.z = 7;
-	camera.position.y = 7;
+		camera.position.x = 7;
+		camera.position.z = 7;
+		camera.position.y = 7;
 
 	const light = new THREE.DirectionalLight( 0xffffbb, 0x080820, 1 )
-	light.position.set( 30, 30, 30 ).normalize();
-	scene.add( light );
+		light.position.set( 30, 30, 30 ).normalize();
+		scene.add( light );
 	
 	export let renderer = new THREE.WebGLRenderer({canvas: canvas_three});
-	renderer.setSize( 600, 300 );
+		renderer.setSize( 600, 300 );
 	
 	//Adding groups for objects and another for pallets.
 	export let cargo_area_group = new THREE.Group();
@@ -59,7 +59,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	let raycaster = new THREE.Raycaster(); 	// Create once for dragging cargos
 	let moveMouse = new THREE.Vector2();   	// Create once for dragging cargo according mouse position
 	let clickMouse = new THREE.Vector2();  // create once
-	let  draggable_cargo = null;			//Variable that containe draggable cargo
+	let draggable_cargo = null;			//Variable that containe draggable cargo
 	let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
 	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	//Using for only checking mouse coordinstes in canvas.
 
@@ -123,7 +123,6 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 	//Realtime record mouse position to variable "moveMouse".Use in raycaster dragging objects.
 	window.addEventListener('mousemove', event => {
-
 		
 		let canvasBounds2 = renderer.getContext().canvas.getBoundingClientRect();
 		moveMouse.x = ( ( event.clientX - canvasBounds2.left ) / ( canvasBounds2.right - canvasBounds2.left ) ) * 2 - 1;
@@ -132,7 +131,7 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 	}
 	)
 
-	function dragObject() {
+	export function dragObject() {
 		
 		raycaster.setFromCamera(moveMouse, camera);
 		
@@ -196,15 +195,15 @@ import { CSS3DRenderer, CSS3DObject } from '/node_modules/three/examples/jsm/ren
 
 
 
-function animate() 
-{	
-	dragObject();
-	requestAnimationFrame( animate );
-	controls.update();
-	renderer.render( scene, camera );
+// export function animate() 
+// {	
+// 	dragObject();
+// 	requestAnimationFrame( animate );
+// 	controls.update();
+// 	renderer.render( scene, camera );
 	
-}
-animate();
+// }
+// animate();
 
 
 
@@ -212,3 +211,4 @@ export let colors = ["aqua","antiquewhite","coral","cornflowerblue","chocolate",
 
 
 // npm run build
+// npm run preview
