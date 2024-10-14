@@ -45,9 +45,9 @@ export function placement_cargo_according_to_algorithm_on_local_server()
                     children_cube.width_X = inner_cube.width_X
                     children_cube.height_Y = inner_cube.height_Y
                     children_cube.depth_Z = inner_cube.depth_Z
-                    children_cube.position_x = inner_cube.x
-                    children_cube.position_y = inner_cube.y
-                    children_cube.position_z = inner_cube.z
+                    children_cube.position_x = Number(inner_cube.position_x)
+                    children_cube.position_y = Number(inner_cube.position_y)
+                    children_cube.position_z = Number(inner_cube.position_z)
                     
                     let children = create_cargo_from_cuboid(children_cube)
                     

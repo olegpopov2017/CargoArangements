@@ -12,7 +12,7 @@ import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitCo
 		camera.position.z = 7;
 		camera.position.y = 7;
 
-	const light = new THREE.DirectionalLight( 0xffffbb, 0x080820, 1 )
+	const light = new THREE.AmbientLight( 0xffffbb, 0x080820, 1 )
 		light.position.set( 30, 30, 30 ).normalize();
 		scene.add( light );
 	

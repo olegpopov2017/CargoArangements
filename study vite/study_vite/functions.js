@@ -3,6 +3,7 @@ import {Cuboid} from './classes.js';
 import {cargo_group,cargo_area_group,scene,colors,camera,renderer,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import{create_RGB_axes_helper_with_symbols} from './RGB_helper.js'
 import {} from './NEW_functions.js';
+import {create_conteiner_picture_from_cargo_area_cuboid} from './Image_conteiner.js'
 
 //Change screen size before pushing button "f".
 export function resize_renderer()
@@ -155,8 +156,15 @@ export function cargo_area_adding()
     cargo_area_floor.position.z = z/2;
     cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
     cargo_area_group.add(cargo_area);
+
     create_RGB_axes_helper_with_symbols(x,y,z)
+
+    let cube = new Cuboid
+    cube.width_X = x
+    cube.height_Y = y
+    cube.depth_Z = z
     
+    create_conteiner_picture_from_cargo_area_cuboid(cube)
     //Camera look at control target
     camera.position.set(x*1.4,y*1.4,z)
 
@@ -223,6 +231,8 @@ export function cargo_area_adding_from_cuboid(cube)
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;                  
+    
+    create_RGB_axes_helper_with_symbols(x,y,z)
     group_of_cargo_area_floor.add(cargo_area_floor) 
 
     return cargo_area

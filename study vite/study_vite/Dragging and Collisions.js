@@ -11,8 +11,29 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 	let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
 	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	//Using for only checking mouse coordinstes in canvas.
 
-	//Realtime catching object after mouse cошибкаlicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
-    window.addEventListener('click', event => {
+//Find delay bettwen mousedown and mouse up. If delay < 200 mlsec, calling function "catch draggable".
+    let start_time;
+    let end_time;
+    let time_diff;
+        
+    window.addEventListener('mousedown', (event) => {
+        start_time = null
+        
+        start_time = new Date;
+    });
+
+    window.addEventListener('mouseup', (event) => {
+        end_time = null
+        time_diff = null
+
+        end_time = new Date
+        time_diff = end_time-start_time
+        if (time_diff < 200){catch_draggable()}
+    })
+
+
+//Realtime catching object after mouse cошибкаlicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
+    function catch_draggable() {
 		
 		if (draggable_cargo) 	//If we will dropping draggable cargo.
 
@@ -66,7 +87,7 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 				}
 			}
 		}
-	)
+	
 
 	//Realtime record mouse position to variable "moveMouse".Use in raycaster dragging objects.
 	window.addEventListener('mousemove', event => {
