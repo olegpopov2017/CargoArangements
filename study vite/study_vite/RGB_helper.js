@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import {cargo_group,cargo_area_group,scene,colors,camera, controls,renderer,
-     group_of_grounds_for_draggable_objects} from './three_cargo_canvas.js';
-// import { PI } from 'three/webgpu';
+import {cargo_area_group} from './three_cargo_canvas.js';
 
 
 //Adding text X Y Z on axes
@@ -24,7 +22,6 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
     //Create red axe with text "X"
         //Create text "x"
         const loader_x = new FontLoader();
-        // loader_x.load( '/node_modules/three/examples/fonts/optimer_regular.typeface.json', function ( font ) {
         loader_x.load( './optimer_regular.typeface.json', function ( font ) {
 
             const text_geometry = new TextGeometry( 'X', {

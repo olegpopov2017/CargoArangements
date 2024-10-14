@@ -1,8 +1,7 @@
 import * as XLSX from 'xlsx';
 import {Cuboid} from './classes.js'; 
-import {create_cargo_from_cuboid,create_cuboid_from_cargo,threejs_scena_to_cuboid_with_inner_objects} from './functions.js';  
+import {create_cargo_from_cuboid,create_cuboid_from_cargo} from './functions.js';  
 import {cargo_group} from './three_cargo_canvas.js'; 
-// import { read, writeFileXLSX} from "xlsx"; 
 
 
 //Adding function import cargos from excel file.
@@ -33,12 +32,6 @@ export function import_from_excel(){
                if(typeof(quantity) != "undefined"){                   //Adding equals cargos by user number of quantity in excel.
                     for (let i = 1; i<=quantity; i++){
                          let cube = new Cuboid
-               
-
-                              // if(typeof(box['id']) != "undefined"){
-                              //      cube.uuid = box['id']
-                              // }
-                              
 
                               if(typeof(box['position X']) != "undefined"){
                               cube.position_x = box['position X']

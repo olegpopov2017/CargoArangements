@@ -87,7 +87,7 @@ export function present_object_parameters()
                     
 
 
-                for (let i = 1; i < cargo_group.children.length; ++i)
+                for (let i = 0; i < cargo_group.children.length; ++i)
                     {
                     let cargo = create_cuboid_from_cargo(cargo_group.children[i]);
 

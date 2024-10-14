@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 import {Cuboid} from './classes.js';
-import {cargo_group,cargo_area_group,scene,colors,camera, controls,renderer,
-      group_of_grounds_for_draggable_objects,group_of_cargo_area_floor} from './three_cargo_canvas.js';
+import {cargo_group,cargo_area_group,scene,colors,camera,renderer,group_of_cargo_area_floor} from './three_cargo_canvas.js';
 import{create_RGB_axes_helper_with_symbols} from './RGB_helper.js'
-import { Color } from 'three';
 import {} from './NEW_functions.js';
 
 //Change screen size before pushing button "f".
@@ -207,7 +205,7 @@ export function threejs_scena_to_cuboid_with_inner_objects()
 export function cargo_area_adding_from_cuboid(cube)   
     {
     cargo_area_group.clear();
-    group_of_grounds_for_draggable_objects.clear();
+    group_of_cargo_area_floor.clear();
 
     let x = Number(cube.width_X)
     let y = Number(cube.height_Y)
@@ -225,7 +223,7 @@ export function cargo_area_adding_from_cuboid(cube)
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;                  
-    group_of_grounds_for_draggable_objects.add(cargo_area_floor) 
+    group_of_cargo_area_floor.add(cargo_area_floor) 
 
     return cargo_area
     };   
