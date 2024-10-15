@@ -54,7 +54,7 @@ button24.addEventListener('click',cargo_area_adding);
 
 //Button 25 - Delete all cargo areas in scene
 let button25 = document.querySelector('#button25');
-button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_grounds_for_draggable_objects.clear(),group_of_cargo_area_floor.clear(),present_object_parameters()));
+button25.addEventListener('click',() => (cargo_area_group.clear(),group_of_cargo_area_floor.clear(),present_object_parameters()));
 
 
 
