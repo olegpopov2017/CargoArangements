@@ -1,7 +1,5 @@
 import * as THREE from 'three';
-import {Cuboid as cube} from './classes.js';
-
-import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_cargo_area_floor} from './three_cargo_canvas.js';
+import {group_of_cargo_area_attribute} from './three_cargo_canvas.js';
 
 
 
@@ -18,6 +16,7 @@ let front_picture = new THREE.Mesh(new THREE.PlaneGeometry(1, 1),material_front)
 // scene.add(front)
 
 export function create_conteiner_picture_from_cargo_area_cuboid(cube1){
+    
     let cube = cube1
 
     let front = front_picture.clone()
@@ -25,7 +24,7 @@ export function create_conteiner_picture_from_cargo_area_cuboid(cube1){
     front.scale.y = Number(cube.height_Y)
     front.position.x = Number(cube.width_X/2)
     front.position.y = Number(cube.height_Y/2)
-    scene.add(front)
+    group_of_cargo_area_attribute.add(front)
 
     let back = front_picture.clone()
     back.scale.x = Number(cube.width_X)
@@ -34,7 +33,7 @@ export function create_conteiner_picture_from_cargo_area_cuboid(cube1){
     back.position.y = Number(cube.height_Y/2)
     back.position.z = Number(cube.depth_Z)
     back.rotation.y = Math.PI
-    scene.add(back)
+    group_of_cargo_area_attribute.add(back)
 
     let left = side_picture.clone()
     left.scale.x = Number(cube.depth_Z)
@@ -43,7 +42,7 @@ export function create_conteiner_picture_from_cargo_area_cuboid(cube1){
     left.position.y = Number(cube.height_Y/2)
     left.position.z = Number(cube.depth_Z/2)
     left.rotation.y = Math.PI/2
-    scene.add(left)
+    group_of_cargo_area_attribute.add(left)
 
     let right = side_picture.clone()
     right.scale.x = Number(cube.depth_Z)
@@ -52,9 +51,7 @@ export function create_conteiner_picture_from_cargo_area_cuboid(cube1){
     right.position.y = Number(cube.height_Y/2)
     right.position.z = Number(cube.depth_Z/2)
     right.rotation.y = -Math.PI/2
-    scene.add(right)
-
-
+    group_of_cargo_area_attribute.add(right)
 
 }
 

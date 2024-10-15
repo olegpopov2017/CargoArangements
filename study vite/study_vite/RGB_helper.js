@@ -1,11 +1,13 @@
 import * as THREE from 'three';
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
-import {cargo_area_group} from './three_cargo_canvas.js';
+import {group_of_cargo_area_attribute} from './three_cargo_canvas.js';
 
-
+create_RGB_axes_helper_with_symbols(3,3,3)
 //Adding text X Y Z on axes
 export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
+    
+    
     let width = Number(width_x)
     let height = Number(height_y)
     let depth = Number(depth_z) 
@@ -42,7 +44,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
             text.position.x = width+min//*1.4
             text.position.y = 0
             text.position.z = 0
-            cargo_area_group.add(text)
+            group_of_cargo_area_attribute.add(text)
         } );
 
         //Create red line of axes "X"
@@ -54,7 +56,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
     
         const line_x = new THREE.Line( geometry_x, material_x );
         line_x.material.linewidth = 1
-        cargo_area_group.add(line_x)
+        group_of_cargo_area_attribute.add(line_x)
 
     //Create green axe with text "Y"
         //Create text "y"
@@ -78,7 +80,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
             text.position.x = 0
             text.position.y = height+min
             text.position.z = 0
-            cargo_area_group.add(text)
+            group_of_cargo_area_attribute.add(text)
         } );
 
         //Create green line of axes "Y"
@@ -90,7 +92,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
 
         const line_y = new THREE.Line( geometry_y, material_y );
         line_y.material.linewidth = 1
-        cargo_area_group.add(line_y)
+        group_of_cargo_area_attribute.add(line_y)
 
     //Create red axe with text "Z"
         //Create text "Z"
@@ -116,7 +118,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
             text.position.z = depth*1.3+min//+ Number(text.geometry.parameters.options.size)
             text.rotation.y = Math.PI/2 
             // console.log(text)
-            cargo_area_group.add(text)
+            group_of_cargo_area_attribute.add(text)
         } );
 
         //Create blue line of axes "Z"
@@ -128,7 +130,7 @@ export function create_RGB_axes_helper_with_symbols(width_x,height_y,depth_z){
 
         const line_z = new THREE.Line( geometry_z, material_z );
         line_z.material.linewidth = 1
-        cargo_area_group.add(line_z)
+        group_of_cargo_area_attribute.add(line_z)
 
 
 

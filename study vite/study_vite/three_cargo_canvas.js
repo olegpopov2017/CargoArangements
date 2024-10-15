@@ -22,11 +22,13 @@ import { OrbitControls } from '/node_modules/three/examples/jsm/controls/OrbitCo
 	//Adding groups for objects and another for pallets.
 	export let cargo_area_group = new THREE.Group();
 	export let cargo_group = new THREE.Group();
-	export let group_of_cargo_area_floor = new THREE.Group();
+	export let group_of_cargo_area_floor = new THREE.Group();		//Need for drag cargos and check collisions.
+	export let group_of_cargo_area_attribute = new THREE.Group();	//Contain rgb helpers,pictures and others visual atributes.
 
 	scene.add(cargo_area_group);
 	scene.add(cargo_group);
 	scene.add(group_of_cargo_area_floor)
+	scene.add(group_of_cargo_area_attribute)
 	
 	//Rotation camera with orbit controls.
 	export let controls = new OrbitControls(camera, canvas_three);

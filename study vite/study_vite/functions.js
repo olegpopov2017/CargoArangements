@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {Cuboid} from './classes.js';
-import {cargo_group,cargo_area_group,scene,colors,camera,renderer,group_of_cargo_area_floor} from './three_cargo_canvas.js';
+import {cargo_group,cargo_area_group,scene,colors,camera,renderer,group_of_cargo_area_floor, group_of_cargo_area_attribute} from './three_cargo_canvas.js';
 import{create_RGB_axes_helper_with_symbols} from './RGB_helper.js'
 import {} from './NEW_functions.js';
 import {create_conteiner_picture_from_cargo_area_cuboid} from './Image_conteiner.js'
@@ -135,6 +135,7 @@ export function cargo_area_adding()
 {
     cargo_area_group.clear();
     group_of_cargo_area_floor.clear()
+    group_of_cargo_area_attribute.clear()
 
     let x = Number(document.querySelector("#width_palette").value);
     let y = Number(document.querySelector("#height_palette").value);
@@ -144,33 +145,31 @@ export function cargo_area_adding()
     const area = new THREE.Box3();
     area.setFromCenterAndSize( new THREE.Vector3( x/2,y/2 ,z/2  ), new THREE.Vector3( x, y, z));
     const cargo_area = new THREE.Box3Helper(area, 0xdf0707 );
+    cargo_area_group.add(cargo_area);
         
     
     //Create/adding transparent yellow floor for reading mouse moving position
     let boxGeometry = new THREE.BoxGeometry(x, 0, z);
-    
     let cubeMaterial = new THREE.MeshBasicMaterial({color: 0xffff00})
-    
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;
     cargo_area_floor.userData.isFloor = true                            //this use for cargo jumping
-    cargo_area_group.add(cargo_area);
+    group_of_cargo_area_floor.add(cargo_area_floor)
 
-    create_RGB_axes_helper_with_symbols(x,y,z)
-
+    //Creating RGB helper and picture of container.
     let cube = new Cuboid
     cube.width_X = x
     cube.height_Y = y
     cube.depth_Z = z
-    
     create_conteiner_picture_from_cargo_area_cuboid(cube)
+    create_RGB_axes_helper_with_symbols(x,y,z)
+    
     //Camera look at control target
     camera.position.set(x*1.4,y*1.4,z)
 
-    group_of_cargo_area_floor.add(cargo_area_floor)
-    console.log(cargo_area_group.children)
-    console.log(scene.children)
+    // console.log(cargo_area_group.children)
+    // console.log(scene.children)
     
 };
 
@@ -231,9 +230,17 @@ export function cargo_area_adding_from_cuboid(cube)
     let cargo_area_floor = new THREE.Mesh(boxGeometry, cubeMaterial);
     cargo_area_floor.position.x = x/2;
     cargo_area_floor.position.z = z/2;                  
-    
-    create_RGB_axes_helper_with_symbols(x,y,z)
     group_of_cargo_area_floor.add(cargo_area_floor) 
+    
+    //Creating RGB helper and picture of container.
+    // let cube = new Cuboid
+    // cube.width_X = x
+    // cube.height_Y = y
+    // cube.depth_Z = z
+    create_conteiner_picture_from_cargo_area_cuboid(cube)
+    create_RGB_axes_helper_with_symbols(x,y,z)
+
+    // camera.position.set(x*1.4,y*1.4,z)
 
     return cargo_area
     };   
