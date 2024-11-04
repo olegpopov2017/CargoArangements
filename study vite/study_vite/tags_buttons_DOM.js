@@ -3,7 +3,7 @@ import {cargo_area_group,cargo_group,group_of_cargo_area_floor,group_of_cargo_ar
 import {cargo_area_adding,resize_renderer,create_cargo_after_input_data_and_adding_to_scene} from './functions.js';
 import {placement_cargo_according_to_algorithm_on_local_server,present_object_parameters} from './NEW_functions.js';
 import {import_from_excel,export_to_excel} from './excel.js';
-// import {testfunc} from './Table_of_cargo_parameters.js'
+import {testfunc} from './Table_of_cargo_parameters.js'
 
 
 
@@ -129,7 +129,7 @@ document.body.append(form4);
 
 //Button42(Form 4) - Creating object
 let button42 = document.querySelector('#button42');
-// button42.addEventListener('click',testfunc);
+button42.addEventListener('click',testfunc);
 
 // button45.addEventListener('click',present_object_parameters)
 let button45 = document.querySelector('#button45');

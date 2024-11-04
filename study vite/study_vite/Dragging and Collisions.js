@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_cargo_area_floor} from './three_cargo_canvas.js';
-import{updateTable} from './Table_of_cargo_parameters.js'
+import{updateTable,testfunc} from './Table_of_cargo_parameters.js'
 
 
 //////////// Raycaster mouse moving cargos and Check the collisions of draggable cargo and other cargos. If collision is detected,cargo come back to start position.
@@ -118,6 +118,7 @@ import{updateTable} from './Table_of_cargo_parameters.js'
 			if (cargos_on_ray.length > 0) {
 
 				let found = cargos_on_ray[0]
+				// testfunc()
 					updateTable(draggable_cargo)
 				//Condition for cargo moving only upper faces of cargo (upper faces consist of two triangles with numbers 4 and 5).
 				if(found.faceIndex == 4 || found.faceIndex == 5){		

@@ -199,7 +199,7 @@ export function threejs_scena_to_cuboid_with_inner_objects()
     {
     let parent_cube = create_cuboid_from_cargo_area(cargo_area_group.children[0])
 
-    for(let i =0; i<cargo_group.children.length; i++)
+    for(let i =0; cargo_group.children.length > i; i++)
         {   
             let children_cube = create_cuboid_from_cargo(cargo_group.children[i])
             parent_cube.array_of_inner_objects.push(children_cube);
