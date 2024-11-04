@@ -117,7 +117,7 @@ export function create_cargo_after_input_data_and_adding_to_scene()
             let cube3 = create_cuboid_from_input();
             let colorful_box1 = create_cargo_from_cuboid(cube3);
             cargo_group.add(colorful_box1);
-            console.log(colorful_box1)
+            console.log(colorful_box1) 
         }
     } 
     else {

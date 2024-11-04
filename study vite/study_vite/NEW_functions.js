@@ -3,6 +3,7 @@ import { create_cuboid_from_cargo_area,create_cargo_from_cuboid,threejs_scena_to
         create_cuboid_from_cargo,cargo_area_adding_from_cuboid, } from './functions';
 import {Cuboid} from './classes.js';
 import {cargo_area_group,cargo_group,group_of_cargo_area_floor,group_of_cargo_area_attribute} from './three_cargo_canvas.js';
+// import{addcolumn} from './Table_of_cargo_parameters.js'
 
       
 

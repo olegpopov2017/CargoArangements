@@ -1,3 +1,5 @@
+/* @import  "tabulator-tables" */
+
 #test color
 {
 color:#ee0c0c 
@@ -7,6 +9,15 @@ color:#ee0c0c
 #000000
 /*   0x19f005 */
 }
+
+#cargo_table
+    {
+    position:absolute;
+    top: 500px;
+    left: 700px;
+    /* margin:0; */
+    /* padding:0; */
+    }
 
 #header
     {

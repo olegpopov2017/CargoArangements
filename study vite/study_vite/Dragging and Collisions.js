@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_cargo_area_floor} from './three_cargo_canvas.js';
+import{updateTable} from './Table_of_cargo_parameters.js'
 
 
 //////////// Raycaster mouse moving cargos and Check the collisions of draggable cargo and other cargos. If collision is detected,cargo come back to start position.
@@ -7,7 +8,7 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 	let raycaster = new THREE.Raycaster(); 	// Create once for dragging cargos
 	let moveMouse = new THREE.Vector2();   	// Create once for dragging cargo according mouse position
 	let clickMouse = new THREE.Vector2();  // create once
-	let draggable_cargo = null;			//Variable that containe draggable cargo
+	export let draggable_cargo = null;			//Variable that containe draggable cargo
 	let backup_draggable_cargo = null;	//Use if collisions is detected and after that,cargo return in start position(position before dragging).
 	let canvasBounds = renderer.getContext().canvas.getBoundingClientRect();	//Using for only checking mouse coordinstes in canvas.
 
@@ -18,7 +19,7 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
         
     window.addEventListener('mousedown', (event) => {
         start_time = null
-        
+
         start_time = new Date;
     });
 
@@ -31,7 +32,6 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
         if (time_diff < 200){catch_draggable()}
     })
 
-
 //Realtime catching object after mouse cошибкаlicking on canvas and save values in variable "draggable".Use in raycaster dragging objects
     function catch_draggable() {
 		
@@ -39,7 +39,11 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 
 		{
 			controls.enabled = false
+			// addcolumn(draggable_cargo)
+			// table.addData([{ id: 1, name: "John Doe" }]);
+			// table.on("tableBuilt", function () {addcolumn()});
 
+			// table.on("tableBuilt", function(){table.addData({guid:44})},console.log("sss"));
 			check_collision_of_draggable_cargo_and_other_cargos()
 
 			draggable_cargo.material.opacity = 1
@@ -114,7 +118,7 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 			if (cargos_on_ray.length > 0) {
 
 				let found = cargos_on_ray[0]
-					
+					updateTable(draggable_cargo)
 				//Condition for cargo moving only upper faces of cargo (upper faces consist of two triangles with numbers 4 and 5).
 				if(found.faceIndex == 4 || found.faceIndex == 5){		
 					
@@ -163,6 +167,7 @@ import {renderer,scene,camera,controls,cargo_group,cargo_area_group,group_of_car
 				} else {console.log("collision not detected")}
 			}
 		}
+
 	} 
 
 
